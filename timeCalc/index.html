@@ -233,11 +233,11 @@
 	<h1 id="title">Time Calculator</h1>
 	<span id="version">version 0.0</span>
 	<div id="outputParent">
-		<div id="titleOutput">Title test</div>
+		<div id="titleOutput"></div>
 		<div id="mainOutput">
-			<span id="beforeOutput">約</span>
-			<span id="numberOutput">12.345</span>
-			<span id="afterOutput">年</span>
+			<span id="beforeOutput"></span>
+			<span id="numberOutput"></span>
+			<span id="afterOutput"></span>
 		</div>
 	</div>
 	<fieldset id="inputField">
@@ -329,12 +329,12 @@
 						<br>
 						<label>タイトル
 							<span lang="en">Title</span>
-							<input id="titleText" placeholder="例) 生まれてから">
+							<input id="titleText" placeholder="例) 2100年まで">
 						</label>
 						<br>
 						<label>前置
 							<span lang="en">Prefix</span>
-							<input id="beforeText" placeholder="例) 約">
+							<input id="beforeText" placeholder="例) あと">
 						</label>
 						<br>
 						<label>後置
@@ -435,17 +435,17 @@
 								<span>タイトルの色
 									<span lang="en">Title color</span>:
 								</span>
-								<div id="fontColorOfTitle"></div>
+								<div id="colorOfTitle"></div>
 								<br>
 								<span>数字の色
 									<span lang="en">Number color</span>:
 								</span>
-								<div id="fontColorOfNumber"></div>
+								<div id="colorOfNumber"></div>
 								<br>
 								<span>前置･後置の色
 									<span lang="en">Prefix/Suffix color</span>:
 								</span>
-								<div id="fontColorOfPrefixSuffix"></div>
+								<div id="colorOfPrefixSuffix"></div>
 							</div>
 						</span>
 					</li>
@@ -500,9 +500,9 @@
 		};
 		const PICKR = {
 			fontColor: new PickrClass("fontColor", "#000000", true),
-			fontColorOfTitle: new PickrClass("fontColorOfTitle", "#000000", true),
-			fontColorOfNumber: new PickrClass("fontColorOfNumber", "#000000", true),
-			fontColorOfPrefixSuffix: new PickrClass("fontColorOfPrefixSuffix", "#000000", true)
+			colorOfTitle: new PickrClass("colorOfTitle", "#000000", true),
+			colorOfNumber: new PickrClass("colorOfNumber", "#000000", true),
+			colorOfPrefixSuffix: new PickrClass("colorOfPrefixSuffix", "#000000", true)
 		};
 	// ここまでPickr関連のコード
 
@@ -591,7 +591,12 @@
 				});
 			};
 		});
-
+		el("beforeText").addEventListener("input", function() {
+			el("beforeOutput").innerText = this.value;
+		});
+		el("afterText").addEventListener("input", function() {
+			el("afterOutput").innerText = this.value;
+		});
 		el("fontSize").addEventListener("input", function() {
 			el("fontSizeRange").value = this.value;
 			el("numberOutput").style.fontSize = this.value + "px";
@@ -631,7 +636,6 @@
 		};
 		const MAX_VALUE = [Infinity, 12, 31, 24, 60, 60];
 		const DIVIDE_VALUE = [31536000, 2678400, 86400, 3600, 60, 0];
-		const DECIMAL_PLACE = el("decimalPlace").value ? el("decimalPlace").value : 3;
 		let inputDate = {
 			year: el("year").value ? el("year").value : DEFAULT_DATE.year,
 			month: el("month").value ? el("month").value : DEFAULT_DATE.month,
@@ -675,6 +679,7 @@
 				getInputDate();
 				getNowDate();
 				el("titleOutput").innerHTML = `now: ${now.year}/${now.month}/${now.day} ${now.hour}:${now.min}:${now.sec}.${now.milliSec}`;
+				const decimalPlace = el("decimalPlace").value ? el("decimalPlace").value : 3;
 				let timeLeft = [
 					inputDate.year - now.year,
 					inputDate.month - now.month,
@@ -738,19 +743,19 @@
 					};
 					switch(nameValue("rounding")) { // 小数点以下の桁数を切り捨て・四捨五入・切り上げする
 						case "roundOff":
-							result[1] = Math.floor(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							result[1] = Math.floor(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
 							break;
 						case "roundUp":
-							result[1] = Math.ceil(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							result[1] = Math.ceil(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
 							break;
 						case "roundDown":
-							result[1] = Math.round(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							result[1] = Math.round(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
 							break;
 					};
 					if(result[1].toString().slice(2)) {
-						result[1] = result[1].toString().slice(2).padEnd(DECIMAL_PLACE, "0");
+						result[1] = result[1].toString().slice(2).padEnd(decimalPlace, "0");
 					} else {
-						result[1] = "0".repeat(DECIMAL_PLACE);
+						result[1] = "0".repeat(decimalPlace);
 					};
 					el("numberOutput").innerText = result[0] + "." + result[1];
 				} else {
