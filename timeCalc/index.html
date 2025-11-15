@@ -631,6 +631,7 @@
 		};
 		const MAX_VALUE = [Infinity, 12, 31, 24, 60, 60];
 		const DIVIDE_VALUE = [31536000, 2678400, 86400, 3600, 60, 0];
+		const DECIMAL_PLACE = el("decimalPlace").value ? el("decimalPlace").value : 3;
 		let inputDate = {
 			year: el("year").value ? el("year").value : DEFAULT_DATE.year,
 			month: el("month").value ? el("month").value : DEFAULT_DATE.month,
@@ -734,6 +735,22 @@
 								result[0] = BigInt(timeLeft[i]) + BigInt(timeLeft[i-1]);
 							};
 						};
+					};
+					switch(nameValue("rounding")) { // 小数点以下の桁数を切り捨て・四捨五入・切り上げする
+						case "roundOff":
+							result[1] = Math.floor(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							break;
+						case "roundUp":
+							result[1] = Math.ceil(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							break;
+						case "roundDown":
+							result[1] = Math.round(result[1] * (10 ** DECIMAL_PLACE)) / (10 ** DECIMAL_PLACE);
+							break;
+					};
+					if(result[1].toString().slice(2)) {
+						result[1] = result[1].toString().slice(2).padEnd(DECIMAL_PLACE, "0");
+					} else {
+						result[1] = "0".repeat(DECIMAL_PLACE);
 					};
 					el("numberOutput").innerText = result[0] + "." + result[1];
 				} else {
