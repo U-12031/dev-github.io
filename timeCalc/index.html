@@ -357,7 +357,7 @@
 								<option value="2">日</option>
 								<option value="3">時</option>
 								<option value="4">分</option>
-								<option value="sec">秒</option>
+								<option value="5">秒</option>
 							</select>
 						</label>
 						<br>
@@ -741,26 +741,30 @@
 							};
 						};
 					};
-					switch(nameValue("rounding")) { // 小数点以下の桁数を切り捨て・四捨五入・切り上げする
-						case "roundOff":
-							result[1] = Math.floor(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
-							break;
-						case "roundUp":
-							result[1] = Math.ceil(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
-							break;
-						case "roundDown":
-							result[1] = Math.round(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
-							break;
-					};
-					if(result[1].toString().slice(2)) {
-						result[1] = result[1].toString().slice(2).padEnd(decimalPlace, "0");
+					if(decimalPlace == 0) {
+						el("numberOutput").innerText = result[0].toString();
 					} else {
-						result[1] = "0".repeat(decimalPlace);
+						switch(nameValue("rounding")) { // 小数点以下の桁数を切り捨て・四捨五入・切り上げする
+							case "roundOff":
+								result[1] = Math.floor(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
+								break;
+							case "roundUp":
+								result[1] = Math.ceil(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
+								break;
+							case "roundDown":
+								result[1] = Math.round(result[1] * (10 ** decimalPlace)) / (10 ** decimalPlace);
+								break;
+						};
+						if(result[1].toString().slice(2)) { // 桁数が足りないところに0を追加する
+							result[1] = result[1].toString().slice(2).padEnd(decimalPlace, "0");
+						} else {
+							result[1] = "0".repeat(decimalPlace);
+						};
+						el("numberOutput").innerText = result[0] + "." + result[1];
 					};
-					el("numberOutput").innerText = result[0] + "." + result[1];
 				} else {
 					el("numberOutput").innerText = timeLeft[0] + "年" + timeLeft[1] + "か月" + timeLeft[2] + "日 " + timeLeft[3] + "時間" + timeLeft[4] + "分" + timeLeft[5] + "秒";
-				}
+				};
 			}, 1000);
 		},1000 - now.milliSec);
 	</script>
