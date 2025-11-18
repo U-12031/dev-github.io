@@ -511,6 +511,27 @@
 			colorOfNumber: new PickrClass("colorOfNumber", "#000000", true),
 			colorOfPrefixSuffix: new PickrClass("colorOfPrefixSuffix", "#000000", true)
 		};
+
+		PICKR.fontColor.on("change", (color, instance) => {
+			const rgbaColor = color.toRGBA().toString();
+			el("titleOutput").style.color = rgbaColor;
+			el("numberOutput").style.color = rgbaColor;
+			el("beforeOutput").style.color = rgbaColor;
+			el("afterOutput").style.color = rgbaColor;
+		});
+		PICKR.colorOfTitle.on("change", (color, instance) => {
+			const rgbaColor = color.toRGBA().toString();
+			el("titleOutput").style.color = rgbaColor;
+		});
+		PICKR.colorOfNumber.on("change", (color, instance) => {
+			const rgbaColor = color.toRGBA().toString();
+			el("numberOutput").style.color = rgbaColor;
+		});
+		PICKR.colorOfPrefixSuffix.on("change", (color, instance) => {
+			const rgbaColor = color.toRGBA().toString();
+			el("beforeOutput").style.color = rgbaColor;
+			el("afterOutput").style.color = rgbaColor;
+		});
 	// ここまでPickr関連のコード
 
 		let isValid = {
@@ -626,10 +647,19 @@
 					case "same":
 						el("sameFontColor").style.display = "block";
 						el("differentFontColor").style.display = "none";
+						const color = PICKR.fontColor.getColor().toRGBA().toString();
+						el("titleOutput").style.color = color;
+						el("numberOutput").style.color = color;
+						el("beforeOutput").style.color = color;
+						el("afterOutput").style.color = color;
 						break;
 					case "different":
 						el("sameFontColor").style.display = "none";
 						el("differentFontColor").style.display = "block";
+						el("titleOutput").style.color = PICKR.colorOfTitle.getColor().toRGBA().toString();
+						el("numberOutput").style.color = PICKR.colorOfNumber.getColor().toRGBA().toString();
+						el("beforeOutput").style.color = PICKR.colorOfPrefixSuffix.getColor().toRGBA().toString();
+						el("afterOutput").style.color = PICKR.colorOfPrefixSuffix.getColor().toRGBA().toString();
 						break;
 				}
 			});
