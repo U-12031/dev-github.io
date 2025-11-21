@@ -18,20 +18,68 @@
 
 	<title>Mathematical Clicker</title>
 	<style>
-		body {
-			background-color: #333;
+		@keyframes bgColor {
+			from {background-color:#524a47;}
+			25%	 {background-color:#404238;}
+			50%	 {background-color:#3b3434;}
+			75%	 {background-color:#2a282e;}
+			to   {background-color:#524a47;}
 		}
+
+		body {animation: bgColor 40s ease infinite;}
 
 		* {color: #fff;}
 
-		#mainFormula {font-size: 50px;}
+		#mainFormula {
+			font-size: 50px;
+			text-align: center;
+		}
+		
+		#mainFormula>span {
+		position: relative;
+		/* border: 2px dashed #af0; */
+		cursor: pointer;
+		}
+
+		#mainFormula>span>span {
+			display: none;
+			position: absolute;
+			top: 95%;
+			left: 50%;
+			translate: -50% 0;
+			font-size: 20px;
+		}
+
+		@keyframes openInfo {
+			from {opacity: 0; translate: -50% -20px;}
+			to {opacity: 1; translate: -50%;}
+		}
+
+		#mainFormula>span:hover>span {
+			animation: openInfo 0.5s ease forwards;
+			display: inline;
+		}
 	</style>
 </head>
 <body>
-	<h1 id="mainFormula">\[m=t-m_s\]</h1>
-	<input id="input" type="range" min="0" max="10" step="0.001" style="width: 300px;">
+	<h1 id="mainFormula">
+		\(m=\frac{1}{100}\!\)
+		<span id="t">
+			\(\,t\)
+			<span>\(t=50\)</span>
+		</span>
+		\(-\)
+		<span id="m_c">
+			\(m_c\)
+			<span>\(m_c=1000\)</span>
+		</span>
+	</h1>
+	<span id="m_sLabel"></span>
 	<script>
 		function el(id) {return document.getElementById(id)};
+		el("m_c").addEventListener("click", ()=>{
+
+		})
 	</script>
 </body>
 </html>
