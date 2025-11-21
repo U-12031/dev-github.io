@@ -125,14 +125,6 @@
 			border-radius: 10px;
 		}
 
-		.material-symbols-outlined {
-			font-variation-settings:
-			'FILL' 0,
-			'wght' 200,
-			'GRAD' 0,
-			'opsz' 48
-		}
-
 		label:has(#doDisplayEnglish) {
 			display: block;
 			margin: 10px auto;
@@ -255,7 +247,7 @@
 			<span id="afterOutput"></span>
 		</div>
 	</div>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=fullscreen">
+	<img id="fullscreenBt" src="../0_data/images/fullscreen.svg" width="40">
 	<fieldset id="inputField">
 		<legend>入力欄
 			<span lang="en">Input field</span>
@@ -616,6 +608,15 @@
 		inputLimiter("decimalPlace");
 		inputLimiter("fontSize", false);
 
+		el("fullscreenBt").addEventListener("click", function() {
+			if(el("outputParent").requestFullscreen) {
+				el("outputParent").requestFullscreen();
+			} else if(el("outputParent").webkitRequestFullscreen) { /* Safari */
+				el("outputParent").webkitRequestFullscreen();
+			} else if(el("outputParent").msRequestFullscreen) { /* IE11 */
+				el("outputParent").msRequestFullscreen();
+			};
+		})
 		el("doDisplayEnglish").addEventListener("input", function() {
 			const langElements = document.querySelectorAll("span[lang='en']:not(#doDisplayEnglish~span)");
 			if(this.checked) {
