@@ -26,7 +26,10 @@
 			to   {background-color:#524a47;}
 		}
 
-		body {animation: bgColor 40s ease infinite;}
+		body {
+			margin: 0;
+			animation: bgColor 40s ease infinite;
+		}
 
 		* {color: #fff;}
 
@@ -56,6 +59,20 @@
 			opacity: 1;
 			translate: -50% 0;
 		}
+
+		button {
+			font-size: 20px;
+			padding: 10px;
+			background-color: #222;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#shop {
+			border: 2px dashed #af0;
+		}
 	</style>
 </head>
 <body>
@@ -71,7 +88,9 @@
 			<span>\(m_c=1000\)</span>
 		</span>
 	</h1>
-	<span id="m_sLabel"></span>
+	<div id="shop">
+		<button>test</button>
+	</div>
 	<script>
 		function el(id) {return document.getElementById(id)};
 	</script>
