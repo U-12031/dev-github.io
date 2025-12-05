@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="utf-8">
 
@@ -27,7 +27,6 @@
 	<p id="output" style="font-size: 30px;">0</p>
 	<p id="power"></p>
 	<p id="subP"></p>
-	<p id="subP2"></p>
 	<button onclick="el('input').value = BigInt(el('input').value)+1n;conversion(el('input').value);">+1</button>
 	<button onclick="el('input').value = BigInt(el('input').value)+10n;conversion(el('input').value);">+10</button>
 	<button onclick="el('input').value = BigInt(el('input').value)*2n;conversion(el('input').value);">*2</button>
@@ -40,13 +39,13 @@
 	<input min="0" id="repeat" style="height: 10px;width: 50px;">
 	</button>
 	<br>
-	<label for="mode">Mode</label>
+	<label for="mode">モード</label>
 	<select id="mode" oninput="conversion(el('input').value)">
-		<option value="english">English</option>
-		<option value="japanese">Japanese</option>
-		<option value="power">power</option>
-		<option value="weight">weight</option>
-		<option value="unicode">unicode</option>
+		<option value="english">英語(略語)</option>
+		<option value="japanese">日本語</option>
+		<option value="power">10の累乗</option>
+		<option value="weight">-用途不明, 未使用-</option>
+		<option value="unicode">Unicodeへ変換(16^4進法)</option>
 	</select>
 	<p id="output2" style="font-size: 20px;"></p>
 	<script>
@@ -93,7 +92,7 @@
 			let
 				value = String(num),
 				length = value.length;
-			el("length").innerHTML = length;
+			el("length").innerHTML = length + "桁";
 			el("power").innerHTML = "≒ 10^" + (length-1);
 			// ここから
 			switch(el("mode").value) {
