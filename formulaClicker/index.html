@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-		<meta charset="utf-8">
+	<meta charset="utf-8">
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3VRHWGPB7"></script>
@@ -63,16 +63,19 @@
 		}
 
 		button {
+			display: block;
+			width: 100%;
 			font-size: 20px;
-			padding: 10px;
+			padding: 5px 10px;
 			background-color: #222;
 			color: #fff;
-			border: none;
+			border: 1.5px solid #aaa;
 			border-radius: 5px;
 			cursor: pointer;
 		}
 
 		#shop {
+			display: block;
 			border: 2px dashed #af0;
 		}
 	</style>
@@ -91,7 +94,8 @@
 		</span>
 	</h1>
 	<div id="shop">
-		<button>test</button>
+	<button>test1</button>
+	<button>test2</button>
 	</div>
 	<script>
 		function el(id) {return document.getElementById(id)};
