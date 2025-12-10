@@ -73,7 +73,6 @@
 			}
 		]
 	},
-	"codeswing.autoSave": true,
 	"window.menuBarVisibility": "compact",
 	"files.autoSaveDelay": 1,
 	"editor.stickyScroll.enabled": false,
@@ -89,5 +88,6 @@
 	"color-highlight.matchWords": true,
 	"editor.colorDecorators": false,
 	"workbench.colorTheme": "Default Dark Modern",
-	"editor.wordWrap": "on"
+	"editor.wordWrap": "on",
+	"codeswing.autoRun": "never"
 }
