@@ -24,7 +24,7 @@
 			from {background-color:#524a47;}
 			25%	 {background-color:#404238;}
 			50%	 {background-color:#3b3434;}
-			75%	 {background-color:#2a282e;}
+			75% {background-color: #4f4a59;}
 			to   {background-color:#524a47;}
 		}
 
@@ -41,6 +41,17 @@
 		*:not(.formula):not(.formula *) {
 			font-family: "originalFont";
 			color: #fff;
+		}
+
+		#pinnedValParent {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 30px;
+			background-color: #333;
+			border-bottom: 1px solid #ccc;
+			z-index: 1000;
 		}
 
 		#mainFormula {
@@ -88,16 +99,22 @@
 	</style>
 </head>
 <body>
+	<div id="pinnedValParent"></div>
 	<h1 id="mainFormula" class="formula">
 		\(m=\frac{1}{100}\!\)
-		<span id="t">
+		<span id="t"><!-- t="time" -->
 			\(\,t\)
 			<span>\(t=50\)</span>
 		</span>
 		\(-\)
-		<span id="m_u">
+		<span id="m_u"><!-- m_u="money_used" -->
 			\(m_u\)
 			<span>\(m_u=1000\)</span>
+		</span>
+		\(-\)
+		<span id="d"><!-- d="deviation" -->
+			\(d\)
+			<span>\(d=0\)</span>
 		</span>
 	</h1>
 	<div id="shop">
