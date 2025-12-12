@@ -32,7 +32,13 @@
 </head>
 <body>
 	<h1 id="title">大銀行<span>(仮)</span></h1>
+	<p>version test-α</p>
 
+	<div id="testBts">
+		name="<input id="testName">", password="<input id="testPassword">"
+		<button onclick="addData('test',{name:el('testName').value, password:el('testPassword').value})">データ追加</button>
+		<button onclick="getData()">データ取得</button>
+	</div>
 	<script type="module">
 		// Import the functions you need from the SDKs you need
 		import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
@@ -56,7 +62,28 @@
 		const app = initializeApp(firebaseConfig);
 		const analytics = getAnalytics(app);
 
+		import { getFirestore } from "firebase/firestore";
 		const db = getFirestore(app);
+
+		import { collection, addDoc } from "firebase/firestore";
+
+		function addData(collectionName, data) {
+			try {
+			addDoc(collection(db, collectionName), data);
+			}catch(error) {alert(`${error.name}\n${error.stack}`)}
+		};
+
+		const querySnapshot = await getDocs(collection(db, "users"));;
+		function getData() {
+			try {
+			querySnapshot.forEach((doc) => {
+				alert(`${doc.id} => ${JSON.stringify(doc.data())}`);
+			});
+			}catch(error) {alert(`${error.name}\n${error.stack}`)}
+		};
+	</script>
+	<script>
+		function el(id) {return document.getElementById(id);}
 	</script>
 </body>
 </html>
