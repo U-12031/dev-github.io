@@ -85,6 +85,10 @@
 					alert(`${error.name}\n${error.stack}`);
 				}
 			}
+
+			// 外から呼べるようにする
+			window.addData = addData;
+			window.getData = getData;
 	</script>
 	<script>
 		function el(id) {return document.getElementById(id);}
