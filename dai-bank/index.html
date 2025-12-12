@@ -62,6 +62,9 @@
 		const app = initializeApp(firebaseConfig);
 		const analytics = getAnalytics(app);
 
+		</script>
+	<script>
+		function el(id) {return document.getElementById(id);}
 		import { getFirestore } from "firebase/firestore";
 		const db = getFirestore(app);
 
@@ -81,9 +84,6 @@
 			});
 			}catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
-	</script>
-	<script>
-		function el(id) {return document.getElementById(id);}
 	</script>
 </body>
 </html>
