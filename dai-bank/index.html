@@ -32,12 +32,15 @@
 </head>
 <body>
 	<h1 id="title">大銀行<span>(仮)</span></h1>
-	<p>version test-β</p>
+	<p>version test-γ</p>
 
 	<div id="testBts" style="background-color: #fff;">
-		name="<input id="testName">", password="<input id="testPassword">"
-		<button onclick="addData('test',{name:el('testName').value, password:el('testPassword').value})">データ追加</button>
-		<button onclick="getData()">データ取得</button>
+		name="<input id="testName">", password="<input id="testPassword">"<button id="testCreAccount" style="margin: auto 20px;">アカウント作成(test)</button>
+		<br>
+		name="<input id="testLoginName">", password="<input id="testLoginPassword">"<button id="testLogin" style="margin: auto 20px;">ログイン(test)</button>
+		<br>
+		<button id="testLogout">ログアウト(test)</button>
+		<span id="testOutput"></span>
 	</div>
 	<script type="module">
 		// Firebase App & Firestore をインポート（すべて同じバージョンで統一）
@@ -66,29 +69,17 @@
 
 			// データを追加する関数
 			async function addData(collectionName, data) {
-				try {
-					await addDoc(collection(db, collectionName), data);
-					alert("書き込み完了！");
-				} catch (error) {
-					alert(`${error.name}\n${error.stack}`);
-				}
-			}
+				await addDoc(collection(db, collectionName), data);
+				alert("書き込み完了！");
+			};
 
 			// データを取得する関数
 			async function getData() {
-				try {
-					let result = [];
-					const querySnapshot = await getDocs(collection(db, "test"));
-					querySnapshot.forEach((doc) => {
-						result.push(doc.data());
-						alert(`${doc.id}\n${doc.data()}\n${typeof doc.data()}`);
-					});
-					alert(result);
-					return result;
-				} catch (error) {
-					alert(`${error.name}\n${error.stack}`);
-				}
-			}
+				let result = [];
+				const querySnapshot = await getDocs(collection(db, "test"));
+				querySnapshot.forEach(doc => result.push(doc.data()));
+				return result;
+			};
 
 			// 外から呼べるようにする
 			window.addData = addData;
@@ -110,6 +101,40 @@
 				};
 			};
 			return null;
+		};
+
+		if(getCookie("loginName")) {
+			el("testOutput").innerHTML = `${getCookie("loginName")}としてログインしています`}
+
+		el("testCreAccount").onclick = async () => {
+			await addData("test", {
+				name: el("testName").value,
+				password: el("testPassword").value
+			});
+			saveCokie("loginName", el("testName").value);
+			el("testOutput").innerHTML = `${el("testName").value}としてログインしました`;
+		};
+		el("testLogin").onclick = async () => {
+			const data = await getData();
+			const name = el("testLoginName").value;
+			const password = el("testLoginPassword").value;
+			let found = false;
+			for (const doc of data) {
+				if (doc.name === name && doc.password === password) {
+					found = true;
+					break;
+				};
+			};
+			if (found) {
+				saveCokie("loginName", name);
+				el("testOutput").innerHTML = `${name}としてログインしました`;
+			} else {
+				el("testOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
+			};
+		};
+		el("testLogout").onclick = () => {
+			saveCokie("loginName", "");
+			el("testOutput").innerHTML = "ログアウトしました";
 		};
 	</script>
 </body>
