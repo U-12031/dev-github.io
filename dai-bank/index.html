@@ -79,9 +79,8 @@
 				try {
 					// let result = [];
 					const querySnapshot = await getDocs(collection(db, "test"));
-					alert(typeof querySnapshot);
 					querySnapshot.forEach((doc) => {
-						alert(`${doc.id} => ${JSON.stringify(doc.data())}`);
+						alert(`${doc.id}\n${JSON.stringify(doc.data())}\n${typeof JSON.stringify(doc.data())}`);
 					});
 				} catch (error) {
 					alert(`${error.name}\n${error.stack}`);
