@@ -27,13 +27,33 @@
 
 		#title>span {font-size: 0.75em;}
 
-		body {background-color: #eff;}
+		body {background-color: #def;}
+
+		button {
+			background-color: #3bf;
+			color: white;
+			font-size: 1.5em;
+			padding: 7px 10px;
+			border: none;
+			border-radius: 20px;
+			cursor: pointer;
+		}
+
+		#menu {
+			margin: 20px auto;
+			padding: 10px;
+			width: 90%;
+			max-width: 600px;
+			background-color: #fff;
+			border-radius: 10px;
+		}
 	</style>
 </head>
 <body>
 	<h1 id="title">大銀行<span>(仮)</span></h1>
 	<p>version test-γ</p>
 
+	<!--
 	<div id="testBts" style="background-color: #fff;">
 		name="<input id="testName">", password="<input id="testPassword">"<button id="testCreAccount" style="margin: auto 20px;">アカウント作成(test)</button>
 		<br>
@@ -41,6 +61,14 @@
 		<br>
 		<button id="testLogout">ログアウト(test)</button>
 		<p id="testOutput"></p>
+	</div>
+	-->
+
+	<div id="menu">
+		<div id="loginMenu">
+			<button id="loginBt">ログイン</button>
+			<span id="loginOutput">test1</span>
+		</div>
 	</div>
 	<script type="module">
 		// Firebase App & Firestore をインポート（すべて同じバージョンで統一）
