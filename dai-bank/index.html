@@ -25,6 +25,8 @@
 			font-family: "originalFont", sans-serif;
 		}
 
+		:disabled {filter: grayscale(100%);}
+
 		#title>span {font-size: 0.75em;}
 
 		body {background-color: #def;}
@@ -47,6 +49,41 @@
 			background-color: #fff;
 			border-radius: 10px;
 		}
+
+		#loginMenu {
+			border: 2px solid #666;
+			border-radius: 20px;
+			padding: 20px;
+			width: min(500px, 50%);
+		}
+
+		#menu>div>* {
+			margin: 10px 20px;
+		}
+
+		#loginModal {
+			border: 2px solid #333;
+			border-radius: 10px;
+			padding: 20px;
+			text-align: center;
+		}
+
+		#loginModal>h1 {
+			font-size: 1.5em
+		}
+
+		#loginModal hr {
+			border: none;
+		}
+
+		#closeModal {
+			position: absolute;
+			top: -5px;
+			right: -5px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -65,9 +102,31 @@
 	-->
 
 	<div id="menu">
-		<div id="loginMenu">
-			<button id="loginBt">ログイン</button>
-			<span id="loginOutput">test1</span>
+		<div>
+			<div id="loginMenu">
+				<button id="loginBt">ログイン</button>
+				<br>
+				<span id="loginOutput">test1</span>
+				<dialog id="loginModal">
+					<h1>ログイン</h1>
+					<button id="closeModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button>
+					<form>
+						ユーザー名
+						<br>
+						<input type="text" id="loginName">
+						<hr>
+						パスワード
+						<br>
+						<input type="password" id="loginPassword">
+						<hr>
+						<button id="loginSubmit">ログインする</button>
+					</form>
+				</dialog>
+			</div>
+			<button id="sendMoney">送金する</button>
+			<button id="seeHistory">履歴を見る</button>
+			<br>
+			<button id="gamble">ギャンブルする</button>
 		</div>
 	</div>
 	<script type="module">
@@ -131,6 +190,14 @@
 			return null;
 		};
 
+		el("loginBt").addEventListener("click", () => {
+			el("loginModal").showModal();
+		});
+		el("closeModal").addEventListener("click", () => {
+			el("loginModal").close();
+		});
+
+		/*
 		if(getCookie("loginName")) {
 			el("testOutput").innerHTML = `${getCookie("loginName")}としてログインしています`}
 
@@ -164,6 +231,7 @@
 			saveCokie("loginName", "");
 			el("testOutput").innerHTML = "ログアウトしました";
 		};
+		*/
 	</script>
 </body>
 </html>
