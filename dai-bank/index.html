@@ -189,7 +189,7 @@
 	<script>
 		function el(id) {return document.getElementById(id);}
 
-		function saveCokie(name, value) {
+		function saveCookie(name, value) {
 			document.cookie = `${name}=${value}; max-age=${60*60*24*365};`;
 		};
 
@@ -221,11 +221,12 @@
 				name: el("testName").value,
 				password: el("testPassword").value
 			});
-			saveCokie("loginName", el("testName").value);
+			saveCookie("loginName", el("testName").value);
 			el("testOutput").innerHTML = `${el("testName").value}としてログインしました`;
 		};
 		*/
 		el("testLogin").onclick = async () => {
+			try {
 			const data = await getData();
 			const name = el("loginName").value;
 			const password = el("loginPassword").value;
@@ -237,16 +238,19 @@
 				};
 			};
 			if (found) {
-				saveCokie("loginName", name);
+				alert(`${name}でログインに成功しました`);
+				saveCookie("loginName", name);
 				el("loginModal").close();
 				el("loginOutput").innerHTML = `${name}としてログインしました`;
 			} else {
+				alert("ログインに失敗しました");
 				el("loginModalOutput").style.color = "red";
 				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
 			};
+			} catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
 		el("testLogout").onclick = () => {
-			saveCokie("loginName", "");
+			saveCookie("loginName", "");
 			el("loginMOdalOutput").style.color = "black";
 			el("testOutput").innerHTML = "ログアウトしました";
 		};
