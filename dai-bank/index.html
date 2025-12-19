@@ -225,7 +225,7 @@
 			el("testOutput").innerHTML = `${el("testName").value}としてログインしました`;
 		};
 		*/
-		el("testLogin").onclick = async () => {
+		el("loginSubmit").onclick = async () => {
 			try {
 			const data = await getData();
 			const name = el("loginName").value;
