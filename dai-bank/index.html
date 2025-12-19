@@ -209,9 +209,11 @@
 			el("loginModal").close();
 		};
 
+		try {
 		if(getCookie("loginName")) {
 			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`
 		};
+	}catch(error) {alert(`${error.name}\n${error.stack}`)}
 
 		/*
 		el("testCreAccount").onclick = async () => {
