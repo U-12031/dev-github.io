@@ -50,15 +50,15 @@
 			border-radius: 10px;
 		}
 
-		#loginMenu {
-			border: 2px solid #666;
+		#menu>div>* {
+			margin: 10px 20px;
+		}
+
+		#menu #loginMenu {
+			margin: auto;
 			border-radius: 20px;
 			padding: 20px;
 			width: min(500px, 50%);
-		}
-
-		#menu>div>* {
-			margin: 10px 20px;
 		}
 
 		#loginModal {
@@ -76,6 +76,18 @@
 			border: none;
 		}
 
+		#loginModal>form>label {
+			display: block;
+			margin: 10px 0;
+		}
+
+		#loginModal input:not([type="checkbox"]) {
+			border-radius: 3px;
+			border: 1.5px solid #777;
+			margin-left: 10px;
+			text-align: left;
+		}
+
 		#closeModal {
 			position: absolute;
 			top: -5px;
@@ -84,6 +96,8 @@
 			border: none;
 			cursor: pointer;
 		}
+
+		#loginModalOutput {font-size: .9em;}
 	</style>
 </head>
 <body>
@@ -106,18 +120,18 @@
 			<div id="loginMenu">
 				<button id="loginBt">ログイン</button>
 				<br>
-				<span id="loginOutput">test1</span>
+				<span id="loginOutput"></span>
 				<dialog id="loginModal">
 					<h1>ログイン</h1>
 					<button id="closeModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button>
 					<form>
-						ユーザー名
-						<br>
-						<input type="text" id="loginName">
-						<hr>
-						パスワード
-						<br>
-						<input type="password" id="loginPassword">
+						<label>ユーザー名
+							<input type="text" id="loginName">
+						</label>
+						<label>パスワード
+							<input type="password" id="loginPassword">
+						</label>
+						<p id="loginModalOutput">ユーザー名とパスワードを入力してください</p>
 						<hr>
 						<button id="loginSubmit">ログインする</button>
 					</form>
@@ -190,17 +204,18 @@
 			return null;
 		};
 
-		el("loginBt").addEventListener("click", () => {
+		el("loginBt").onclick = () => {
 			el("loginModal").showModal();
-		});
-		el("closeModal").addEventListener("click", () => {
+		};
+		el("closeModal").onclick = () => {
 			el("loginModal").close();
-		});
+		};
+
+		if(getCookie("loginName")) {
+			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`
+		};
 
 		/*
-		if(getCookie("loginName")) {
-			el("testOutput").innerHTML = `${getCookie("loginName")}としてログインしています`}
-
 		el("testCreAccount").onclick = async () => {
 			await addData("test", {
 				name: el("testName").value,
@@ -209,10 +224,11 @@
 			saveCokie("loginName", el("testName").value);
 			el("testOutput").innerHTML = `${el("testName").value}としてログインしました`;
 		};
+		*/
 		el("testLogin").onclick = async () => {
 			const data = await getData();
-			const name = el("testLoginName").value;
-			const password = el("testLoginPassword").value;
+			const name = el("loginName").value;
+			const password = el("loginPassword").value;
 			let found = false;
 			for (const doc of data) {
 				if (doc.name === name && doc.password === password) {
@@ -222,16 +238,18 @@
 			};
 			if (found) {
 				saveCokie("loginName", name);
-				el("testOutput").innerHTML = `${name}としてログインしました`;
+				el("loginModal").close();
+				el("loginOutput").innerHTML = `${name}としてログインしました`;
 			} else {
-				el("testOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
+				el("loginModalOutput").style.color = "red";
+				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
 			};
 		};
 		el("testLogout").onclick = () => {
 			saveCokie("loginName", "");
+			el("loginMOdalOutput").style.color = "black";
 			el("testOutput").innerHTML = "ログアウトしました";
 		};
-		*/
 	</script>
 </body>
 </html>
