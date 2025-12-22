@@ -61,6 +61,11 @@
 			width: min(500px, 50%);
 		}
 
+		#loginOutput {
+			display: block;
+			margin-top: 10px;
+		}
+
 		#loginModal {
 			border: 2px solid #333;
 			border-radius: 10px;
@@ -117,6 +122,8 @@
 
 	<div id="menu">
 		<div>
+			名前="<input id="testName">", パスワード="<input id="testPassword">"
+			<button id="testCreAccount">アカウント作成(test)</button>
 			<div id="loginMenu">
 				<button id="loginBt">ログイン</button>
 				<br>
@@ -127,6 +134,7 @@
 					<label>ユーザー名
 						<input type="text" id="loginName">
 					</label>
+					<hr>
 					<label>パスワード
 						<input type="password" id="loginPassword">
 					</label>
@@ -169,7 +177,6 @@
 			// データを追加する関数
 			async function addData(collectionName, data) {
 				await addDoc(collection(db, collectionName), data);
-				alert("書き込み完了！");
 			};
 
 			// データを取得する関数
@@ -209,24 +216,25 @@
 			el("loginModal").close();
 		};
 
-		try {
 		if(getCookie("loginName")) {
 			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`
+		} else {
+			el("loginOutput").innerHTML = "ログインしていません";
+			el("sendMoney").disabled = true;
+			el("seeHistory").disabled = true;
+			el("gamble").disabled = true;
 		};
-	}catch(error) {alert(`${error.name}\n${error.stack}`)}
 
-		/*
 		el("testCreAccount").onclick = async () => {
-			await addData("test", {
+			await addData("account", {
 				name: el("testName").value,
 				password: el("testPassword").value
 			});
 			saveCookie("loginName", el("testName").value);
-			el("testOutput").innerHTML = `${el("testName").value}としてログインしました`;
+			el("loginOutput").innerHTML = `${el("testName").value}としてログインしました`;
 		};
-		*/
+
 		el("loginSubmit").onclick = async () => {
-			try {
 			const data = await getData();
 			const name = el("loginName").value;
 			const password = el("loginPassword").value;
@@ -238,21 +246,22 @@
 				};
 			};
 			if (found) {
-				alert(`${name}でログインに成功しました`);
 				saveCookie("loginName", name);
 				el("loginModal").close();
 				el("loginOutput").innerHTML = `${name}としてログインしました`;
 			} else {
-				alert("ログインに失敗しました");
 				el("loginModalOutput").style.color = "red";
 				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
 			};
-			} catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
 		el("testLogout").onclick = () => {
 			saveCookie("loginName", "");
 			el("loginMOdalOutput").style.color = "black";
 			el("testOutput").innerHTML = "ログアウトしました";
+		};
+
+		el("sendMoney").onclick = () => {
+
 		};
 	</script>
 </body>
