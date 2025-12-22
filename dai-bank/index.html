@@ -41,7 +41,26 @@
 			cursor: pointer;
 		}
 
-		dialog>h1 {margin-top: 5px;}
+		dialog {
+			border: 2px solid #333;
+			border-radius: 10px;
+			padding: 20px;
+			text-align: center;
+		}
+
+		dialog>h1 {
+			margin-top: 5px;
+			font-size: 1.5em;
+		}
+
+		dialog hr {border: none;}
+
+		dialog input:not([type="checkbox"]) {
+			border-radius: 3px;
+			border: 1.5px solid #777;
+			margin-left: 10px;
+			text-align: left;
+		}
 
 		.closeModal {
 			position: absolute;
@@ -81,29 +100,6 @@
 			background-color: #d33;
 			color: white;
 			cursor: pointer;
-		}
-
-		#loginModal {
-			border: 2px solid #333;
-			border-radius: 10px;
-			padding: 20px;
-			text-align: center;
-		}
-
-		#loginModal>h1 {font-size: 1.5em}
-
-		#loginModal hr {border: none;}
-
-		#loginModal>form>label {
-			display: block;
-			margin: 10px 0;
-		}
-
-		#loginModal input:not([type="checkbox"]) {
-			border-radius: 3px;
-			border: 1.5px solid #777;
-			margin-left: 10px;
-			text-align: left;
 		}
 
 		#loginModalOutput {font-size: .9em;}
@@ -157,6 +153,20 @@
 				</dialog>
 			</div>
 			<button id="sendMoney">送金する</button>
+			<dialog id="sendMoneyModal">
+				<h1>送金</h1>
+				<img class="closeModal" src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg">
+				<label>送金先ユーザー名
+					<input type="text" id="sendToName">
+				</label>
+				<hr>
+				<label>送金額
+					<input type="number" id="sendAmount" min="1">
+				</label>
+				<p id="sendMoneyModalOutput">正しいユーザーネームとパスワードを入力してください</p>
+				<hr>
+				<button id="sendConfirm">送金する</button>
+			</dialog>
 			<button id="seeHistory">履歴を見る</button>
 			<br>
 			<button id="gamble">ギャンブルする</button>
@@ -234,7 +244,7 @@
 			el("logoutBt").style.display = "initial";
 		} else {
 			el("loginOutput").innerHTML = "ログインしていません";
-			el("sendMoney").disabled = true;
+			// el("sendMoney").disabled = true;
 			el("seeHistory").disabled = true;
 			el("gamble").disabled = true;
 			// el("logoutBt").style.display = "none";
@@ -287,7 +297,7 @@
 		};
 
 		el("sendMoney").onclick = () => {
-			
+			el("sendMoneyModal").showModal();
 		};
 	</script>
 </body>
