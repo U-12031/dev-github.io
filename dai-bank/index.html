@@ -31,7 +31,7 @@
 
 		body {background-color: #def;}
 
-		button {
+		button:not(#logoutBt, .closeModal) {
 			background-color: #3bf;
 			color: white;
 			font-size: 1.5em;
@@ -64,6 +64,14 @@
 		#loginOutput {
 			display: block;
 			margin-top: 10px;
+		}
+
+		#logoutBt {
+			border-radius: 10px;
+			border: none;
+			background-color: #d33;
+			color: white;
+			cursor: pointer;
 		}
 
 		#loginModal {
@@ -109,17 +117,6 @@
 	<h1 id="title">大銀行<span>(仮)</span></h1>
 	<p>version test-γ</p>
 
-	<!--
-	<div id="testBts" style="background-color: #fff;">
-		name="<input id="testName">", password="<input id="testPassword">"<button id="testCreAccount" style="margin: auto 20px;">アカウント作成(test)</button>
-		<br>
-		name="<input id="testLoginName">", password="<input id="testLoginPassword">"<button id="testLogin" style="margin: auto 20px;">ログイン(test)</button>
-		<br>
-		<button id="testLogout">ログアウト(test)</button>
-		<p id="testOutput"></p>
-	</div>
-	-->
-
 	<div id="menu">
 		<div>
 			名前="<input id="testName">", パスワード="<input id="testPassword">"
@@ -128,6 +125,11 @@
 				<button id="loginBt">ログイン</button>
 				<br>
 				<span id="loginOutput"></span>
+				<button id="logoutBt">ログアウト</button>
+				<dialog id="logoutModal">
+					<!-- <h1>ログアウトしました</h1> -->
+					<!-- <button id="closeLogoutModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button> -->
+				</dialog>
 				<dialog id="loginModal">
 					<h1>ログイン</h1>
 					<button id="closeModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button>
@@ -217,12 +219,14 @@
 		};
 
 		if(getCookie("loginName")) {
-			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`
+			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`;
+			el("logoutBt").style.display = "initial";
 		} else {
 			el("loginOutput").innerHTML = "ログインしていません";
 			el("sendMoney").disabled = true;
 			el("seeHistory").disabled = true;
 			el("gamble").disabled = true;
+			// el("logoutBt").style.display = "none";
 		};
 
 		el("testCreAccount").onclick = async () => {
@@ -232,6 +236,7 @@
 			});
 			saveCookie("loginName", el("testName").value);
 			el("loginOutput").innerHTML = `${el("testName").value}としてログインしました`;
+			el("logoutBt").style.display = "initial";
 		};
 
 		el("loginSubmit").onclick = async () => {
@@ -249,19 +254,23 @@
 				saveCookie("loginName", name);
 				el("loginModal").close();
 				el("loginOutput").innerHTML = `${name}としてログインしました`;
+				el("logoutBt").style.display = "initial";
 			} else {
 				el("loginModalOutput").style.color = "red";
 				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
+				el("logoutBt").style.display = "none";
 			};
 		};
-		el("testLogout").onclick = () => {
+		el("logoutBt").onclick = () => {
+			// el("logoutModal").showModal();
 			saveCookie("loginName", "");
-			el("loginMOdalOutput").style.color = "black";
-			el("testOutput").innerHTML = "ログアウトしました";
+			el("loginOutput").style.color = "black";
+			el("loginOutput").innerHTML = "ログアウトしました";
+			el("logoutBt").style.display = "none";
 		};
 
 		el("sendMoney").onclick = () => {
-
+			
 		};
 	</script>
 </body>
