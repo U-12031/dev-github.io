@@ -41,6 +41,17 @@
 			cursor: pointer;
 		}
 
+		dialog>h1 {margin-top: 5px;}
+
+		.closeModal {
+			position: absolute;
+			top: -5px;
+			right: -5px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+		}
+
 		#menu {
 			margin: 20px auto;
 			padding: 10px;
@@ -50,9 +61,7 @@
 			border-radius: 10px;
 		}
 
-		#menu>div>* {
-			margin: 10px 20px;
-		}
+		#menu>div>* {margin: 10px 20px;}
 
 		#menu #loginMenu {
 			margin: auto;
@@ -81,13 +90,9 @@
 			text-align: center;
 		}
 
-		#loginModal>h1 {
-			font-size: 1.5em
-		}
+		#loginModal>h1 {font-size: 1.5em}
 
-		#loginModal hr {
-			border: none;
-		}
+		#loginModal hr {border: none;}
 
 		#loginModal>form>label {
 			display: block;
@@ -101,16 +106,20 @@
 			text-align: left;
 		}
 
-		#closeModal {
-			position: absolute;
-			top: -5px;
-			right: -5px;
-			background-color: transparent;
-			border: none;
-			cursor: pointer;
+		#loginModalOutput {font-size: .9em;}
+
+		#logoutModal>h1 {
+			font-size: 1.3em;
+			margin: auto 20px;
 		}
 
-		#loginModalOutput {font-size: .9em;}
+		#logoutModal>button {
+			margin: 20px 10px 0 10px;
+			font-size: 1.2em;
+			border: none;
+			border-radius: 15px;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -126,13 +135,9 @@
 				<br>
 				<span id="loginOutput"></span>
 				<button id="logoutBt">ログアウト</button>
-				<dialog id="logoutModal">
-					<!-- <h1>ログアウトしました</h1> -->
-					<!-- <button id="closeLogoutModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button> -->
-				</dialog>
 				<dialog id="loginModal">
 					<h1>ログイン</h1>
-					<button id="closeModal"><img src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg"></button>
+					<img class="closeModal" src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg">
 					<label>ユーザー名
 						<input type="text" id="loginName">
 					</label>
@@ -143,6 +148,12 @@
 					<p id="loginModalOutput">ユーザー名とパスワードを入力してください</p>
 					<hr>
 					<button id="loginSubmit">ログインする</button>
+				</dialog>
+				<dialog id="logoutModal">
+					<h1>ログアウトしますか？</h1>
+					<img class="closeModal" src="data/close_52dp_666666_FILL0_wght500_GRAD200_opsz48.svg">
+					<button id="logoutNo">いいえ</button>
+					<button id="logoutYes">はい</button>
 				</dialog>
 			</div>
 			<button id="sendMoney">送金する</button>
@@ -214,9 +225,9 @@
 		el("loginBt").onclick = () => {
 			el("loginModal").showModal();
 		};
-		el("closeModal").onclick = () => {
-			el("loginModal").close();
-		};
+		document.querySelectorAll(".closeModal").forEach(bt => {
+			bt.onclick = () => bt.parentElement.close();
+		});
 
 		if(getCookie("loginName")) {
 			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`;
@@ -262,11 +273,17 @@
 			};
 		};
 		el("logoutBt").onclick = () => {
-			// el("logoutModal").showModal();
+			el("logoutModal").showModal();
+		};
+		el("logoutYes").onclick = () => {
+			el("logoutModal").close();
 			saveCookie("loginName", "");
 			el("loginOutput").style.color = "black";
 			el("loginOutput").innerHTML = "ログアウトしました";
 			el("logoutBt").style.display = "none";
+		};
+		el("logoutNo").onclick = () => {
+			el("logoutModal").close();
 		};
 
 		el("sendMoney").onclick = () => {
