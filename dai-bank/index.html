@@ -41,7 +41,10 @@
 			cursor: pointer;
 		}
 
+		::backdrop {background-color: rgba(0, 0, 0, 0.5);}
+
 		dialog {
+			margin: auto !important;
 			border: 2px solid #333;
 			border-radius: 10px;
 			padding: 20px;
@@ -203,9 +206,9 @@
 			};
 
 			// データを取得する関数
-			async function getData() {
+			async function getData(collectionName) {
 				let result = [];
-				const querySnapshot = await getDocs(collection(db, "account"));
+				const querySnapshot = await getDocs(collection(db, collectionName));
 				querySnapshot.forEach(doc => result.push(doc.data()));
 				return result;
 			};
@@ -247,7 +250,7 @@
 			// el("sendMoney").disabled = true;
 			el("seeHistory").disabled = true;
 			el("gamble").disabled = true;
-			// el("logoutBt").style.display = "none";
+			el("logoutBt").style.display = "none";
 		};
 
 		el("testCreAccount").onclick = async () => {
@@ -298,6 +301,9 @@
 
 		el("sendMoney").onclick = () => {
 			el("sendMoneyModal").showModal();
+		};
+		el("sendConfirm").onclick = async () => {
+			alert(typeof getData("account"));
 		};
 	</script>
 </body>
