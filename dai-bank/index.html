@@ -119,6 +119,10 @@
 			border-radius: 15px;
 			cursor: pointer;
 		}
+
+		#sendMoneyOutput>span {display: block;}
+
+		#sendAmountOutput {color: red;}
 	</style>
 </head>
 <body>
@@ -166,7 +170,10 @@
 				<label>送金額
 					<input type="number" id="sendAmount" min="1">
 				</label>
-				<p id="sendMoneyModalOutput">正しいユーザーネームとパスワードを入力してください</p>
+				<p id="sendMoneyOutput">
+					<span id="sendToNameOutput">正しいユーザーネームとパスワードを入力してください</span>
+					<span id="sendAmountOutput"></span>
+				</p>
 				<hr>
 				<button id="sendConfirm">送金する</button>
 			</dialog>
@@ -302,8 +309,28 @@
 		el("sendMoney").onclick = () => {
 			el("sendMoneyModal").showModal();
 		};
+		el("sendToName").oninput = function() {
+			const value = el("sendToName").value;
+			const output = el("sendToNameOutput");
+			output.style.color = "red";
+			el("sendConfirm").disabled = true;
+			if(value === getCookie("loginName")) {
+				output.innerHTML = "自分自身には送金できません";
+			} else if(value === "") {
+				output.innerHTML = "ユーザーネームを入力してください";
+			} else if(getData("account").find(el => el.name === value) === undefined) {
+				output.innerHTML = "送金先ユーザー名が見つかりません";
+			} else {
+				output.style.color = "black";
+				if(el("sendAmountOutput").innerHTML === "送金金額は有効です") {
+					el("sendConfirm").disabled = false;
+				};
+				output.innerHTML = "送金先ユーザー名は有効です";
+			};
+		};
 		el("sendConfirm").onclick = async () => {
-			alert(typeof getData("account"));
+			const sendFrom = getData("account").find(el => el.name === getCookie("loginName"));
+			const sendTo = getData("account").find(el => el.name === el("sendToName").value);
 		};
 	</script>
 </body>
