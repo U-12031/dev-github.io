@@ -271,6 +271,7 @@
 		};
 
 		el("loginSubmit").onclick = async () => {
+			try {
 			const data = await getData();
 			const name = el("loginName").value;
 			const password = el("loginPassword").value;
@@ -291,6 +292,7 @@
 				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
 				el("logoutBt").style.display = "none";
 			};
+		}catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
 		el("logoutBt").onclick = () => {
 			el("logoutModal").showModal();
