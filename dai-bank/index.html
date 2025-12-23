@@ -328,6 +328,21 @@
 				output.innerHTML = "送金先ユーザー名は有効です";
 			};
 		};
+		el("sendAmount").oninput = () => {
+			const value = Number(el("sendAmount").value);
+			const output = el("sendAmountOutput");
+			output.style.color = "red";
+			el("sendConfirm").disabled = true;
+			if(isNaN(value) || value <= 0) {
+				output.innerHTML = "送金金額は1以上の数字で入力してください";
+			} else {
+				output.style.color = "black";
+				if(el("sendToNameOutput").innerHTML === "送金先ユーザー名は有効です") {
+					el("sendConfirm").disabled = false;
+				};
+				output.innerHTML = "送金金額は有効です";
+			};
+		};
 		el("sendConfirm").onclick = async () => {
 			const sendFrom = getData("account").find(el => el.name === getCookie("loginName"));
 			const sendTo = getData("account").find(el => el.name === el("sendToName").value);
