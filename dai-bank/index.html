@@ -315,7 +315,7 @@
 			const output = el("sendToNameOutput");
 			output.style.color = "red";
 			el("sendConfirm").disabled = true;
-			if(value === getCookie("loginName").find(el => el.name === value)) {
+			if(value === getCookie("loginName")) {
 				output.innerHTML = "自分自身には送金できません";
 			} else if(value == "") {
 				output.innerHTML = "ユーザーネームを入力してください";
