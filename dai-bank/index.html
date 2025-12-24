@@ -310,9 +310,9 @@
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = function() {
+			try {
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
-			alert(value);
 			output.style.color = "red";
 			el("sendConfirm").disabled = true;
 			if(value === getCookie("loginName").find(el => el.name === value)) {
@@ -328,6 +328,7 @@
 				};
 				output.innerHTML = "送金先ユーザー名は有効です";
 			};
+		}catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
 		el("sendAmount").oninput = () => {
 			const value = Number(el("sendAmount").value);
