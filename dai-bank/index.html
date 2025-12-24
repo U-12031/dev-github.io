@@ -311,6 +311,7 @@
 		};
 		el("sendToName").oninput = function() {
 			try {
+				alert(typeof getData("account"));
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
 			output.style.color = "red";
