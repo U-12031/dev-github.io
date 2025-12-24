@@ -310,13 +310,14 @@
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = function() {
-			const value = el("sendToName").value;
+			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
+			alert(value);
 			output.style.color = "red";
 			el("sendConfirm").disabled = true;
-			if(value === getCookie("loginName")) {
+			if(value === getCookie("loginName").find(el => el.name === value)) {
 				output.innerHTML = "自分自身には送金できません";
-			} else if(value === "") {
+			} else if(value == "") {
 				output.innerHTML = "ユーザーネームを入力してください";
 			} else if(getData("account").find(el => el.name === value) === undefined) {
 				output.innerHTML = "送金先ユーザー名が見つかりません";
