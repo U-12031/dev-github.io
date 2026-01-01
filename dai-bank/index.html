@@ -43,22 +43,23 @@
 
 		::backdrop {background-color: rgba(0, 0, 0, 0.5);}
 
-		dialog {
+		:modal {
 			margin: auto !important;
 			border: 2px solid #333;
 			border-radius: 10px;
 			padding: 20px;
 			text-align: center;
+			position: relative;
 		}
 
-		dialog>h1 {
+		:modal>h1 {
 			margin-top: 5px;
 			font-size: 1.5em;
 		}
 
-		dialog hr {border: none;}
+		:modal hr {border: none;}
 
-		dialog input:not([type="checkbox"]) {
+		:modal input:not([type="checkbox"]) {
 			border-radius: 3px;
 			border: 1.5px solid #777;
 			margin-left: 10px;
@@ -308,7 +309,7 @@
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = async function() {
-			const aaa = await getData("account");
+			const data = await getData("account");
 			try {
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
@@ -318,7 +319,7 @@
 				output.innerHTML = "自分自身には送金できません";
 			} else if(value == "") {
 				output.innerHTML = "ユーザーネームを入力してください";
-			} else if(getData("account").then(data => data.find(el => el.name === value))) {
+			} else if(data.find(el => el.name === value)) {
 				output.innerHTML = "送金先ユーザー名が見つかりません";
 			} else {
 				output.style.color = "black";
