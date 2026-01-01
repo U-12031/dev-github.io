@@ -311,7 +311,6 @@
 		};
 		el("sendToName").oninput = function() {
 			try {
-				alert(typeof getData("account"));
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
 			output.style.color = "red";
@@ -320,7 +319,7 @@
 				output.innerHTML = "自分自身には送金できません";
 			} else if(value == "") {
 				output.innerHTML = "ユーザーネームを入力してください";
-			} else if(getData("account").find(el => el.name === value) === undefined) {
+			} else if(getData("account").then(data => data.find(el => el.name === value)) === undefined) {
 				output.innerHTML = "送金先ユーザー名が見つかりません";
 			} else {
 				output.style.color = "black";
@@ -346,9 +345,9 @@
 				output.innerHTML = "送金金額は有効です";
 			};
 		};
-		el("sendConfirm").onclick = async () => {
-			const sendFrom = getData("account").find(el => el.name === getCookie("loginName"));
-			const sendTo = getData("account").find(el => el.name === el("sendToName").value);
+		el("sendConfirm").onclick = async () => { 
+			const sendFrom = (await getData("account")).find(el => el.name === getCookie("loginName"));
+			const sendTo = (await getData("account")).find(el => el.name === el("sendToName").value);
 		};
 	</script>
 </body>
