@@ -223,8 +223,6 @@
 			// 外から呼べるようにする
 			window.addData = addData;
 			window.getData = getData;
-	</script>
-	<script>
 		function el(id) {return document.getElementById(id);}
 
 		function saveCookie(name, value) {
@@ -310,6 +308,7 @@
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = function() {
+			const aaa = await getData("account");
 			try {
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
@@ -349,6 +348,8 @@
 			const sendFrom = (await getData("account")).find(el => el.name === getCookie("loginName"));
 			const sendTo = (await getData("account")).find(el => el.name === el("sendToName").value);
 		};
+	</script>
+	<script>
 	</script>
 </body>
 </html>
