@@ -319,7 +319,7 @@
 				output.innerHTML = "自分自身には送金できません";
 			} else if(value == "") {
 				output.innerHTML = "ユーザーネームを入力してください";
-			} else if(getData("account").then(data => data.find(el => el.name === value)) === undefined) {
+			} else if(getData("account").then(data => data.find(el => el.name === value))) {
 				output.innerHTML = "送金先ユーザー名が見つかりません";
 			} else {
 				output.style.color = "black";
