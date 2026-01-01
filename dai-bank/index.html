@@ -307,7 +307,7 @@
 		el("sendMoney").onclick = () => {
 			el("sendMoneyModal").showModal();
 		};
-		el("sendToName").oninput = function() {
+		el("sendToName").oninput = async function() {
 			const aaa = await getData("account");
 			try {
 			let value = el("sendToName").value;
