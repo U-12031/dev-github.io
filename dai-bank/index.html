@@ -39,17 +39,29 @@
 			border: none;
 			border-radius: 20px;
 			cursor: pointer;
+			box-shadow: 3px 3px #06c;
+
+			&:hover:not(:disabled) {
+				transition: 
+					box-shadow 0.3s,
+					translate 0.3s;
+				;
+				box-shadow: none !important;
+				translate: 2px 2px;
+			}
 		}
 
 		::backdrop {background-color: rgba(0, 0, 0, 0.5);}
 
 		:modal {
-			margin: auto !important;
-			border: 2px solid #333;
+			margin: auto;
+			border: none;
 			border-radius: 10px;
 			padding: 20px;
 			text-align: center;
 			position: relative;
+			box-shadow: 7px 7px #0af;
+			overflow: hidden;
 		}
 
 		:modal>h1 {
@@ -84,7 +96,7 @@
 			border-radius: 10px;
 		}
 
-		#menu>div>* {margin: 10px 20px;}
+		#menu>div>*:not(:modal) {margin: 10px 20px;}
 
 		#menu #loginMenu {
 			margin: auto;
