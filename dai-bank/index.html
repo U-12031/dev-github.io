@@ -233,10 +233,6 @@
 				return result;
 			};
 
-			// 外から呼べるようにする
-			window.addData = addData;
-			window.getData = getData;
-
 		function el(id) {return document.getElementById(id);}
 
 		function saveCookie(name, value) {
@@ -254,13 +250,12 @@
 			return null;
 		};
 
-		el("loginBt").onclick = () => {
-			el("loginModal").showModal();
-		};
+		// modalの閉じるボタン
 		document.querySelectorAll(".closeModal").forEach(bt => {
 			bt.onclick = () => bt.parentElement.close();
 		});
 
+		// 起動時のログイン状態確認
 		if(getCookie("loginName")) {
 			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`;
 			el("logoutBt").style.display = "initial";
@@ -272,6 +267,7 @@
 			el("logoutBt").style.display = "none";
 		};
 
+		// アカウント作成(test用)
 		el("testCreAccount").onclick = async () => {
 			await addData("account", {
 				name: el("testName").value,
@@ -282,6 +278,10 @@
 			el("logoutBt").style.display = "initial";
 		};
 
+		// ログイン
+		el("loginBt").onclick = () => {
+			el("loginModal").showModal();
+		};
 		el("loginSubmit").onclick = async () => {
 			const data = await getData("account");
 			const name = el("loginName").value;
@@ -304,6 +304,8 @@
 				el("logoutBt").style.display = "none";
 			};
 		};
+
+		// ログアウト
 		el("logoutBt").onclick = () => {
 			el("logoutModal").showModal();
 		};
@@ -318,12 +320,12 @@
 			el("logoutModal").close();
 		};
 
+		// 送金機能
 		el("sendMoney").onclick = () => {
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = async function() {
 			const data = await getData("account");
-			try {
 			let value = el("sendToName").value;
 			const output = el("sendToNameOutput");
 			output.style.color = "red";
@@ -341,7 +343,6 @@
 				};
 				output.innerHTML = "送金先ユーザー名は有効です";
 			};
-		}catch(error) {alert(`${error.name}\n${error.stack}`)}
 		};
 		el("sendAmount").oninput = () => {
 			const value = Number(el("sendAmount").value);
@@ -362,8 +363,6 @@
 			const sendFrom = (await getData("account")).find(el => el.name === getCookie("loginName"));
 			const sendTo = (await getData("account")).find(el => el.name === el("sendToName").value);
 		};
-	</script>
-	<script>
 	</script>
 </body>
 </html>
