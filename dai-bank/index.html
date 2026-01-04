@@ -197,48 +197,66 @@
 	</div>
 	<script type="module">
 		// Firebase App & Firestore をインポート（すべて同じバージョンで統一）
-			import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-			import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-			import {
-				getFirestore,
-				collection,
-				addDoc,
-				getDocs
-			} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+		import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+		import {
+			getFirestore,
+			collection,
+			addDoc,
+			getDocs
+		} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-			const firebaseConfig = {
-				apiKey: "AIzaSyAjavOCdQ3RN8atXMLjhLK7TfKY3KSRjig",
-				authDomain: "dai-bank.firebaseapp.com",
-				projectId: "dai-bank",
-				storageBucket: "dai-bank.firebasestorage.app",
-				messagingSenderId: "257888747834",
-				appId: "1:257888747834:web:e0df926bcf298623325003",
-				measurementId: "G-SWPVQD3XT7"
-			};
+		const firebaseConfig = {
+			apiKey: "AIzaSyAjavOCdQ3RN8atXMLjhLK7TfKY3KSRjig",
+			authDomain: "dai-bank.firebaseapp.com",
+			projectId: "dai-bank",
+			storageBucket: "dai-bank.firebasestorage.app",
+			messagingSenderId: "257888747834",
+			appId: "1:257888747834:web:e0df926bcf298623325003",
+			measurementId: "G-SWPVQD3XT7"
+		};
 
-			const app = initializeApp(firebaseConfig);
-			const analytics = getAnalytics(app);
-			const db = getFirestore(app);
+		const app = initializeApp(firebaseConfig);
+		const analytics = getAnalytics(app);
+		const db = getFirestore(app);
 
-			// データを追加する関数
-			async function addData(collectionName, data) {
-				await addDoc(collection(db, collectionName), data);
-			};
+		/** データを追加する関数
+		 * @param {string} collectionName コレクション名
+		 * @param {Object} data 追加するデータ 
+		*/
+		async function addData(collectionName, data) {
+			await addDoc(collection(db, collectionName), data);
+		};
 
-			// データを取得する関数
-			async function getData(collectionName) {
-				let result = [];
-				const querySnapshot = await getDocs(collection(db, collectionName));
-				querySnapshot.forEach(doc => result.push(doc.data()));
-				return result;
-			};
+		/** データを取得する関数
+		 * @param {string} collectionName コレクション名
+		 * @returns {Array} 取得したデータの配列
+		*/
+		async function getData(collectionName) {
+			let result = [];
+			const querySnapshot = await getDocs(collection(db, collectionName));
+			querySnapshot.forEach(doc => result.push(doc.data()));
+			return result;
+		};
 
+		/** idで要素を取得する関数
+		 * @param {string} id 要素のid
+		 * @returns {HTMLElement} 取得した要素
+		*/
 		function el(id) {return document.getElementById(id);}
 
+		/** cookieを保存する関数  保存期間は1年
+		 * @param {string} name cookieの名前
+		 * @param {string} value cookieの値
+		*/
 		function saveCookie(name, value) {
 			document.cookie = `${name}=${value}; max-age=${60*60*24*365};`;
 		};
 
+		/** cookieを取得する関数
+		 * @param {string} name cookieの名前
+		 * @returns {string|null} 取得したcookieの値 ない場合はnull
+		*/
 		function getCookie(name) {
 			const cookies = document.cookie.split("; ");
 			for (const c of cookies) {
@@ -250,6 +268,13 @@
 			return null;
 		};
 
+		function disableBts(disable = true) {
+			// el("sendMoney").disabled = disable;
+			el("seeHistory").disabled = disable;
+			el("gamble").disabled = disable;
+			el("logoutBt").style.display = disable ? "none" : "initial";
+		};
+
 		// modalの閉じるボタン
 		document.querySelectorAll(".closeModal").forEach(bt => {
 			bt.onclick = () => bt.parentElement.close();
@@ -258,13 +283,10 @@
 		// 起動時のログイン状態確認
 		if(getCookie("loginName")) {
 			el("loginOutput").innerHTML = `${getCookie("loginName")}としてログインしています`;
-			el("logoutBt").style.display = "initial";
+			disableBts(false);
 		} else {
 			el("loginOutput").innerHTML = "ログインしていません";
-			// el("sendMoney").disabled = true;
-			el("seeHistory").disabled = true;
-			el("gamble").disabled = true;
-			el("logoutBt").style.display = "none";
+			disableBts(true);
 		};
 
 		// アカウント作成(test用)
@@ -275,7 +297,7 @@
 			});
 			saveCookie("loginName", el("testName").value);
 			el("loginOutput").innerHTML = `${el("testName").value}としてログインしました`;
-			el("logoutBt").style.display = "initial";
+			disableBts(false);
 		};
 
 		// ログイン
@@ -297,11 +319,11 @@
 				saveCookie("loginName", name);
 				el("loginModal").close();
 				el("loginOutput").innerHTML = `${name}としてログインしました`;
-				el("logoutBt").style.display = "initial";
+				disableBts(false);
 			} else {
 				el("loginModalOutput").style.color = "red";
 				el("loginModalOutput").innerHTML = `ログイン失敗：名前かパスワードが間違っています`;
-				el("logoutBt").style.display = "none";
+				disableBts(true);
 			};
 		};
 
@@ -314,7 +336,7 @@
 			saveCookie("loginName", "");
 			el("loginOutput").style.color = "black";
 			el("loginOutput").innerHTML = "ログアウトしました";
-			el("logoutBt").style.display = "none";
+			disableBts(true);
 		};
 		el("logoutNo").onclick = () => {
 			el("logoutModal").close();
