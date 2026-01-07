@@ -192,11 +192,11 @@
 					<input type="number" id="sendAmount" min="1">
 				</label>
 				<p id="sendMoneyOutput">
-					<span id="sendToNameOutput">正しいユーザーネームとパスワードを入力してください</span>
+					<span id="sendToNameOutput">正しいユーザーネームと送金額を入力してください</span>
 					<span id="sendAmountOutput"></span>
 				</p>
 				<hr>
-				<button id="sendConfirm">送金する</button>
+				<button id="sendConfirm" disabled>送金する</button>
 			</dialog>
 			<button id="seeHistory">履歴を見る</button>
 			<br>
@@ -352,6 +352,8 @@
 
 		// 送金機能
 		el("sendMoney").onclick = () => {
+			el("sendToNameOutput").innerHTML = "正しいユーザーネームと送金額を入力してください";
+			el("sendAmountOutput").innerHTML = "";
 			el("sendMoneyModal").showModal();
 		};
 		el("sendToName").oninput = async function() {
@@ -379,6 +381,12 @@
 			const output = el("sendAmountOutput");
 			output.style.color = "red";
 			el("sendConfirm").disabled = true;
+			/*
+			if(el("sendToName").value === "") {
+				el("sendToNameOutput").innerHTML = "正しいユーザーネームと送金額を入力してください";
+				output.innerHTML = "";
+			} else 
+			*/
 			if(isNaN(value) || value <= 0) {
 				output.innerHTML = "送金金額は1以上の数字で入力してください";
 			} else {
