@@ -252,6 +252,8 @@
 		 * @returns {HTMLElement} 取得した要素
 		*/
 		function el(id) {return document.getElementById(id);}
+		// module外でも使えるようにする
+		window.el = el;
 
 		/** cookieを保存する関数  保存期間は1年
 		 * @param {string} name cookieの名前
@@ -401,6 +403,60 @@
 			const sendFrom = (await getData("account")).find(el => el.name === getCookie("loginName"));
 			const sendTo = (await getData("account")).find(el => el.name === el("sendToName").value);
 		};
+	</script>
+	<script>
+		/** 要素を作成して指定した場所に追加する関数
+		 * @param {string} elementName 作成する要素の名前
+		 * @param {string} placeId 追加する場所のid
+		 * @param {Object} info 作成する要素の情報
+		*/
+		function createEl(elementName, placeId, info) {
+			let create = document.createElement(elementName);
+			for(let item in info) {
+				if(item !== "class") {
+					create[item] = info[item];
+				} else {
+					create.classList.add(info[item]);
+				};
+			};
+			el(placeId).appendChild(create);
+		};
+
+		let cursorMenuPosition = {}; // 各要素のカーソルメニューの大きさを保存するオブジェクト
+		/** カーソルメニューを作成する関数
+		 * @param {string} origId 元となる要素のid
+		 * @param {Object} option 作成する要素のオプション
+		*/
+		function creCursorMenu(origId, option = {}) {
+			let newId = origId + "CursorMenu";
+			cursorMenuPosition[origId] = [0, 0];
+			//カーソルメニューのCSSを指定
+			document.getElementsByTagName("style")[0].style += `#${origId}>* {\n\tdisplay: flex;\n\tpointer-events: none;\n}`;
+			el(origId).style.position = "relative";
+			createEl("div", "body", Object.assign({id: newId, }, option));
+			el(newId).style.display = "none";
+			el(newId).style.position = "absolute";
+			el(newId).style.pointerEvents = "none";
+			el(origId).addEventListener("mousemove", (event) => {
+				if(cursorMenuPosition[origId][0] < el(newId).clientWidth) {cursorMenuPosition[origId][0] = el(newId).clientWidth;};
+				if(cursorMenuPosition[origId][1] < el(newId).clientHeight) {cursorMenuPosition[origId][1] = el(newId).clientHeight};
+				el(newId).style.display = "flex";
+				if(event.pageX <= window.innerWidth - cursorMenuPosition[origId][0]) {//もしカーソルのX座標が(ウィンドウの横幅-要素の横幅)以下なら
+					el(newId).style.left = event.pageX + "px";
+				} else {
+					el(newId).style.left = (window.innerWidth - el(newId).clientWidth/*別にclientである意味はない*/) + "px";
+				};
+				if(event.pageY <= window.innerHeight - cursorMenuPosition[origId][1]) {//上と同じようなこと
+					el(newId).style.top = event.pageY + "px";
+				} else {
+					el(newId).style.top = (window.innerHeight - el(newId).clientHeight/*こっちも同じ*/) + "px";
+				}
+			});
+			el(origId).addEventListener("mouseleave", () => {
+				el(newId).style.display = "none";
+			});
+		};
+		creCursorMenu("sendMoney", {innerHTML: "送金機能を使います"});
 	</script>
 </body>
 </html>
