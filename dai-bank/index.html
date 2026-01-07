@@ -252,8 +252,6 @@
 		 * @returns {HTMLElement} 取得した要素
 		*/
 		function el(id) {return document.getElementById(id);}
-		// module外でも使えるようにする
-		window.el = el;
 
 		/** cookieを保存する関数  保存期間は1年
 		 * @param {string} name cookieの名前
@@ -405,6 +403,8 @@
 		};
 	</script>
 	<script>
+		// こちら側で一応定義
+		function el(id) {return document.getElementById(id);}
 		/** 要素を作成して指定した場所に追加する関数
 		 * @param {string} elementName 作成する要素の名前
 		 * @param {string} placeId 追加する場所のid
@@ -456,7 +456,7 @@
 				el(newId).style.display = "none";
 			});
 		};
-		creCursorMenu("sendMoney", {innerHTML: "送金機能を使います"});
+		creCursorMenu("sendMoney", {innerHTML: "<span>送金機能を使います</span>"});
 	</script>
 </body>
 </html>
