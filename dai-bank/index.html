@@ -254,7 +254,7 @@
 		*/
 		async function getDataDocument(collectionName, documentName) {
 			getData(collectionName).then(data => {
-				return data.find(el => el.name === documentName);
+				return data.find(el => el.name == documentName);
 			});
 		};
 
@@ -409,8 +409,8 @@
 			};
 		};
 		el("sendConfirm").onclick = async () => { 
-			const sendFrom = (await getData("account")).find(el => el.name === getCookie("loginName"));
-			const sendTo = (await getData("account")).find(el => el.name === el("sendToName").value);
+			const sendFrom = getDataDocument("account", getCookie("loginName"));
+			const sendTo = getDataDocument("account", el("sendToName").value);
 		};
 	</script>
 </body>
