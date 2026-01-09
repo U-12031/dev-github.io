@@ -247,6 +247,17 @@
 			return result;
 		};
 
+		/** コレクション内の特定のドキュメントを取得する関数
+		 * @param {string} collectionName コレクション名
+		 * @param {string} documentName ドキュメント名
+		 * @returns {Object} 取得したドキュメント
+		*/
+		async function getDataDocument(collectionName, documentName) {
+			getData(collectionName).then(data => {
+				return data.find(el => el.name === documentName);
+			});
+		};
+
 		/** idで要素を取得する関数
 		 * @param {string} id 要素のid
 		 * @returns {HTMLElement} 取得した要素
@@ -276,6 +287,9 @@
 			return null;
 		};
 
+		/** ボタンの有効/無効を切り替える関数
+		 * @param {boolean} disable 無効にする場合はtrue、有効にする場合はfalse
+		*/
 		function disableBts(disable = true) {
 			// el("sendMoney").disabled = disable;
 			el("seeHistory").disabled = disable;
@@ -381,13 +395,10 @@
 			const output = el("sendAmountOutput");
 			output.style.color = "red";
 			el("sendConfirm").disabled = true;
-			/*
 			if(el("sendToName").value === "") {
 				el("sendToNameOutput").innerHTML = "正しいユーザーネームと送金額を入力してください";
 				output.innerHTML = "";
-			} else 
-			*/
-			if(isNaN(value) || value <= 0) {
+			} else if(isNaN(value) || value <= 0) {
 				output.innerHTML = "送金金額は1以上の数字で入力してください";
 			} else {
 				output.style.color = "black";
