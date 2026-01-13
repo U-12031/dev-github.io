@@ -84,6 +84,14 @@
 		<div id="outputSquare"></div>
 		<span id="outputPercent">100.00%</span>
 	</div>
-	test<input id="testInput" type="range" min="0" max="100" value="100">
+	test<input id="testInput" type="range" min="0" max="100" value="100" style="width: 400px;">
+	<script>
+		function el(id) {document.getElementById(id);};
+
+		el("yearFor").addEventListener("input", function() {
+			const output = el("outputSquare");
+			percent.style.width = this.value + "px";
+		});
+	</script>
 </body>
 </html>
