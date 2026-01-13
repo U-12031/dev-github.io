@@ -24,9 +24,20 @@
 			/* ↑codeswing用 */
 		}
 
+		@font-face {
+			font-family: "7segFont";
+			src: url(/0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf) format("truetype");
+			/* src: url(https://u-12031.github.io//0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf); */
+			/* ↑codeswing用 */
+		}
+
 		* {
 			text-align: center;
-			font-family: "originalFont", sans-serif;
+			font-family: "originalFont";
+		}
+
+		body {
+			margin: 0;
 		}
 
 		#title>#yearFor {
@@ -36,13 +47,43 @@
 			padding-right: 5px;
 			margin-right: -5px;
 		}
+
+		#outputParent {
+			position: relative;
+			width: calc(100vw - 50px);
+			margin: 50px 25px;
+			height: 80px;
+			border: 2px solid #333;
+		}
+
+		#outputParent>#outputSquare {
+			position:absolute;
+			top: 10px;
+			left: 10px;
+			width: calc(100vw - 70px); /* 初期値として */
+			height: 60px;
+			background-color: #0f0;
+		}
+
+		#outputParent>#outputPercent {
+			font-family: "7segFont", monospace;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 1.5em;
+		}
 	</style>
 </head>
 <body>
 	<h1 id="title">
 		<input type="number" id="yearFor" value="2027" min="0">
 		年まであと
-		<div id="ourputSquare"></div>
 	</h1>
+	<div id="outputParent">
+		<div id="outputSquare"></div>
+		<span id="outputPercent">100.00%</span>
+	</div>
+	test<input id="testInput" type="range" min="0" max="100" value="100">
 </body>
 </html>
