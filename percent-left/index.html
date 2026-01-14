@@ -94,7 +94,8 @@
 		<div id="outputSquare"></div>
 		<span id="outputPercent">100.00%</span>
 	</div>
-	test<input id="testInput" type="range" min="0" max="100" value="100" style="width: 400px;">
+	test<input id="testInput" type="range" min="0" max="100" value="100" step="0.01" style="width: 400px;">
+	<br>
 	<span id="minColor"></span>
 	←→
 	<span id="middleColor"></span>
@@ -147,23 +148,57 @@
 			newPickr.on("hide", instance => instance.applyColor());
 			return newPickr;
 		};
-		try {
 		const PICKR = {
 			minColor: new PickrClass("minColor", "#f00"),
 			middleColor: new PickrClass("middleColor", "#ff0"),
 			maxColor: new PickrClass("maxColor", "#0f0")
 		};
-	}catch(error) {console.log(`${error.name}\n${error.stack}`)}
 
 		// PICKR.fontColor.on("change", (color, instance) => {
 			// const rgbaColor = color.toRGBA().toString();
 		// });
 
 		
-	// 	ここまでPickr関連のコード
-		el("testInput").addEventListener("input", function() {
-			const output = el("outputSquare");
-			percent.style.width = this.value + "px";
+		// 	ここまでPickr関連のコード
+
+		/** 2つの色を指定した比率で混ぜた色を返します。
+		 * @param {string(rgb)} color1 色1 (例: "rgb(255, 0, 0)")
+		 * @param {string(rgb)} color2 色2 (例: "rgb(0, 0, 255)")
+		 * @param {number(0~1)} ratio 色1の比率
+		 * @return {string(rgb)} 混ぜた色 (例: "rgb(127, 0, 127)")
+		 */
+		function colorBlend(color1="rgb(,,)", color2="rgb(,,)", ratio) {
+			const result = [];
+			color1 = color1.split("(")[1].split(")")[0].split(",").map(Number);
+			color2 = color2.split("(")[1].split(")")[0].split(",").map(Number);
+			for(let i=0;i<3;i++) {
+				result[i] = color1[i] * ratio + color2[i] * (1-ratio);
+			};
+			return `rgb(${result[0]}, ${result[1]}, ${result[2]})`;
+		};
+
+		function updateSquare() { // テスト段階
+			const square = el("outputSquare");
+			const percent = el("testInput").value;
+			square.style.width = `calc((100vw - 70px) * ${percent} / 100)`;
+			el("outputPercent").textContent = `${Number(percent).toFixed(2)}%`;
+			if(percent < 50) {
+				el("outputSquare").style.backgroundColor = colorBlend(
+					PICKR.middleColor.getColor().toRGBA().toString(),
+					PICKR.minColor.getColor().toRGBA().toString(),
+					percent / 50
+				);
+			} else {
+				el("outputSquare").style.backgroundColor = colorBlend(
+					PICKR.maxColor.getColor().toRGBA().toString(),
+					PICKR.middleColor.getColor().toRGBA().toString(),
+					(percent - 50) / 50
+				);
+			}
+		};
+
+		el("testInput").addEventListener("input", () => {
+			updateSquare();
 		});
 	</script>
 </body>
