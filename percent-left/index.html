@@ -3,6 +3,7 @@
 <head>
 	<meta charset='UTF-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<meta name="description" content="2027年まであと何%なのかを表示します。他の年も設定できます。">
 	<title>Document</title>
 
 		<!-- Google tag (gtag.js) -->
@@ -14,6 +15,12 @@
 
 		gtag('config', 'G-G3VRHWGPB7');
 	</script>
+
+	<!-- Color picker:
+		I used Pickr(https://github.com/Simonwep/pickr?tab=readme-ov-file).
+		A big thank you to simonwep. -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/themes/monolith.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
 
 	<title>2027年まであと何%？</title>
 	<style>
@@ -73,6 +80,9 @@
 			transform: translate(-50%, -50%);
 			font-size: 1.5em;
 		}
+		.pickr {
+			display: inline-block;
+		}
 	</style>
 </head>
 <body>
@@ -85,10 +95,73 @@
 		<span id="outputPercent">100.00%</span>
 	</div>
 	test<input id="testInput" type="range" min="0" max="100" value="100" style="width: 400px;">
+	<span id="minColor"></span>
+	←→
+	<span id="middleColor"></span>
+	←→
+	<span id="maxColor"></span>
 	<script>
-		function el(id) {document.getElementById(id);};
+		/** idから要素を取得します。
+		 * @param {string} id 要素のID
+		 * @return {HTMLElement} 取得された要素
+		 */
+		function el(id) {return document.getElementById(id)};
+		/** 新しいPickrを作成します。
+		 * @class
+		 * @param {string} id Pickrを設置する要素のID
+		 * @param {string} defaultColor Pickrの初期色
+		 * @param {boolean} opacity 透明度バーを表示するかどうか
+		 * @return {Pickr} 作成されたPickrオブジェクト
+		 */
+		function PickrClass(id, defaultColor, opacity=false) {
+			const newPickr = Pickr.create({
+				el: "#" + id,
+				theme: "monolith",
+				default: defaultColor,
+				swatches: [
+					"#000000",
+					"#ffffff",
+					"#ff0000",
+					"#00ff00",
+					"#0000ff",
+					"#ffff00",
+					"#00ffff",
+					"#ff00ff"
+				],
+				components: {
+					// 主要なパネル部分
+					preview: true,  // 色プレビュー
+					opacity: opacity, // 透明度バー
+					hue: true,      // 色相バー
 
-		el("yearFor").addEventListener("input", function() {
+					// 下部の入力・操作部分
+					interaction: {
+						hex: true,    // HEX形式表示
+						rgba: true,   // RGBA形式表示
+						input: true,  // 入力ボックス
+						clear: false, // クリアボタン
+						save: true    // 保存ボタン
+					}
+				}
+			});
+			newPickr.on("hide", instance => instance.applyColor());
+			return newPickr;
+		};
+		try {
+		const PICKR = {
+			minColor: new PickrClass("minColor", "#f00"),
+			middleColor: new PickrClass("middleColor", "#ff0"),
+			maxColor: new PickrClass("maxColor", "#0f0")
+		};
+	}catch(error) {console.log(`${error.name}\n${error.stack}`)}
+
+		// PICKR.fontColor.on("change", (color, instance) => {
+			// const rgbaColor = color.toRGBA().toString();
+		// });
+
+		
+	// 	ここまでPickr関連のコード
+		el("testInput").addEventListener("input", function() {
 			const output = el("outputSquare");
 			percent.style.width = this.value + "px";
 		});
