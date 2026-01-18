@@ -96,11 +96,12 @@
 	</div>
 	test<input id="testInput" type="range" min="0" max="100" value="100" step="0.01" style="width: 400px;">
 	<br>
-	<span id="minColor"></span>
+	<!-- <span id="minColor" ></span> -->
+	<pickr-el id="minColor" data-default-color="#f00" data-opacity="false"></pickr-el>
 	←→
-	<span id="middleColor"></span>
+	<pickr-el id="middleColor" data-default-color="#ff0"></pickr-el>
 	←→
-	<span id="maxColor"></span>
+	<pickr-el id="maxColor" data-default-color="#0f0"></pickr-el>
 	<script>
 		/** idから要素を取得します。
 		 * @param {string} id 要素のID
@@ -148,17 +149,20 @@
 			newPickr.on("hide", instance => instance.applyColor());
 			return newPickr;
 		};
-		const PICKR = {
-			minColor: new PickrClass("minColor", "#f00"),
-			middleColor: new PickrClass("middleColor", "#ff0"),
-			maxColor: new PickrClass("maxColor", "#0f0")
+		let pickrs = {};
+		class pickrEl extends HTMLElement {
+			constructor() {
+				super();
+			}
+			connectedCallback() {
+				pickrs[this.id] = new PickrClass(this.id, this.dataset.defaultColor, this.dataset.opacity==="true");
+				pickrs[this.id].on("change", (color, instance) => {
+					updateSquare();
+				});
+			}
 		};
+		customElements.define("pickr-el", pickrEl);
 
-		// PICKR.fontColor.on("change", (color, instance) => {
-			// const rgbaColor = color.toRGBA().toString();
-		// });
-
-		
 		// 	ここまでPickr関連のコード
 
 		/** 2つの色を指定した比率で混ぜた色を返します。
@@ -184,14 +188,14 @@
 			el("outputPercent").textContent = `${Number(percent).toFixed(2)}%`;
 			if(percent < 50) {
 				el("outputSquare").style.backgroundColor = colorBlend(
-					PICKR.middleColor.getColor().toRGBA().toString(),
-					PICKR.minColor.getColor().toRGBA().toString(),
+					pickrs.middleColor.getColor().toRGBA().toString(),
+					pickrs.minColor.getColor().toRGBA().toString(),
 					percent / 50
 				);
 			} else {
 				el("outputSquare").style.backgroundColor = colorBlend(
-					PICKR.maxColor.getColor().toRGBA().toString(),
-					PICKR.middleColor.getColor().toRGBA().toString(),
+					pickrs.maxColor.getColor().toRGBA().toString(),
+					pickrs.middleColor.getColor().toRGBA().toString(),
 					(percent - 50) / 50
 				);
 			}
