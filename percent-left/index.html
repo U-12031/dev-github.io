@@ -97,11 +97,11 @@
 	test<input id="testInput" type="range" min="0" max="100" value="100" step="0.01" style="width: 400px;">
 	<br>
 	<!-- <span id="minColor" ></span> -->
-	<pickr-el id="minColor" data-default-color="#f00" data-opacity="false"></pickr-el>
+	<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
 	←→
-	<pickr-el id="middleColor" data-default-color="#ff0"></pickr-el>
+	<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
 	←→
-	<pickr-el id="maxColor" data-default-color="#0f0"></pickr-el>
+	<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
 	<script>
 		/** idから要素を取得します。
 		 * @param {string} id 要素のID
@@ -161,7 +161,7 @@
 				});
 			}
 		};
-		customElements.define("pickr-el", pickrEl);
+		customElements.define("cl-pickr", pickrEl);
 
 		// 	ここまでPickr関連のコード
 
