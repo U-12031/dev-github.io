@@ -44,6 +44,23 @@
 
 		body {margin: 0;}
 
+		ul {list-style: none;}
+
+		li {
+			border-image-width: 0 0 0 2px;
+			border-image-slice: 0 0 0 100%;
+			border-image-outset: 1 1 1 10px;
+			border-image-source: linear-gradient(to bottom, transparent 2.3em, #777 2.3em);
+		}
+
+		.listTitle {
+			display:inline-block;
+			margin-top: 10px;
+			margin-bottom: 5px;
+			margin-left: -20px;
+			font-size: 17px;
+		}
+
 		input[type="checkbox"] {
 			appearance: none;
 			position: relative;
@@ -73,7 +90,6 @@
 			&:checked::after {
 				left: 17px;
 			}
-
 		}
 
 		.pickr {
@@ -126,6 +142,8 @@
 			line-height: 1.3em;
 		}
 
+		#settings * {text-align: left;}
+
 		#settings>legend {
 			position: absolute;
 			top: 0;
@@ -156,14 +174,16 @@
 	<fieldset id="settings">
 		<legend>設定</legend>
 		
-		<span>色の変化<br>
-			<!-- <label>中央の色を使う<input type="checkbox"></label> -->
-			<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
-			＜
-			<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
-			＜
-			<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
-		</span>
+		<ul>
+			<li><span class="listTitle">色の変化</span><br>
+				<!-- <label>中央の色を使う<input type="checkbox"></label> -->
+				<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
+				＜
+				<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
+				＜
+				<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
+			</li>
+		</ul>
 	</fieldset>
 	<script>
 		/** idから要素を取得します。
