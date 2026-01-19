@@ -44,6 +44,38 @@
 
 		body {margin: 0;}
 
+		input[type="checkbox"] {
+			appearance: none;
+			position: relative;
+			margin: 5px auto;
+			margin-bottom: -5px;
+			width: 40px;
+			height: 25px;
+			border-radius: 12.5px;
+			background-color: #999;
+			transition: all .2s;
+				
+			&:checked {background-color: #0af;}
+
+			&::after {
+				margin: 0;
+				content: "";
+				position: absolute;
+				top: 2px;
+				left: 2px;
+				width: 21px;
+				height: 21px;
+				border-radius: 50%;
+				background-color: #fff;
+				transition: all .2s;
+			}
+
+			&:checked::after {
+				left: 17px;
+			}
+
+		}
+
 		.pickr {display: inline-block;}
 
 		#title>#yearFor {
@@ -98,6 +130,9 @@
 	<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
 	←→
 	<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
+	<br>
+	UTC時間を使用する：
+	<input type="checkbox" id="doUseUTCtime">
 	<script>
 		/** idから要素を取得します。
 		 * @param {string} id 要素のID
@@ -210,6 +245,12 @@
 
 		function nowUpdate() {
 			const acquiredDate = new Date();
+			now.y = acquiredDate.getFullYear();
+			now.mo = acquiredDate.getMonth() + 1;
+			now.d = acquiredDate.getDate();
+			now.h = acquiredDate.getHours();
+			now.mi = acquiredDate.getMinutes();
+			now.s = acquiredDate.getSeconds();
 		};
 
 		el("testInput").addEventListener("input", () => {
@@ -217,7 +258,7 @@
 		});
 
 		let update = setInterval(() => {
-
+			nowUpdate();
 		}, updateInterval);
 	</script>
 </body>
