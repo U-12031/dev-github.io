@@ -4,7 +4,6 @@
 	<meta charset='UTF-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 	<meta name="description" content="2027年まであと何%なのかを表示します。他の年も設定できます。">
-	<title>Document</title>
 
 		<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-G3VRHWGPB7"></script>
@@ -43,9 +42,9 @@
 			font-family: "originalFont";
 		}
 
-		body {
-			margin: 0;
-		}
+		body {margin: 0;}
+
+		.pickr {display: inline-block;}
 
 		#title>#yearFor {
 			font-size: inherit;
@@ -79,9 +78,6 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 			font-size: 1.5em;
-		}
-		.pickr {
-			display: inline-block;
 		}
 	</style>
 </head>
@@ -166,6 +162,16 @@
 
 		// 	ここまでPickr関連のコード
 
+		let now = {
+			y: null,
+			mo: null,
+			d: null,
+			h: null,
+			mi: null,
+			s: null
+		};
+		let updateInterval = 1000; // 更新間隔 (ms)
+
 		/** 2つの色を指定した比率で混ぜた色を返します。
 		 * @param {string(rgb)} color1 色1 (例: "rgb(255, 0, 0)")
 		 * @param {string(rgb)} color2 色2 (例: "rgb(0, 0, 255)")
@@ -202,9 +208,17 @@
 			}
 		};
 
+		function nowUpdate() {
+			const acquiredDate = new Date();
+		};
+
 		el("testInput").addEventListener("input", () => {
 			updateSquare();
 		});
+
+		let update = setInterval(() => {
+
+		}, updateInterval);
 	</script>
 </body>
 </html>
