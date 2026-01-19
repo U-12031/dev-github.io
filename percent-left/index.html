@@ -76,7 +76,10 @@
 
 		}
 
-		.pickr {display: inline-block;}
+		.pickr {
+			display: inline-block;
+			margin: 5px;
+		}
 
 		#title>#timeFor {
 			font-size: inherit;
@@ -110,6 +113,28 @@
 			transform: translate(-50%, -50%);
 			font-size: 1.5em;
 		}
+
+		#settings {
+			text-align: left;
+			position: relative;
+			background-color: #cef;
+			margin: auto 30px;
+			padding: 30px;
+			padding-top: 40px;
+			border: none;
+			border-radius: 15px;
+			line-height: 1.3em;
+		}
+
+		#settings>legend {
+			position: absolute;
+			top: 0;
+			translate: 0 -50%;
+			background-color: #adf;
+			padding: 3px 7px;
+			border-radius: 7px;
+			font-size: 20px;
+		}
 	</style>
 </head>
 <body>
@@ -126,13 +151,20 @@
 	</h1>
 	<div id="outputParent">
 		<div id="outputSquare"></div>
-		<span id="outputPercent">100.00%</span>
+		<span id="outputPercent"></span>
 	</div>
-	<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
-	←→
-	<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
-	←→
-	<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
+	<fieldset id="settings">
+		<legend>設定</legend>
+		
+		<span>色の変化<br>
+			<!-- <label>中央の色を使う<input type="checkbox"></label> -->
+			<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
+			＜
+			<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
+			＜
+			<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
+		</span>
+	</fieldset>
 	<script>
 		/** idから要素を取得します。
 		 * @param {string} id 要素のID
@@ -190,7 +222,7 @@
 			connectedCallback() {
 				pickrs[this.id] = new PickrClass(this.id, this.dataset.defaultColor, this.dataset.opacity==="true");
 				pickrs[this.id].on("change", (color, instance) => {
-					squareUpdate();
+					percentUpdate();
 				});
 			}
 		};
@@ -234,7 +266,7 @@
 			return `rgb(${result[0]}, ${result[1]}, ${result[2]})`;
 		};
 
-		function squareUpdate(percent) { // テスト段階
+		function squareUpdate(percent) {
 			const square = el("outputSquare");
 			square.style.width = `calc((100vw - 70px) * ${percent})`;
 			el("outputPercent").textContent = `${(percent*100).toFixed(2)}%`;
@@ -265,16 +297,15 @@
 		};
 
 		function percentUpdate() {
-			try {
 			const timeFor = Number(el("timeFor").value) + 1;
 			const timeForM6 = 6 - timeFor;
 			nowUpdate();
 			for(let i=0;i<timeForM6;i++) {
 				now[5-i] += now[6-i]/CARRY_VALUE[6-i];
 			};
-			now[timeFor] /= CARRY_VALUE[timeFor] // "/="なんか中々使わない
+			now[timeFor] /= CARRY_VALUE[timeFor]; // "/="なんか中々使わない
+			now[timeFor] = 1 - now[timeFor];
 			squareUpdate(now[timeFor]);
-		}catch(error) {console.log(`${error.name}\n${error.stack}`)}
 		};
 
 		let update = setInterval(percentUpdate, updateInterval);
