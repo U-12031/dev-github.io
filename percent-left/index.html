@@ -78,9 +78,8 @@
 
 		.pickr {display: inline-block;}
 
-		#title>#yearFor {
+		#title>#timeFor {
 			font-size: inherit;
-			width: 2.75em;
 			padding: 0;
 			padding-right: 5px;
 			margin-right: -5px;
@@ -115,24 +114,25 @@
 </head>
 <body>
 	<h1 id="title">
-		<input type="number" id="yearFor" value="2027" min="0">
-		年まであと
+		<select id="timeFor">
+			<option value="0">来年</option>
+			<option value="1">来月</option>
+			<option value="2">明日</option>
+			<option value="3">次の時間</option>
+			<option value="4">次の分</option>
+			<option value="5">次の秒</option>
+		</select>
+		まであと
 	</h1>
 	<div id="outputParent">
 		<div id="outputSquare"></div>
 		<span id="outputPercent">100.00%</span>
 	</div>
-	test<input id="testInput" type="range" min="0" max="100" value="100" step="0.01" style="width: 400px;">
-	<br>
-	<!-- <span id="minColor" ></span> -->
 	<cl-pickr id="minColor" data-default-color="#f00" data-opacity="false"></cl-pickr>
 	←→
 	<cl-pickr id="middleColor" data-default-color="#ff0"></cl-pickr>
 	←→
 	<cl-pickr id="maxColor" data-default-color="#0f0"></cl-pickr>
-	<br>
-	UTC時間を使用する：
-	<input type="checkbox" id="doUseUTCtime">
 	<script>
 		/** idから要素を取得します。
 		 * @param {string} id 要素のID
@@ -180,6 +180,7 @@
 			newPickr.on("hide", instance => instance.applyColor());
 			return newPickr;
 		};
+
 		let pickrs = {};
 
 		class pickrEl extends HTMLElement {
@@ -189,7 +190,7 @@
 			connectedCallback() {
 				pickrs[this.id] = new PickrClass(this.id, this.dataset.defaultColor, this.dataset.opacity==="true");
 				pickrs[this.id].on("change", (color, instance) => {
-					updateSquare();
+					squareUpdate();
 				});
 			}
 		};
@@ -197,14 +198,24 @@
 
 		// 	ここまでPickr関連のコード
 
-		let now = {
-			y: null,
-			mo: null,
-			d: null,
-			h: null,
-			mi: null,
-			s: null
-		};
+		let now = [ // 今の時間(nowUpdate関数で更新する)
+			null, // year
+			null, // month
+			null, // day
+			null, // hour
+			null, // minute
+			null, // second
+			null  // millisecond
+		];
+		const CARRY_VALUE = [ // 秒を分に、時間を日に繰り上げるときの引く数
+			null,
+			12,
+			null, // 月によって変わるので別で計算する
+			12,
+			60,
+			60,
+			1000
+		];
 		let updateInterval = 1000; // 更新間隔 (ms)
 
 		/** 2つの色を指定した比率で混ぜた色を返します。
@@ -223,43 +234,51 @@
 			return `rgb(${result[0]}, ${result[1]}, ${result[2]})`;
 		};
 
-		function updateSquare() { // テスト段階
+		function squareUpdate(percent) { // テスト段階
 			const square = el("outputSquare");
-			const percent = el("testInput").value;
-			square.style.width = `calc((100vw - 70px) * ${percent} / 100)`;
-			el("outputPercent").textContent = `${Number(percent).toFixed(2)}%`;
-			if(percent < 50) {
+			square.style.width = `calc((100vw - 70px) * ${percent})`;
+			el("outputPercent").textContent = `${(percent*100).toFixed(2)}%`;
+			if(percent < 0.5) {
 				el("outputSquare").style.backgroundColor = colorBlend(
 					pickrs.middleColor.getColor().toRGBA().toString(),
 					pickrs.minColor.getColor().toRGBA().toString(),
-					percent / 50
+					percent * 2
 				);
 			} else {
 				el("outputSquare").style.backgroundColor = colorBlend(
 					pickrs.maxColor.getColor().toRGBA().toString(),
 					pickrs.middleColor.getColor().toRGBA().toString(),
-					(percent - 50) / 50
+					(percent - 0.5) * 2
 				);
 			}
 		};
 
 		function nowUpdate() {
 			const acquiredDate = new Date();
-			now.y = acquiredDate.getFullYear();
-			now.mo = acquiredDate.getMonth() + 1;
-			now.d = acquiredDate.getDate();
-			now.h = acquiredDate.getHours();
-			now.mi = acquiredDate.getMinutes();
-			now.s = acquiredDate.getSeconds();
+			now[0] = acquiredDate.getFullYear();
+			now[1] = acquiredDate.getMonth() + 1;
+			now[2] = acquiredDate.getDate();
+			now[3] = acquiredDate.getHours();
+			now[4] = acquiredDate.getMinutes();
+			now[5] = acquiredDate.getSeconds();
+			now[6] = acquiredDate.getMilliseconds();
 		};
 
-		el("testInput").addEventListener("input", () => {
-			updateSquare();
-		});
-
-		let update = setInterval(() => {
+		function percentUpdate() {
+			try {
+			const timeFor = Number(el("timeFor").value) + 1;
+			const timeForM6 = 6 - timeFor;
 			nowUpdate();
-		}, updateInterval);
+			for(let i=0;i<timeForM6;i++) {
+				now[5-i] += now[6-i]/CARRY_VALUE[6-i];
+			};
+			now[timeFor] /= CARRY_VALUE[timeFor] // "/="なんか中々使わない
+			now[timeFor] *= 1;
+			squareUpdate(now[timeFor]);
+		}catch(error) {console.log(`${error.name}\n${error.stack}`)}
+		};
+
+		let update = setInterval(percentUpdate, updateInterval);
 	</script>
 </body>
 </html>
