@@ -273,7 +273,6 @@
 				now[5-i] += now[6-i]/CARRY_VALUE[6-i];
 			};
 			now[timeFor] /= CARRY_VALUE[timeFor] // "/="なんか中々使わない
-			now[timeFor] *= 1;
 			squareUpdate(now[timeFor]);
 		}catch(error) {console.log(`${error.name}\n${error.stack}`)}
 		};
