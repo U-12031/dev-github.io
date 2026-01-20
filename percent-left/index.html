@@ -46,7 +46,7 @@
 
 		ul {list-style: none;}
 
-		li {
+		.line {
 			border-image-width: 0 0 0 2px;
 			border-image-slice: 0 0 0 100%;
 			border-image-outset: 1 1 1 10px;
@@ -132,6 +132,8 @@
 		#settings {
 			text-align: left;
 			position: relative;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
 			background-color: #cef;
 			margin: auto 30px;
 			padding: 20px 30px;
@@ -145,6 +147,7 @@
 		#settings>legend {
 			position: absolute;
 			top: 0;
+			left: 15px;
 			translate: 0 -50%;
 			background-color: #adf;
 			padding: 7px 10px;
@@ -152,10 +155,19 @@
 			font-size: 20px;
 		}
 
+		#settings input:not([type="checkbox"]) {
+			width: 50px;
+			margin: 5px 10px;
+			padding: 0;
+			font-size: 0.9em;
+		}
+
 		#maxColorParent {
 			display: inline-block;
 			transition: translate .5s cubic-bezier(0, 0.6, 0.5, 1);
 		}
+
+		#settings #interval {margin: 5px 0 0 10px;}
 	</style>
 </head>
 <body>
@@ -177,7 +189,7 @@
 	<fieldset id="settings">
 		<legend>設定</legend>
 		<ul>
-			<li><span class="listTitle">色の変化</span><br>
+			<li class="line"><span class="listTitle">色の変化</span><br>
 				<label>中央の色を使う
 					<input type="checkbox" id="doUseMiddleColor" checked>
 				</label>
@@ -190,8 +202,14 @@
 					<span class="pickr" id="maxColor" data-color="#0f0"></span>
 				</span>
 			</li>
-			<li><span class="listTitle"></span>
-
+			<li><label class="listTitle" for="interval">更新する間隔</label>
+					<input type="number" id="interval" min="0" value="1000">
+					<span style="font-size: .9em; cursor: default; white-space: nowrap;">ミリ秒</span>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<span class="listTitle"></span>
 			</li>
 		</ul>
 	</fieldset>
@@ -355,8 +373,13 @@
 				maxColorParent.style.translate = "0";
 			} else {
 				middleColor.style.opacity = "0";
-				maxColorParent.style.translate = "-60px";
+				maxColorParent.style.translate = "-62px";
 			};
+		};
+
+		el("interval").oninput = function() {
+			updateInterval = this.value;
+			updateUpdate();
 		};
 	</script>
 </body>
