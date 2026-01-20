@@ -294,21 +294,30 @@
 
 		function squareUpdate(percent) {
 			const square = el("outputSquare");
+			const doUseMiddleColor = el("doUseMiddleColor").checked;
 			square.style.width = `calc((100vw - 70px) * ${percent})`;
 			el("outputPercent").textContent = `${(percent*100).toFixed(2)}%`;
-			if(percent < 0.5) {
-				el("outputSquare").style.backgroundColor = colorBlend(
-					pickrs.middleColor.getColor().toRGBA().toString(),
-					pickrs.minColor.getColor().toRGBA().toString(),
-					percent * 2
-				);
+			if(doUseMiddleColor) {
+				if(percent < 0.5) {
+					el("outputSquare").style.backgroundColor = colorBlend(
+						pickrs.middleColor.getColor().toRGBA(),
+						pickrs.minColor.getColor().toRGBA(),
+						percent * 2
+					);
+				} else {
+					el("outputSquare").style.backgroundColor = colorBlend(
+						pickrs.maxColor.getColor().toRGBA(),
+						pickrs.middleColor.getColor().toRGBA(),
+						(percent - 0.5) * 2
+					);
+				};
 			} else {
-				el("outputSquare").style.backgroundColor = colorBlend(
-					pickrs.maxColor.getColor().toRGBA().toString(),
-					pickrs.middleColor.getColor().toRGBA().toString(),
-					(percent - 0.5) * 2
-				);
-			}
+				colorBlend(
+					pickrs.maxColor.getColor().toRGBA(),
+					pickrs.minColor.getColor().toRGBA(),
+					percent
+				)
+			};
 		};
 
 		function nowUpdate() {
