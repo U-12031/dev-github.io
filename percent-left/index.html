@@ -93,6 +93,7 @@
 		.pickr {
 			display: inline-block;
 			margin: 5px;
+			transition: opacity .5s;
 		}
 
 		#title>#timeFor {
@@ -150,6 +151,11 @@
 			border-radius: 7px;
 			font-size: 20px;
 		}
+
+		#maxColorParent {
+			display: inline-block;
+			transition: translate .5s;
+		}
 	</style>
 </head>
 <body>
@@ -179,8 +185,10 @@
 				<span class="pickr" id="minColor" data-color="#f00"></span>
 				＜
 				<span class="pickr" id="middleColor" data-color="#ff0"></span>
-				＜
-				<span class="pickr" id="maxColor" data-color="#0f0"></span>
+				<span id="maxColorParent">
+					＜
+					<span class="pickr" id="maxColor" data-color="#0f0"></span>
+				</span>
 			</li>
 			<li><span class="listTitle"></span>
 
@@ -331,14 +339,16 @@
 		};
 
 		el("doUseMiddleColor").onclick = function() {
-			const middleColor = el("middleColor");
+			const middleColor = document.querySelectorAll(".pickr")[1];
+			const maxColorParent = el("maxColorParent");
 			if(this.checked) {
-				// middleColor.style.display = "inline-block";
-				middleColor.style.setProperty("--display")
+				middleColor.style.opacity = "1";
+				maxColorParent.style.translate = "0";
 			} else {
-				middleColor.style.display = "none"
-			}
-		}
+				middleColor.style.opacity = "0";
+				maxColorParent.style.translate = "-60px";
+			};
+		};
 	</script>
 </body>
 </html>
