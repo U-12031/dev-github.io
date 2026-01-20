@@ -266,7 +266,9 @@
 			60,
 			1000
 		];
-		let updateInterval = 10; // 更新間隔 (ms)
+		let updateInterval = 1000; // 更新間隔 (ms)
+		let update;
+		updateUpdate();
 
 		/** 2つの色を指定した比率で混ぜた色を返します。
 		 * @param {string(rgb)} color1 色1 (例: "rgb(255, 0, 0)")
@@ -326,7 +328,9 @@
 			squareUpdate(now[timeFor]);
 		};
 
-		let update = setInterval(percentUpdate, updateInterval);
+		function updateUpdate() {
+			update = setInterval(percentUpdate, updateInterval);
+		};
 	</script>
 </body>
 </html>
