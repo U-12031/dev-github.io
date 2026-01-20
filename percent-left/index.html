@@ -26,7 +26,7 @@
 		@font-face {
 			font-family: "originalFont";
 			src: url(/0_data/fonts/MPLUS1p-Regular.ttf) format("truetype");
-			/* src: url(https://u-12031.github.io//0_data/fonts/MPLUS1p-Regular.ttf); */
+			src: url(https://u-12031.github.io//0_data/fonts/MPLUS1p-Regular.ttf);
 			/* ↑codeswing用 */
 		}
 
@@ -156,7 +156,6 @@
 		}
 
 		#settings input:not([type="checkbox"]) {
-			width: 50px;
 			margin: 5px 10px;
 			padding: 0;
 			font-size: 0.9em;
@@ -167,7 +166,33 @@
 			transition: translate .5s cubic-bezier(0, 0.6, 0.5, 1);
 		}
 
-		#settings #interval {margin: 5px 0 0 10px;}
+		#settings #interval {
+			margin-right: 0;
+			margin-bottom: 0;
+			width: 50px;
+		}
+
+		#settings #displaySize {
+			position: relative;
+			width: 200px;
+			translate: 0 2px;
+			margin-bottom: 20px;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 19px;
+				left: 44px;
+				display: inline-block;
+				width: 2px;
+				height: 10px;
+				background-color: #333;
+			}
+		}
+
+		#displaySizeOutput {
+
+		}
 	</style>
 </head>
 <body>
@@ -208,9 +233,15 @@
 			</li>
 		</ul>
 		<ul>
-			<li>
-				<span class="listTitle"></span>
+			<li class="line"><label class="listTitle" for="displaySize">文字の大きさ</label>
+				<br>
+				<label>文字を表示する
+					<input type="checkbox" id="doDisplayText" checked>
+				</label>
+				<input type="range" id="displaySize" min="0" max="5" step="0.1" value="1">
+				<span id="displaySizeOutput">×1.0</span>
 			</li>
+			<!-- フォントを変えるやつも作りたい -->
 		</ul>
 	</fieldset>
 	<script>
@@ -365,7 +396,7 @@
 			update = setInterval(percentUpdate, updateInterval);
 		};
 
-		el("doUseMiddleColor").onclick = function() {
+		el("doUseMiddleColor").oninput = function() {
 			const middleColor = document.querySelectorAll(".pickr")[1];
 			const maxColorParent = el("maxColorParent");
 			if(this.checked) {
@@ -380,6 +411,26 @@
 		el("interval").oninput = function() {
 			updateInterval = this.value;
 			updateUpdate();
+		};
+
+		el("doDisplayText").oninput = function() {
+			if(this.checked) {
+				if(el("displaySize").value == "0") {
+					el("displaySize").value = 1;
+					el("outputPercent").style.fontSize = "1.5em";
+					el("displaySizeOutput").innerHTML = "×1.0";
+				};
+			} else {
+				el("displaySize").value = 0;
+				el("outputPercent").style.fontSize = "0";
+				el("displaySizeOutput").innerHTML = "×0.0";
+			}
+		};
+
+		el("displaySize").oninput = function() {
+			el("outputPercent").style.fontSize = (1.5 * Number(this.value)) + "em";
+			el("displaySizeOutput").innerHTML = "×" + Number(this.value).toFixed(1)
+			el("doDisplayText").checked = (this.value != "0");
 		};
 	</script>
 </body>
