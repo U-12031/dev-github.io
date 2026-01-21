@@ -33,7 +33,7 @@
 		@font-face {
 			font-family: "7segFont";
 			src: url(/0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf) format("truetype");
-			/* src: url(https://u-12031.github.io//0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf); */
+			src: url(https://u-12031.github.io//0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf);
 			/* ↑codeswing用 */
 		}
 
@@ -189,6 +189,13 @@
 				background-color: #333;
 			}
 		}
+
+		#doUseOriginalFont {
+			background-color: #0af;
+			height: 6px;
+
+			&::after {top: -6px;}
+		}
 	</style>
 </head>
 <body>
@@ -237,7 +244,12 @@
 				<input type="range" id="displaySize" min="0" max="5" step="0.1" value="1">
 				<span id="displaySizeOutput">×1.0</span>
 			</li>
-			<!-- フォントを変えるやつも作りたい -->
+			<li class="line"><span class="listTitle">フォントの種類</span>
+				<br>
+				<span id="useNormalFont">ブラウザのフォント</span>
+				<input type="checkbox" id="doUseOriginalFont" checked>
+				<span id="useOriginalFont">独自のフォント</span>
+			</li>
 		</ul>
 	</fieldset>
 	<script>
@@ -427,6 +439,32 @@
 			el("outputPercent").style.fontSize = (1.5 * Number(this.value)) + "em";
 			el("displaySizeOutput").innerHTML = "×" + Number(this.value).toFixed(1)
 			el("doDisplayText").checked = (this.value != "0");
+		};
+
+		el("doUseOriginalFont").oninput = function() {
+			if(this.checked) {
+				el("outputPercent").style.fontFamily = '"7segFont", monospace';
+				el("useNormalFont").style.color = "black";
+				el("useOriginalFont").style.color = "#0af";
+			} else {
+				el("outputPercent").style.fontFamily = "monospace";
+				el("useNormalFont").style.color = "#0af";
+				el("useOriginalFont").style.color = "black";
+			};
+		};
+
+		el("useNormalFont").onclick = function() {
+			el("doUseOriginalFont").checked = false;
+			el("outputPercent").style.fontFamily = "monospace";
+			el("useNormalFont").style.color = "#0af";
+			el("useOriginalFont").style.color = "black";
+		};
+
+		el("useOriginalFont").onclick = function() {
+			el("doUseOriginalFont").checked = true;
+			el("outputPercent").style.fontFamily = '"7segFont" monospace';
+			el("useNormalFont").style.color = "black";
+			el("useOriginalFont").style.color = "#0af"
 		};
 	</script>
 </body>
