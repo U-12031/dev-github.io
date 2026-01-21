@@ -363,8 +363,9 @@
 		function squareUpdate(percent) {
 			const square = el("outputSquare");
 			const doUseMiddleColor = el("doUseMiddleColor").checked;
+			const decimalPlace = el("decimalPlace").value;
 			square.style.width = `calc((100vw - 70px) * ${percent})`;
-			el("outputPercent").textContent = `${(percent*100).toFixed(2)}%`;
+			el("outputPercent").textContent = `${(percent*100).toFixed(decimalPlace)}%`;
 			if(doUseMiddleColor) {
 				if(percent < 0.5) {
 						el("outputSquare").style.backgroundColor = colorBlend(
