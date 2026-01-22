@@ -434,7 +434,6 @@
 		};
 
 		el("interval").oninput = function() {
-			console.log("Interval changed to " + this.value + " ms");
 			updateInterval = this.value;
 			clearInterval(update);
 			updateUpdate();
