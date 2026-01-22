@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/themes/monolith.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
 
-	<title>2027年まであと何%？</title>
+	<title>~~まであと何%？</title>
 	<style>
 		@font-face {
 			font-family: "originalFont";
@@ -33,7 +33,7 @@
 		@font-face {
 			font-family: "7segFont";
 			src: url(/0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf) format("truetype");
-			src: url(https://u-12031.github.io//0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf);
+			/* src: url(https://u-12031.github.io//0_data/fonts/fonts-DSEG_v046/DSEG7ClassicMini-Bold.ttf); */
 			/* ↑codeswing用 */
 		}
 
@@ -51,6 +51,16 @@
 			border-image-slice: 0 0 0 100%;
 			border-image-outset: 1 1 1 10px;
 			border-image-source: linear-gradient(to bottom, transparent 2.3em, #777 2.3em);
+		}
+
+		button {
+			background-color: #4cf;
+			border: none;
+			border-radius: 100000px;
+			padding: 3px 10px;
+			cursor: pointer !important;
+		
+			&:hover {background-color: #2af;}
 		}
 
 		.listTitle {
@@ -96,6 +106,14 @@
 			transition: opacity .5s;
 		}
 
+		#title:fullscreen {
+			position: fixed;
+			top: calc(50vh - 70px);
+			left: 50vw;
+			translate: -50% -50%;
+			font-size: 2em;
+		}
+
 		#title>#timeFor {
 			font-size: inherit;
 			padding: 0;
@@ -109,6 +127,14 @@
 			margin: 150px 25px;
 			height: 80px;
 			border: 2px solid #333;
+
+			&:fullscreen {
+				margin: auto;
+				position: fixed;
+				top: 50vh;
+				left: 50vw;
+				translate: -50% -50%;
+			}
 		}
 
 		#outputParent>#outputSquare {
@@ -204,24 +230,32 @@
 	</style>
 </head>
 <body>
-	<h1 id="title">
-		<select id="timeFor">
-			<option value="0">来年</option>
-			<option value="1">来月</option>
-			<option value="2">明日</option>
-			<option value="3">次の時間</option>
-			<option value="4">次の分</option>
-			<option value="5">次の秒</option>
-		</select>
-		まであと
-	</h1>
-	<div id="outputParent">
-		<div id="outputSquare"></div>
-		<span id="outputPercent"></span>
+	<div id="main">
+		<h1 id="title">
+			<select id="timeFor">
+				<option value="0">来年</option>
+				<option value="1">来月</option>
+				<option value="2">明日</option>
+				<option value="3">次の時間</option>
+				<option value="4">次の分</option>
+				<option value="5">次の秒</option>
+			</select>
+			まであと
+		</h1>
+		<div id="outputParent">
+			<div id="outputSquare"></div>
+			<span id="outputPercent"></span>
+		</div>
 	</div>
 	<fieldset id="settings">
 		<legend>設定</legend>
 		<ul>
+			<li><span class="listTitle">全画面表示</span>
+				<br>
+				<button id="fullScreen">全画面表示する</button>
+				<br>
+				<span style="font-size: .8em;">全画面表示を解除するときはescキーを押してください</span>
+			</li>
 			<li><span class="listTitle">色の変化</span><br>
 				<label>中央の色を使う
 					<input type="checkbox" id="doUseMiddleColor" checked>
@@ -237,7 +271,7 @@
 			</li>
 			<li><label class="listTitle" for="interval">更新する間隔</label>
 				<br>
-				<input type="number" id="interval" min="0" value="1000">
+				<input type="number" id="interval" min="0" value="100">
 				<span style="white-space: nowrap;">ミリ秒</span>
 			</li>
 		</ul>
@@ -340,7 +374,7 @@
 			60,
 			1000
 		];
-		let updateInterval = 1000; // 更新間隔 (ms)
+		let updateInterval = 100; // 更新間隔 (ms)
 		let update;
 		updateUpdate();
 
@@ -418,6 +452,10 @@
 
 		function updateUpdate() {
 			update = setInterval(percentUpdate, updateInterval);
+		};
+
+		el("fullScreen").onclick = function() {
+			el("main").requestFullscreen();
 		};
 
 		el("doUseMiddleColor").oninput = function() {
