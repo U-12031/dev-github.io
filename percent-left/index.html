@@ -392,7 +392,7 @@
 		function nowUpdate() {
 			const acquiredDate = new Date();
 			now[0] = acquiredDate.getFullYear();
-			now[1] = acquiredDate.getMonth() + 1;
+			now[1] = acquiredDate.getMonth();
 			now[2] = acquiredDate.getDate();
 			now[3] = acquiredDate.getHours();
 			now[4] = acquiredDate.getMinutes();
@@ -405,7 +405,11 @@
 			const timeForM6 = 6 - timeFor;
 			nowUpdate();
 			for(let i=0;i<timeForM6;i++) {
-				now[5-i] += now[6-i]/CARRY_VALUE[6-i];
+				if(i == 4) { // 月の場合
+					now[5-i] += now[6-i]/(new Date(now[0], now[1], 0)).getDate();
+				} else {
+					now[5-i] += now[6-i]/CARRY_VALUE[6-i];
+				};
 			};
 			now[timeFor] /= CARRY_VALUE[timeFor]; // "/="なんか中々使わない
 			now[timeFor] = 1 - now[timeFor];
