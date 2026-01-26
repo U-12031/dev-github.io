@@ -13,9 +13,73 @@
 		gtag('config', 'G-G3VRHWGPB7');
 	</script>
 
-	<style></style>
+	<style>
+		@font-face {
+			font-family: "originalFont";
+			/* src: url(/0_data/fonts/MPLUS1p-Medium.ttf) format("truetype"); */
+			src: url(https://u-12031.github.io/0_data/fonts/MPLUS1p-Medium.ttf) format("truetype"); /* Codeswing用 */
+		}
+
+		* {font-family: "originalFont";}
+		
+		@keyframes headerAni {
+			from {
+				/* background-color: white; */
+				translate: 0 -80px;
+			}
+			to {
+				/* background-color: #0af; */
+				translate: 0 0;
+			}
+		}
+
+		@keyframes headerTextAni {
+			0% {
+				translate: -50% 80px;
+				text-shadow: #0af 0px 0px;
+			}
+			50% {
+				translate: -50% 80px;
+				text-shadow: #0af 3px 3px;
+			}
+			to {
+				translate: -50% 10px;
+				text-shadow: #08c 3px 3px;
+			}
+		}
+
+		header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 80px;
+			translate: 0 -80px; /* 初期値として */
+			background-color: #0af;
+			animation: headerAni 2s .5s forwards;
+			color: white;
+		}
+
+		header>h1 {
+			white-space: nowrap;
+			animation: headerTextAni 2.5s forwards;
+			text-shadow: #0af 3px 3px;
+			position: absolute;
+			margin: 0;
+			top: 0px;
+			left: 50%;
+			translate: -50% 80px; /* 初期値として */
+			font-size: 40px;
+
+			&>span {
+				font-size: 25px;
+			}
+		}
+	</style>
 </head>
 <body>
-	<h1>welcome!</h1>
+	<header>
+		<h1>U-12031<span>.github.io</span></h1>
+	</header>
 </body>
 </html>
