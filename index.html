@@ -54,14 +54,13 @@
 			height: 80px;
 			translate: 0 -80px; /* 初期値として */
 			background-color: #0af;
-			animation: headerAni 2s .5s forwards;
+			animation: headerAni 2s 1s forwards;
 			color: white;
 		}
 
 		header>h1 {
 			white-space: nowrap;
-			animation: headerTextAni 2.5s forwards;
-			text-shadow: #0af 3px 3px;
+			animation: headerTextAni 2.5s .5s forwards;
 			position: absolute;
 			margin: 0;
 			top: 0px;
@@ -71,11 +70,27 @@
 
 			&>span {font-size: 25px;}
 		}
+
+		header>#headerIcons {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+
+			a>img {
+				clip-path: circle(50%);
+			}
+		}
 	</style>
 </head>
 <body>
 	<header>
 		<h1>U-12031<span>.github.io</span></h1>
+		<div id="headerIcons">
+			<a href="https://github.io/U-12031">
+				<img src="https://avatars.githubusercontent.com/u/120626067?v=4" height="30">
+			</a>
+		</div>
 	</header>
+	<!-- <h1>Welcome to U-12031.github.io!</h1> -->
 </body>
 </html>
