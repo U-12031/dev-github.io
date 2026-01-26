@@ -67,8 +67,14 @@
 			left: 50%;
 			translate: -50% 80px; /* 初期値として */
 			font-size: 40px;
+		}
+		
+		header span {font-size: 25px;}
 
-			&>span {font-size: 25px;}
+		header>span {
+			position: absolute;
+			left: 50%;
+			translate: calc(-50% - 240px) 0;
 		}
 
 		header>#headerIcons {
@@ -84,6 +90,7 @@
 </head>
 <body>
 	<header>
+		<span>Welcome to</span>
 		<h1>U-12031<span>.github.io</span></h1>
 		<div id="headerIcons">
 			<a href="https://github.com/U-12031">
@@ -91,6 +98,5 @@
 			</a>
 		</div>
 	</header>
-	<!-- <h1>Welcome to U-12031.github.io!</h1> -->
 </body>
 </html>
