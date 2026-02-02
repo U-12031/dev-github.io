@@ -23,6 +23,19 @@
 		* {font-family: "originalFont";}
 
 		body {margin: 0;}
+
+		h1 {
+			position: relative;
+			margin-top: 30px;
+		}
+
+		h1:not(header *)>span {
+			display: block;
+			position: absolute;
+			top: calc(-.7em + -5px);
+			left: 0;
+			font-size: .7em;
+		}
 		
 		@keyframes headerAni {
 			from {
@@ -82,9 +95,23 @@
 			top: 5px;
 			right: 5px;
 
-			a>img {
-				clip-path: circle(50%);
+			a>img {clip-path: circle(50%);}
+		}
+
+		@keyframes othersAni {
+			from {
+				translate: 0 10px;
+				opacity: 0;
 			}
+			to {
+				translate: 0 0;
+				opacity: 1;
+			}
+		}
+
+		body :not(header):not(header *) {
+			animation: othersAni 2s 3s forwards;
+			opacity: 0; /* 初期値として */
 		}
 	</style>
 </head>
@@ -98,5 +125,6 @@
 			</a>
 		</div>
 	</header>
+	<h1>テスト<span>testestTEST</span></h1>
 </body>
 </html>
