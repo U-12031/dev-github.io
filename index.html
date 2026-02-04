@@ -16,7 +16,7 @@
 	<style>
 		@font-face {
 			font-family: "originalFont";
-			/* src: url(/0_data/fonts/MPLUS1p-Medium.ttf) format("truetype"); */
+			src: url(/0_data/fonts/MPLUS1p-Medium.ttf) format("truetype");
 			src: url(https://u-12031.github.io/0_data/fonts/MPLUS1p-Medium.ttf) format("truetype"); /* Codeswing用 */
 		}
 
@@ -29,73 +29,53 @@
 			margin-top: 30px;
 		}
 
-		h1:not(header *)>span {
+		.seeDetail {
+			font-size: 1.2em;
+			position: relative;
+			cursor: pointer;
+
+			>h1 {
+			--arrowStartWidth: calc(100% - 15px);
+			background-color: #af0;
+			clip-path: polygon(0% -1em, var(--arrowStartWidth) -1em, 130% calc(50), var(--arrowStartWidth) 100%, 0% 100%);
+			}
+
+			>span {
 			display: block;
 			position: absolute;
 			top: calc(-.7em + -5px);
 			left: 0;
-			font-size: .7em;
-		}
-		
-		@keyframes headerAni {
-			from {
-				translate: 0 -80px;
+			font-size: 1.2em;
+			font-weight: normal;
 			}
-			to {
-				translate: 0 0;
+
+			.moveOnArrow {
+				position: absolute;
+				right: 10px;
+				top: -12px;
+				display: block;
+				width: 30px;
+				height: 50px;
+				margin: 0;
+				background-color: transparent;
+				filter: drop-shadow(10px 0 .5px #888);
+				clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 100%, 0 0);
+				transition: translate .3s;
+
+				&::before {
+					content: "";
+					display: block;
+					width: 30px;
+					height: 50px;
+					translate : -5px 0;
+					background-color: white;
+					clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 100%, 0 0);
+				}
 			}
 		}
 
-		@keyframes headerTextAni {
-			0% {
-				translate: -50% 80px;
-				text-shadow: #0af 0px 0px;
-			}
-			50% {
-				translate: -50% 80px;
-				text-shadow: #0af 3px 3px;
-			}
-			to {
-				translate: -50% 10px;
-				text-shadow: #08c 3px 3px;
-			}
-		}
-
-		header {
-			margin: 0;
-			width: 100vw;
-			height: 80px;
-			translate: 0 -80px; /* 初期値として */
-			background-color: #0af;
-			animation: headerAni 2s 1s forwards;
-			color: white;
-		}
-
-		header>h1 {
-			white-space: nowrap;
-			animation: headerTextAni 2.5s .5s forwards;
-			position: absolute;
-			margin: 0;
-			top: 0px;
-			left: 50%;
-			translate: -50% 80px; /* 初期値として */
-			font-size: 40px;
-		}
-		
-		header span {font-size: 25px;}
-
-		header>span {
-			position: absolute;
-			left: 50%;
-			translate: calc(-50% - 240px) 0;
-		}
-
-		header>#headerIcons {
-			position: absolute;
-			top: 5px;
-			right: 5px;
-
-			a>img {clip-path: circle(50%);}
+		.seeDetail:hover>.moveOnArrow {
+			translate: 15px 0;
 		}
 
 		@keyframes othersAni {
@@ -109,15 +89,79 @@
 			}
 		}
 
-		body :not(header):not(header *) {
-			animation: othersAni 2s 3s forwards;
-			opacity: 0; /* 初期値として */
+		body>*:not(header):not(header *) {
+			/* animation: othersAni 2s 3s forwards; */
+			opacity: 1; /*初期値として*/
+		}
+
+		@keyframes headerAni {
+			from {
+				translate: 0 -80px;
+			}
+			to {translate: 0;}
+		}
+
+		@keyframes headerTextAni {
+			from {
+				translate: -50% 80px;
+				text-shadow: #0af 0px 0px;
+			}
+			50% {
+				translate: -50% 80px;
+				text-shadow: #0af 3px 3px;
+			}
+			to {
+				translate: -50% 10px;
+				text-shadow: #08c 3px 3px;
+			}
+		}
+		
+		header {
+			margin: 0;
+			width: 100vw;
+			height: 80px;
+			translate: 0 -80px; /* 初期値として */
+			background-color: #0af;
+			animation: headerAni 2s 1s forwards;
+			color: white;
+		}
+		
+		header>h1 {
+			white-space: nowrap;
+			animation: headerTextAni 2.5s .5s forwards;
+			position: absolute;
+			margin: 0;
+			top: 0px;
+			left: 50%;
+			translate: -50% 80px; /* 初期値として */
+			font-size: 40px;
+		}
+		
+		header span {font-size: 25px;}
+
+		header>#headerIcons {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+
+			a>img {clip-path: circle(50%);}
+		}
+
+		#displayTitle {
+			text-align: center;
+
+			h1 {
+				font-size: 60px;
+				margin: 10px auto;
+			}
+
+			p {font-size: 25px;}
 		}
 	</style>
+
 </head>
 <body>
 	<header>
-		<span>Welcome to</span>
 		<h1>U-12031<span>.github.io</span></h1>
 		<div id="headerIcons">
 			<a href="https://github.com/U-12031">
@@ -125,6 +169,17 @@
 			</a>
 		</div>
 	</header>
-	<h1>テスト<span>testestTEST</span></h1>
+	<div id="displayTitle">
+		<h1>U-12031.github.io へようこそ！</h1>
+		<p>ここでは、これまでに作成したツールやサイト、ゲームなどを展示しています</p>
+	</div>
+	<div class="seeDetail">
+		<h1>U-12031について</h1>
+		<span>About me</span>
+		<div class="moveOnArrow"></div>
+	</div>
+	<script>
+		function el(id) {return document.getElementById(id);}
+	</script>
 </body>
 </html>
