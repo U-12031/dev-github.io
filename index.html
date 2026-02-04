@@ -35,7 +35,7 @@
 			position: relative;
 			cursor: pointer;
 
-			>h1 {padding-top: 18px; display: block;}
+			>h1 {padding-top: 18px;}
 
 			>span {
 			display: block;
@@ -53,21 +53,8 @@
 				margin: 0;
 				margin-left: 10px;
 				background-color: #888;
-				/* filter: drop-shadow(10px 0 .5px #888); */
-				/* clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 100%, 0 0); */
 				clip-path: polygon(40% 0%, 100% 50%, 40% 100%, 0% 100%, 60% 50%, 0% 0%);
-
 				transition: translate .3s;
-
-				&::before {
-					/* content: ""; */
-					display: block;
-					width: 30px;
-					height: 50px;
-					translate : -5px 0;
-					background-color: white;
-					clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 100%, 0 0);
-				}
 			}
 		}
 
