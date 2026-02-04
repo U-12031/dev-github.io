@@ -1,2 +1,3 @@
-# MyAllFiles
-This is **ALL FILES** I have.
+# div-github.io
+このリポジトリは、公開用の`u-12031.github.io`へ完成したファイルを配置するためのものです。
+ここでファイルを作成・編集し、`u-12031.github.io`へ反映させます。
