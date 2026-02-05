@@ -22,7 +22,10 @@
 
 		* {font-family: "originalFont";}
 
-		body {margin: 0;}
+		body {
+			margin: 0;
+			overflow-x: hidden;
+		}
 
 		h1 {
 			position: relative;
@@ -60,18 +63,12 @@
 		.seeDetail:hover {
 			background-color: #ff03;
 
-			.moveOnArrow {
-				translate: 15px 0;
-			}
+			.moveOnArrow {translate: 15px 0;}
 		}
 
 		@keyframes othersAni {
-			from {
-				opacity: 0;
-			}
-			to {
-				opacity: 1;
-			}
+			from {opacity: 0;}
+			to {opacity: 1;}
 		}
 
 		body *:not(header):not(header *) {
