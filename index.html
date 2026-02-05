@@ -28,13 +28,13 @@
 		}
 
 		h1 {
+			font-size: 2.4em;
 			position: relative;
 			margin-top: 30px;
 		}
 
 		.seeDetail {
 			transition: background-color .3s;
-			font-size: 1.2em;
 			position: relative;
 			cursor: pointer;
 
@@ -72,7 +72,7 @@
 		}
 
 		body *:not(header):not(header *) {
-			animation: othersAni 2s calc(var(--el-index) * 0.2s + 3s) forwards;
+			animation: othersAni 2s calc(var(--animation-index) * 0.2s + 3s) forwards;
 			opacity: 0; /*初期値として*/
 		}
 
@@ -150,20 +150,23 @@
 		</div>
 	</header>
 	<div id="displayTitle" style="opacity: 1;">
-		<h1 style="--el-index: 0;">U-12031.github.io へようこそ！</h1>
-		<p style="--el-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます。</p>
+		<h1 style="--animation-index: 0;">U-12031.github.io へようこそ！</h1>
+		<p style="--animation-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます。</p>
 	</div>
-	<div class="seeDetail" style="--el-index: 2;">
+	<div style="--animation-index: 2;">
+		<h1>主な作品</h1>
+	</div>
+	<div class="seeDetail" style="--animation-index: 2;">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
-		<span style="--el-index: 3;">About me</span>
+		<span style="--animation-index: 3;">About me</span>
 	</div>
-	<div class="seeDetail" style="--el-index: 4;">
-		<h1>作品
+	<div class="seeDetail" style="--animation-index: 4;">
+		<h1>作品一覧
 			<div class="moveOnArrow"></div>
 		</h1>
-		<span style="--el-index: 5;">Projects</span>
+		<span style="--animation-index: 5;">All Projects</span>
 	</div>
 </body>
 </html>
