@@ -76,15 +76,13 @@
 			}
 		}
 
-		body>*:not(header):not(header *) {
-			animation: othersAni 2s 3s forwards;
+		body *:not(header):not(header *) {
+			animation: othersAni 2s calc(var(--el-index) * 0.2s + 3s) forwards;
 			opacity: 0; /*初期値として*/
 		}
 
 		@keyframes headerAni {
-			from {
-				translate: 0 -80px;
-			}
+			from {translate: 0 -80px;}
 			to {translate: 0;}
 		}
 
@@ -156,11 +154,11 @@
 			</a>
 		</div>
 	</header>
-	<div id="displayTitle">
-		<h1>U-12031.github.io へようこそ！</h1>
-		<p>ここでは、これまでに作成したツールやサイト、ゲームなどを展示しています</p>
+	<div id="displayTitle" style="opacity: 1;">
+		<h1 style="--el-index: 0;">U-12031.github.io へようこそ！</h1>
+		<p style="--el-index: 1;">ここでは、これまでに作成したツールやサイト、ゲームなどを展示しています</p>
 	</div>
-	<div class="seeDetail">
+	<div class="seeDetail" style="--el-index: 2;">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
