@@ -49,11 +49,11 @@
 				width: 20px;
 				height: 80px;
 				margin: 0;
-				margin-left: 10px;
+				margin-left: 40px;
 				margin-bottom: -14px;
 				background-color: #888;
 				clip-path: polygon(40% 0%, 100% 50%, 40% 100%, 0% 100%, 60% 50%, 0% 0%);
-				transition: translate .3s;
+				transition: all .3s;
 			}
 		}
 
@@ -67,11 +67,9 @@
 
 		@keyframes othersAni {
 			from {
-				translate: 0 10px;
 				opacity: 0;
 			}
 			to {
-				translate: 0 0;
 				opacity: 1;
 			}
 		}
@@ -156,16 +154,19 @@
 	</header>
 	<div id="displayTitle" style="opacity: 1;">
 		<h1 style="--el-index: 0;">U-12031.github.io へようこそ！</h1>
-		<p style="--el-index: 1;">ここでは、これまでに作成したツールやサイト、ゲームなどを展示しています</p>
+		<p style="--el-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます。</p>
 	</div>
 	<div class="seeDetail" style="--el-index: 2;">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
-		<span>About me</span>
+		<span style="--el-index: 3;">About me</span>
 	</div>
-	<script>
-		function el(id) {return document.getElementById(id);}
-	</script>
+	<div class="seeDetail" style="--el-index: 4;">
+		<h1>作品
+			<div class="moveOnArrow"></div>
+		</h1>
+		<span style="--el-index: 5;">Projects</span>
+	</div>
 </body>
 </html>
