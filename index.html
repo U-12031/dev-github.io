@@ -30,12 +30,10 @@
 		}
 
 		.seeDetail {
-			transition: all .3s;
+			transition: background-color .3s;
 			font-size: 1.2em;
 			position: relative;
 			cursor: pointer;
-
-			>h1 {padding-top: 18px;}
 
 			>span {
 			display: block;
@@ -49,9 +47,10 @@
 			.moveOnArrow {
 				display: inline-block;
 				width: 20px;
-				height: 50px;
+				height: 80px;
 				margin: 0;
 				margin-left: 10px;
+				margin-bottom: -14px;
 				background-color: #888;
 				clip-path: polygon(40% 0%, 100% 50%, 40% 100%, 0% 100%, 60% 50%, 0% 0%);
 				transition: translate .3s;
@@ -59,7 +58,8 @@
 		}
 
 		.seeDetail:hover {
-			background-color: #ffc;
+			background-color: #ff03;
+
 			.moveOnArrow {
 				translate: 15px 0;
 			}
@@ -77,8 +77,8 @@
 		}
 
 		body>*:not(header):not(header *) {
-			/* animation: othersAni 2s 3s forwards; */
-			opacity: 1; /*初期値として*/
+			animation: othersAni 2s 3s forwards;
+			opacity: 0; /*初期値として*/
 		}
 
 		@keyframes headerAni {
