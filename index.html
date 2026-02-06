@@ -34,6 +34,8 @@
 		}
 
 		.seeDetail {
+			color: black;
+			text-decoration: none;
 			transition: background-color .3s;
 			position: relative;
 			cursor: pointer;
@@ -150,19 +152,31 @@
 	</header>
 	<div id="displayTitle" style="opacity: 1;">
 		<h1 style="--animation-index: 0;">U-12031.github.io へようこそ！</h1>
-		<p style="--animation-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます。</p>
+		<p style="--animation-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます</p>
 	</div>
-	<div class="seeDetail" style="--animation-index: 2;">
+	<a class="seeDetail" style="--animation-index: 2;" data-link="/aboutMe">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
 		<span style="--animation-index: 3;">About me</span>
-	</div>
-	<div class="seeDetail" style="--animation-index: 4;">
+	</a>
+	<a class="seeDetail" style="--animation-index: 4;" data-link="/allProjects/">
 		<h1>作品一覧
 			<div class="moveOnArrow"></div>
 		</h1>
 		<span style="--animation-index: 5;">All Projects</span>
-	</div>
+	</a>
+	<script>
+		// SPA(サイトに移動するときに滑らかに移動するやつ)を作るプログラム
+		document.querySelectorAll(".seeDetail").forEach((el) => {
+			el.addEventListener("click", function() {
+				try {
+				const link = el.dataset.link;
+				if(!link) return; // data-link属性がないならやめる
+				history.pushState({}, "", link)
+				}catch(error) {console.log(`${error.name}\n${error.stack}`)}
+			})
+		})
+	</script>
 </body>
 </html>
