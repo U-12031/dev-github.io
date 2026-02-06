@@ -167,16 +167,6 @@
 		<span style="--animation-index: 5;">All Projects</span>
 	</a>
 	<script>
-		// SPA(サイトに移動するときに滑らかに移動するやつ)を作るプログラム
-		document.querySelectorAll(".seeDetail").forEach((el) => {
-			el.addEventListener("click", function() {
-				try {
-				const link = el.dataset.link;
-				if(!link) return; // data-link属性がないならやめる
-				history.pushState({}, "", link)
-				}catch(error) {console.log(`${error.name}\n${error.stack}`)}
-			})
-		})
 	</script>
 </body>
 </html>
