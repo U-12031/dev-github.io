@@ -154,7 +154,7 @@
 		<h1 style="--animation-index: 0;">U-12031.github.io へようこそ！</h1>
 		<p style="--animation-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます</p>
 	</div>
-	<a class="seeDetail" style="--animation-index: 2;" data-link="/aboutMe">
+	<a class="seeDetail" style="--animation-index: 2;" data-link="?link=aboutMe">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
@@ -167,6 +167,13 @@
 		<span style="--animation-index: 5;">All Projects</span>
 	</a>
 	<script>
+		document.querySelectorAll(".seeDetail").forEach((el) => {
+			el.addEventListener("click", function() {
+				const link = el.dataset.link;
+				if(!link) return; // data-link属性がないならやめる
+				history.pushState({}, "", link)
+			})
+		})
 	</script>
 </body>
 </html>
