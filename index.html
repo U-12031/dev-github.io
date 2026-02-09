@@ -34,12 +34,15 @@
 		}
 
 		.seeDetail {
-			display: block;
+			display: flex;
 			color: black;
+			margin: 30px auto;
 			text-decoration: none;
 			transition: background-color .3s;
 			position: relative;
 			cursor: pointer;
+
+			>h1 {margin-bottom: 0;}
 
 			>span {
 			display: block;
@@ -54,6 +57,7 @@
 				width: 20px;
 				height: 80px;
 				margin: 0;
+				margin-top: -10000px;
 				margin-left: 40px;
 				margin-bottom: -14px;
 				background-color: #888;
@@ -139,6 +143,30 @@
 
 			p {font-size: 25px;}
 		}
+
+		@keyframes seeDEtailAni {
+			
+		}
+
+		@keyframes moveOnArrowAni {
+			from {rotate: 0;}
+			to {rotate: 180deg;}
+		}
+
+		@keyframes detailAni {
+			from {left: 100vw;}
+			to {left: 0;}
+		}
+
+		.detail {
+			display: none; /* 初期値として */
+			position: fixed;
+			top: 0;
+			left: 100vw;
+			width: 100vw;
+			height: 100vh;
+			background-color: #af04;
+		}
 	</style>
 
 </head>
@@ -161,20 +189,32 @@
 		</h1>
 		<span style="--animation-index: 3;">About me</span>
 	</a>
-	<a class="seeDetail" style="--animation-index: 4;" data-link="/allProjects/">
+	<a class="seeDetail" style="--animation-index: 4;" data-link="?link=allProjects">
 		<h1>作品一覧
 			<div class="moveOnArrow"></div>
 		</h1>
 		<span style="--animation-index: 5;">All Projects</span>
 	</a>
+	<div class="detail" id="aboutMe">
+		<h1>About me</h1>
+	</div>
+	<div class="detail" id="allProjects">
+		<h1>All Projects</h1>
+	</div>
 	<script>
 		document.querySelectorAll(".seeDetail").forEach((el) => {
 			el.addEventListener("click", function() {
 				const link = el.dataset.link;
 				if(!link) return; // data-link属性がないならやめる
-				history.pushState({}, "", link)
+				history.pushState(null, "", link)
 			})
 		})
+
+		function seeDetail(type, isOpen, doAnimation) {
+			const detail = el(type);
+			detail.style.display = isOpen ? "block" : "none";
+
+		};
 	</script>
 </body>
 </html>
