@@ -33,7 +33,7 @@
 			margin-top: 30px;
 		}
 
-		.seeDetail {
+		.lookDetail {
 			display: block;
 			color: black;
 			text-decoration: none;
@@ -65,7 +65,7 @@
 			}
 		}
 
-		.seeDetail:hover {
+		.lookDetail:hover {
 			background-color: #ff03;
 
 			.moveOnArrow {translate: 15px 0;}
@@ -143,8 +143,9 @@
 			p {font-size: 25px;}
 		}
 
-		@keyframes seeDEtailAni {
-			
+		@keyframes lookDetailAni {
+			from {translate: 0 0;}
+			to {translate: 100px 0;}
 		}
 
 		@keyframes moveOnArrowAni {
@@ -182,13 +183,13 @@
 		<h1 style="--animation-index: 0;">U-12031.github.io へようこそ！</h1>
 		<p style="--animation-index: 1;">ここでは、これまでに作成したツールやゲームなどの作品を展示しています<br>作品ができれば、随時追加・更新していきます</p>
 	</div>
-	<a class="seeDetail" style="--animation-index: 2;" data-link="?link=aboutMe">
+	<a class="lookDetail" id="lookAboutMe" style="--animation-index: 2;" data-link="?link=aboutMe">
 		<h1>U-12031について
 			<div class="moveOnArrow"></div>
 		</h1>
 		<span style="--animation-index: 3;">About me</span>
 	</a>
-	<a class="seeDetail" style="--animation-index: 4;" data-link="?link=allProjects">
+	<a class="lookDetail" id="lookAllProjects" style="--animation-index: 4;" data-link="?link=allProjects">
 		<h1>作品一覧
 			<div class="moveOnArrow"></div>
 		</h1>
@@ -201,7 +202,8 @@
 		<h1>All Projects</h1>
 	</div>
 	<script>
-		document.querySelectorAll(".seeDetail").forEach((el) => {
+		function el(id) {return document.getElementById(id)};
+		document.querySelectorAll(".lookDetail").forEach((el) => {
 			el.addEventListener("click", function() {
 				const link = el.dataset.link;
 				if(!link) return; // data-link属性がないならやめる
@@ -209,11 +211,43 @@
 			})
 		})
 
-		function seeDetail(type, isOpen, doAnimation) {
-			const detail = el(type);
-			detail.style.display = isOpen ? "block" : "none";
-
+		/** これは、class="lookDetail"の要素を移動するための関数です。
+		 * @param {string} id アニメーションする要素のidです。
+		 * @param {number} moveWidth 横に移動する幅を指定します(px単位)。
+		*/
+		function makeLookDetailAni(id, moveWidth) {
+			const target = el(id);
+			let startedTime; // 始めた時間。この時間+1.5秒たったら終わる
+			let isDone = false; // 終わったかどうか
+			function lookDetailAni(timestamp) { // この関数を実行することでアニメーションを実現しています。外のmakeLookDetailAni関数はこれを実行するための準備をします
+				if(startedTime == undefined) {
+					startedTime = timestamp;
+				};
+				const elapsedTime = timestamp - startedTime;
+				const elapsedRatio = elapsedTime / 1500;
+				if(!isDone) {
+					target.style.translate = moveWidth * Math.min(elapsedRatio, 1) + "px 0";
+					if(elapsedRatio >= 1) {
+						isDone = true;
+					};
+					window.requestAnimationFrame(lookDetailAni);
+				} else return;
+			};
+			window.requestAnimationFrame(lookDetailAni);
 		};
+
+		function openDetail(type="", isOpen, doAnimation) {
+			const detail = el(type);
+			const uppercase = type.charAt(0).toUpperCase() + type.slice(1);
+			const lookDetail = el(`look${uppercase}`);
+			const lookDetailHeading = document.querySelector(`#look${uppercase}>h1`);
+			const lookDetailWidth = lookDetailHeading.offsetWidth;
+			detail.style.display = isOpen ? "block" : "none";
+			
+		};
+		try {
+		openDetail("aboutMe")
+	}catch(error) {console.log(`${error.name}\n${error.stack}`)}
 	</script>
 </body>
 </html>
