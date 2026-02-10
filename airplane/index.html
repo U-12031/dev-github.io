@@ -3,13 +3,87 @@
 <head>
 	<title></title>
 	<style>
-		* {color: white;}
+		@font-face {
+			font-family: "originalFont";
+			src: url(/0_data/fonts/B612Mono-Regular.ttf) format("truetype");
+			src: url(https://u-12031.github.io/0_data/fonts/B612Mono-Regular.ttf) format("truetype");
+		}
+
+		* {
+			color: white;
+			font-family: "originalFont" Arial;
+		}
+
 		body {
 			margin: 0;
-			background-color: #210;
+			background-color: #010;
+		}
+
+		#parent {
+			position: relative;
+			background-color: #09e;
+			display: block;
+			width: 400px;
+			height: 500px;
+			border: none;
+			border-radius: 50px;
+		}
+
+		#parent>* {display: block;}
+
+		#ground {
+			position: absolute;
+			bottom: 0;
+			background-color: #840;
+			width: 100%;
+			height: 50%;
+			border-radius: 0 0 50px 50px;
+		}
+
+		#scales {
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	</style>
 </head>
 <body>
+	<div id="parent">
+		<div id="ground"></div>
+		<canvas id="scales" width="400" height="500"></canvas>
+	</div>
+	<script>
+		function el(id) {return document.getElementById(id)};
+		function addScaleOnCenter(y, width, height) {
+			el("scales").getContext("2d").fillRect(200-(width/2), y, width, height);
+		};
+		const scales = el("scales").getContext("2d");
+		scales.fillStyle = "white";
+		addScaleOnCenter(247.5, 400,5);
+
+		addScaleOnCenter(227.5, 50, 5);
+		addScaleOnCenter(207.5, 100, 5);
+		addScaleOnCenter(187.5, 50, 5)
+		addScaleOnCenter(167.5, 250, 5);
+		addScaleOnCenter(147.5, 50, 5);
+		addScaleOnCenter(127.5, 100, 5);
+		addScaleOnCenter(107.5, 50, 5);
+		addScaleOnCenter(87.5, 250, 5);
+		addScaleOnCenter(67.5, 50, 5);
+		addScaleOnCenter(47.5, 100, 5);
+		addScaleOnCenter(27.5, 50, 5);
+
+		addScaleOnCenter(267.5, 50, 5);
+		addScaleOnCenter(287.5, 100, 5);
+		addScaleOnCenter(307.5, 50, 5);
+		addScaleOnCenter(327.5, 250, 5);
+		addScaleOnCenter(347.5, 50, 5);
+		addScaleOnCenter(367.5, 100, 5);
+		addScaleOnCenter(387.5, 50, 5);
+		addScaleOnCenter(407.5, 250, 5);
+		addScaleOnCenter(427.5, 50, 5);
+		addScaleOnCenter(447.5, 100, 5);
+		addScaleOnCenter(467.5, 50, 5);
+	</script>
 </body>
 </html>
