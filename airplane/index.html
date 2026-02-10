@@ -53,22 +53,42 @@
 		<canvas id="scales" width="400" height="500"></canvas>
 	</div>
 	<script>
+		/** この関数は、取得したidを持つ要素を返します。
+		 * @param {string} id 取得する要素のidです。
+		*/
 		function el(id) {return document.getElementById(id)};
-		function addScaleOnCenter(y, width, height) {
-			el("scales").getContext("2d").fillRect(200-(width/2), y, width, height);
+		const SCALES = el("scales").getContext("2d");
+		/** この関数は、指定したy座標、横幅、高さで、中央揃えの長方形を描画します。
+		 * @param {number} y 長方形の始点のy座標です。
+		 * @param {number} width 長方形の横幅です。
+		 * @param {number} height=5 長方形の高さです。
+		*/
+		function addScaleOnCenter(y, width, height=5) {
+			SCALES.fillRect(200-(width/2), y, width, height);
 		};
-		const scales = el("scales").getContext("2d");
-		scales.fillStyle = "white";
+		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
+		 * @param {string} text="" 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
+		 * @param {number} y テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
+		*/
+		function addScaleLabel(text="", y) {
+			SCALES.fillText(text, 50, y);
+			SCALES.fillText(text, 330, y);
+		};
+		SCALES.fillStyle = "white";
+		SCALES.font = "bold 20px originalFont";
+		
 		addScaleOnCenter(247.5, 400,5);
-
+		
 		addScaleOnCenter(227.5, 50, 5);
 		addScaleOnCenter(207.5, 100, 5);
 		addScaleOnCenter(187.5, 50, 5)
-		addScaleOnCenter(167.5, 250, 5);
+		addScaleOnCenter(167.5, 220, 5);
+		addScaleLabel("10", 177.5)
 		addScaleOnCenter(147.5, 50, 5);
 		addScaleOnCenter(127.5, 100, 5);
 		addScaleOnCenter(107.5, 50, 5);
-		addScaleOnCenter(87.5, 250, 5);
+		addScaleOnCenter(87.5, 220, 5);
+		addScaleLabel("20", 97.5)
 		addScaleOnCenter(67.5, 50, 5);
 		addScaleOnCenter(47.5, 100, 5);
 		addScaleOnCenter(27.5, 50, 5);
@@ -76,11 +96,13 @@
 		addScaleOnCenter(267.5, 50, 5);
 		addScaleOnCenter(287.5, 100, 5);
 		addScaleOnCenter(307.5, 50, 5);
-		addScaleOnCenter(327.5, 250, 5);
+		addScaleOnCenter(327.5, 220, 5);
+		addScaleLabel("10", 337.5);
 		addScaleOnCenter(347.5, 50, 5);
 		addScaleOnCenter(367.5, 100, 5);
 		addScaleOnCenter(387.5, 50, 5);
-		addScaleOnCenter(407.5, 250, 5);
+		addScaleOnCenter(407.5, 220, 5);
+		addScaleLabel("20", 417.5)
 		addScaleOnCenter(427.5, 50, 5);
 		addScaleOnCenter(447.5, 100, 5);
 		addScaleOnCenter(467.5, 50, 5);
