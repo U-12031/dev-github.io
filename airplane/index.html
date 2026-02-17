@@ -9,6 +9,12 @@
 			src: url(https://u-12031.github.io/0_data/fonts/B612Mono-Regular.ttf) format("truetype");
 		}
 
+		@font-face {
+			font-family: "numFont";
+			src: url(/0_data/fonts/Lekton-Bold.ttf) format("truetype");
+			src: url(https://u-12031.github.io/0_data/fonts/Lekton-Bold.ttf) format("truetype");
+		}
+
 		* {
 			color: white;
 			font-family: "originalFont";
@@ -27,17 +33,17 @@
 			height: 500px;
 			border: none;
 			border-radius: 50px;
+			overflow: hidden;
 		}
 
 		#parent>* {display: block;}
 
 		#ground {
 			position: absolute;
-			bottom: 0;
+			top: 50%;
 			background-color: #840;
-			width: 100%;
-			height: 50%;
-			border-radius: 0 0 50px 50px;
+			width: 1000px;
+			height: 100%;
 		}
 
 		#scales {
@@ -75,8 +81,7 @@
 			SCALES.fillText(text, 330, y);
 		};
 		SCALES.fillStyle = "white";
-		// SCALES.font = "bold 20px originalFont";
-		SCALES.font = "monospace"
+		SCALES.font = "bold 25px numFont"
 		
 		addScaleOnCenter(247.5, 400,5);
 		
