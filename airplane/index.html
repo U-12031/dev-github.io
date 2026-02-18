@@ -45,28 +45,44 @@
 			translate: -50% 0;
 			transform-origin: top center;
 			background-color: #840;
-			width: 1000px;
+			width: 1400px;
 			height: 100%;
 		}
 
 		#highScale {
 			position: absolute;
-			top: 0;
-			left: 0;
+			top: -450px;
+			left: -500px;
+			transform-origin: center;
 		}
 	</style>
 </head>
 <body>
 	<div id="parent">
 		<div id="ground"></div>
-		<canvas id="highScale" width="400" height="500"></canvas>
+		<canvas id="highScale" width="1400" height="1400"></canvas>
 	</div>
-	TEST1<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0</span>
+	TEST<br>ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
+	<br>
+	X-TRANSFORM<input type="range" id="input2" min="-500" value="0" max="500" style="width: 300px;"><span id="output2">0 px</span>
+	<br>
+	Y-TRANSFORM<input type="range" id="input3" min="-500" value="0" max="500" style="width: 300px;"><span id="output3">0 px</span>
 	<script>
 		el("input1").oninput = function() {
-			el("output1").innerHTML = this.value;
+			el("output1").innerHTML = this.value + " deg";
 			el("ground").style.rotate = this.value + "deg";
 			el("highScale").style.rotate = this.value + "deg";
+		}
+		el("input2").oninput = function() {
+			el("output2").innerHTML = this.value + " px";
+			el("ground").style.translate = "calc(-50% + " + this.value + "px) " + el("input3").value + "px";
+			el("highScale").style.translate = this.value + "px " + el("input3").value + "px";
+		}
+		el("input3").oninput = function() {
+			
+			el("output3").innerHTML = this.value + " px";
+			el("ground").style.translate = "calc(-50% + " + el("input2").value + "px) " + this.value + "px";
+			el("highScale").style.translate = el("input2").value + "px " + this.value + "px";
 		}
 		/** この関数は、取得したidを持つ要素を返します。
 		 * @param {string} id 取得する要素のidです。
@@ -81,48 +97,35 @@
 		 * @param {number} height=5 長方形の高さです。
 		*/
 		function addScaleOnCenter(objective, y, width, height=5) {
-			HIGH_SCALE.fillRect(200-(width/2), y, width, height);
+			HIGH_SCALE.fillRect(700-(width/2), y, width, height);
 		};
 		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
 		 * @param {string} text="" 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
 		 * @param {number} y テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
 		*/
 		function addScaleLabel(text="", y) {
-			HIGH_SCALE.fillText(text, 60, y);
-			HIGH_SCALE.fillText(text, 320, y);
+			HIGH_SCALE.fillText(text, 560, y);
+			HIGH_SCALE.fillText(text, 820, y);
 		};
 		HIGH_SCALE.fillStyle = "white";
 		HIGH_SCALE.font = "bold 25px numFont"
 		
-		addScaleOnCenter(HIGH_SCALE, 247.5, 400,THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 697.5, 1400,THICKNESS);
 		
-		addScaleOnCenter(HIGH_SCALE, 227.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 207.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 187.5, 50, THICKNESS)
-		addScaleOnCenter(HIGH_SCALE, 167.5, 200, THICKNESS);
-		addScaleLabel("10", 177.5)
-		addScaleOnCenter(HIGH_SCALE, 147.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 127.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 107.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 87.5, 200, THICKNESS);
-		addScaleLabel("20", 97.5)
-		addScaleOnCenter(HIGH_SCALE, 67.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 47.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 27.5, 50, THICKNESS);
-
-		addScaleOnCenter(HIGH_SCALE, 267.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 287.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 307.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 327.5, 200, THICKNESS);
-		addScaleLabel("10", 337.5);
-		addScaleOnCenter(HIGH_SCALE, 347.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 367.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 387.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 407.5, 200, THICKNESS);
-		addScaleLabel("20", 417.5)
-		addScaleOnCenter(HIGH_SCALE, 427.5, 50, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 447.5, 100, THICKNESS);
-		addScaleOnCenter(HIGH_SCALE, 467.5, 50, THICKNESS);
+		for(let i=0;i<9;i++) {
+			addScaleOnCenter(HIGH_SCALE, -80*i + 677.5, 50, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, -80*i + 657.5, 100, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, -80*i + 637.5, 50, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, -80*i + 617.5, 200, THICKNESS);
+			addScaleLabel(`${(i+1)*10}`, -80*i + 627.5);
+		};
+		for(let i=0;i<9;i++) {
+			addScaleOnCenter(HIGH_SCALE, 80*i + 717.5, 50, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, 80*i + 737.5, 100, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, 80*i + 757.5, 50, THICKNESS);
+			addScaleOnCenter(HIGH_SCALE, 80*i + 777.5, 200, THICKNESS);
+			addScaleLabel(`${(i+1)*10}`, 80*i + 787.5);
+		};
 	</script>
 </body>
 </html>
