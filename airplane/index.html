@@ -63,17 +63,17 @@
 			height: 100px;
 			/* clip-path: ; */
 		}
-		
+
 	</style>
 </head>
 <body>
 	<div id="parent">
 		<div id="ground"></div>
 		<canvas id="highScale" width="1400" height="1400"></canvas>
-		<div id="bank">
+		<!-- <div id="bank">
 			<div></div>
 			<canvas id="bankScale"></canvas>
-		</div>
+		</div> -->
 	</div>
 	TEST<br>ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
 	<br>
@@ -102,15 +102,21 @@
 		*/
 		function el(id) {return document.getElementById(id)};
 		const HIGH_SCALE = el("highScale").getContext("2d");
-		const THICKNESS = 5;
-		/** この関数は、指定したy座標、横幅、高さで、中央揃えの長方形を描画します。
-		 * @param {object} objective 目的の描画する要素の描画コンテキストです。
-		 * @param {number} y 長方形の始点のy座標です。
-		 * @param {number} width 長方形の横幅です。
-		 * @param {number} height=5 長方形の高さです。
+		
+		/** この関数は、要素の中心に線を描画します。
+		 * @param {object} obnective 描画先の要素の描画コンテキストです。
+		 * @param {number} y 描画する線の高さです。
+		 * @param {number} width 描画する線の幅です。
+		 * @param {boolean} doClose=true 描画した線を閉じるかどうかを定義します。
 		*/
-		function addScaleOnCenter(objective, y, width, height=5) {
-			HIGH_SCALE.fillRect(700-(width/2), y, width, height);
+		function drawLineOnCenter(objective, y, width, doClose=true) {
+			const centerStart = 700 - (width / 2);
+			const centerEnd = 700 + (width / 2);
+			objective.beginPath();
+			objective.moveTo(centerStart, y);
+			objective.lineTo(centerEnd, y);
+			if(doClose) objective.closePath();
+			objective.stroke();
 		};
 		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
 		 * @param {string} text="" 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
@@ -122,21 +128,23 @@
 		};
 		HIGH_SCALE.fillStyle = "white";
 		HIGH_SCALE.font = "bold 25px numFont"
-		
-		addScaleOnCenter(HIGH_SCALE, 697.5, 1400,THICKNESS);
+		HIGH_SCALE.lineWidth = 5;
+		HIGH_SCALE.strokeStyle = "white";
+
+		drawLineOnCenter(HIGH_SCALE, 697.5, 1400);
 		
 		for(let i=0;i<9;i++) {
-			addScaleOnCenter(HIGH_SCALE, -80*i + 677.5, 50, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, -80*i + 657.5, 100, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, -80*i + 637.5, 50, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, -80*i + 617.5, 200, THICKNESS);
+			drawLineOnCenter(HIGH_SCALE, -80*i + 677.5, 50);
+			drawLineOnCenter(HIGH_SCALE, -80*i + 657.5, 100);
+			drawLineOnCenter(HIGH_SCALE, -80*i + 637.5, 50);
+			drawLineOnCenter(HIGH_SCALE, -80*i + 617.5, 200);
 			addScaleLabel(`${(i+1)*10}`, -80*i + 627.5);
 		};
 		for(let i=0;i<9;i++) {
-			addScaleOnCenter(HIGH_SCALE, 80*i + 717.5, 50, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, 80*i + 737.5, 100, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, 80*i + 757.5, 50, THICKNESS);
-			addScaleOnCenter(HIGH_SCALE, 80*i + 777.5, 200, THICKNESS);
+			drawLineOnCenter(HIGH_SCALE, 80*i + 717.5, 50);
+			drawLineOnCenter(HIGH_SCALE, 80*i + 737.5, 100);
+			drawLineOnCenter(HIGH_SCALE, 80*i + 757.5, 50);
+			drawLineOnCenter(HIGH_SCALE, 80*i + 777.5, 200);
 			addScaleLabel(`${(i+1)*10}`, 80*i + 787.5);
 		};
 	</script>
