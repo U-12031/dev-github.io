@@ -75,11 +75,12 @@
 		const HIGH_SCALE = el("highScale").getContext("2d");
 		const THICKNESS = 5;
 		/** この関数は、指定したy座標、横幅、高さで、中央揃えの長方形を描画します。
+		 * @param {object} objective 目的の描画する要素の描画コンテキストです。
 		 * @param {number} y 長方形の始点のy座標です。
 		 * @param {number} width 長方形の横幅です。
 		 * @param {number} height=5 長方形の高さです。
 		*/
-		function addScaleOnCenter(y, width, height=5) {
+		function addScaleOnCenter(objective, y, width, height=5) {
 			HIGH_SCALE.fillRect(200-(width/2), y, width, height);
 		};
 		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
@@ -93,35 +94,35 @@
 		HIGH_SCALE.fillStyle = "white";
 		HIGH_SCALE.font = "bold 25px numFont"
 		
-		addScaleOnCenter(247.5, 400,THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 247.5, 400,THICKNESS);
 		
-		addScaleOnCenter(227.5, 50, THICKNESS);
-		addScaleOnCenter(207.5, 100, THICKNESS);
-		addScaleOnCenter(187.5, 50, THICKNESS)
-		addScaleOnCenter(167.5, 200, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 227.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 207.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 187.5, 50, THICKNESS)
+		addScaleOnCenter(HIGH_SCALE, 167.5, 200, THICKNESS);
 		addScaleLabel("10", 177.5)
-		addScaleOnCenter(147.5, 50, THICKNESS);
-		addScaleOnCenter(127.5, 100, THICKNESS);
-		addScaleOnCenter(107.5, 50, THICKNESS);
-		addScaleOnCenter(87.5, 200, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 147.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 127.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 107.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 87.5, 200, THICKNESS);
 		addScaleLabel("20", 97.5)
-		addScaleOnCenter(67.5, 50, THICKNESS);
-		addScaleOnCenter(47.5, 100, THICKNESS);
-		addScaleOnCenter(27.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 67.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 47.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 27.5, 50, THICKNESS);
 
-		addScaleOnCenter(267.5, 50, THICKNESS);
-		addScaleOnCenter(287.5, 100, THICKNESS);
-		addScaleOnCenter(307.5, 50, THICKNESS);
-		addScaleOnCenter(327.5, 200, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 267.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 287.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 307.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 327.5, 200, THICKNESS);
 		addScaleLabel("10", 337.5);
-		addScaleOnCenter(347.5, 50, THICKNESS);
-		addScaleOnCenter(367.5, 100, THICKNESS);
-		addScaleOnCenter(387.5, 50, THICKNESS);
-		addScaleOnCenter(407.5, 200, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 347.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 367.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 387.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 407.5, 200, THICKNESS);
 		addScaleLabel("20", 417.5)
-		addScaleOnCenter(427.5, 50, THICKNESS);
-		addScaleOnCenter(447.5, 100, THICKNESS);
-		addScaleOnCenter(467.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 427.5, 50, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 447.5, 100, THICKNESS);
+		addScaleOnCenter(HIGH_SCALE, 467.5, 50, THICKNESS);
 	</script>
 </body>
 </html>
