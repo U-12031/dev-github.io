@@ -41,12 +41,15 @@
 		#ground {
 			position: absolute;
 			top: 50%;
+			left: 50%;
+			translate: -50% 0;
+			transform-origin: top center;
 			background-color: #840;
 			width: 1000px;
 			height: 100%;
 		}
 
-		#scales {
+		#highScale {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -56,62 +59,69 @@
 <body>
 	<div id="parent">
 		<div id="ground"></div>
-		<canvas id="scales" width="400" height="500"></canvas>
+		<canvas id="highScale" width="400" height="500"></canvas>
 	</div>
+	TEST1<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0</span>
 	<script>
+		el("input1").oninput = function() {
+			el("output1").innerHTML = this.value;
+			el("ground").style.rotate = this.value + "deg";
+			el("highScale").style.rotate = this.value + "deg";
+		}
 		/** この関数は、取得したidを持つ要素を返します。
 		 * @param {string} id 取得する要素のidです。
 		*/
 		function el(id) {return document.getElementById(id)};
-		const SCALES = el("scales").getContext("2d");
+		const HIGH_SCALE = el("highScale").getContext("2d");
+		const THICKNESS = 5;
 		/** この関数は、指定したy座標、横幅、高さで、中央揃えの長方形を描画します。
 		 * @param {number} y 長方形の始点のy座標です。
 		 * @param {number} width 長方形の横幅です。
 		 * @param {number} height=5 長方形の高さです。
 		*/
 		function addScaleOnCenter(y, width, height=5) {
-			SCALES.fillRect(200-(width/2), y, width, height);
+			HIGH_SCALE.fillRect(200-(width/2), y, width, height);
 		};
 		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
 		 * @param {string} text="" 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
 		 * @param {number} y テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
 		*/
 		function addScaleLabel(text="", y) {
-			SCALES.fillText(text, 50, y);
-			SCALES.fillText(text, 330, y);
+			HIGH_SCALE.fillText(text, 60, y);
+			HIGH_SCALE.fillText(text, 320, y);
 		};
-		SCALES.fillStyle = "white";
-		SCALES.font = "bold 25px numFont"
+		HIGH_SCALE.fillStyle = "white";
+		HIGH_SCALE.font = "bold 25px numFont"
 		
-		addScaleOnCenter(247.5, 400,5);
+		addScaleOnCenter(247.5, 400,THICKNESS);
 		
-		addScaleOnCenter(227.5, 50, 5);
-		addScaleOnCenter(207.5, 100, 5);
-		addScaleOnCenter(187.5, 50, 5)
-		addScaleOnCenter(167.5, 220, 5);
+		addScaleOnCenter(227.5, 50, THICKNESS);
+		addScaleOnCenter(207.5, 100, THICKNESS);
+		addScaleOnCenter(187.5, 50, THICKNESS)
+		addScaleOnCenter(167.5, 200, THICKNESS);
 		addScaleLabel("10", 177.5)
-		addScaleOnCenter(147.5, 50, 5);
-		addScaleOnCenter(127.5, 100, 5);
-		addScaleOnCenter(107.5, 50, 5);
-		addScaleOnCenter(87.5, 220, 5);
+		addScaleOnCenter(147.5, 50, THICKNESS);
+		addScaleOnCenter(127.5, 100, THICKNESS);
+		addScaleOnCenter(107.5, 50, THICKNESS);
+		addScaleOnCenter(87.5, 200, THICKNESS);
 		addScaleLabel("20", 97.5)
-		addScaleOnCenter(67.5, 50, 5);
-		addScaleOnCenter(47.5, 100, 5);
-		addScaleOnCenter(27.5, 50, 5);
+		addScaleOnCenter(67.5, 50, THICKNESS);
+		addScaleOnCenter(47.5, 100, THICKNESS);
+		addScaleOnCenter(27.5, 50, THICKNESS);
 
-		addScaleOnCenter(267.5, 50, 5);
-		addScaleOnCenter(287.5, 100, 5);
-		addScaleOnCenter(307.5, 50, 5);
-		addScaleOnCenter(327.5, 220, 5);
+		addScaleOnCenter(267.5, 50, THICKNESS);
+		addScaleOnCenter(287.5, 100, THICKNESS);
+		addScaleOnCenter(307.5, 50, THICKNESS);
+		addScaleOnCenter(327.5, 200, THICKNESS);
 		addScaleLabel("10", 337.5);
-		addScaleOnCenter(347.5, 50, 5);
-		addScaleOnCenter(367.5, 100, 5);
-		addScaleOnCenter(387.5, 50, 5);
-		addScaleOnCenter(407.5, 220, 5);
+		addScaleOnCenter(347.5, 50, THICKNESS);
+		addScaleOnCenter(367.5, 100, THICKNESS);
+		addScaleOnCenter(387.5, 50, THICKNESS);
+		addScaleOnCenter(407.5, 200, THICKNESS);
 		addScaleLabel("20", 417.5)
-		addScaleOnCenter(427.5, 50, 5);
-		addScaleOnCenter(447.5, 100, 5);
-		addScaleOnCenter(467.5, 50, 5);
+		addScaleOnCenter(427.5, 50, THICKNESS);
+		addScaleOnCenter(447.5, 100, THICKNESS);
+		addScaleOnCenter(467.5, 50, THICKNESS);
 	</script>
 </body>
 </html>
