@@ -27,7 +27,7 @@
 
 		body {animation: bodyGradation 1s linear infinite;}
 
-		* {font-size: 2.5em;}
+		* {font-size: 1.8em;}
 	</style>
 </head>
 <body>
@@ -40,11 +40,9 @@
 
 		let lastTime = performance.now();
 		function loop() {
-			for (const cl of clones) {
-				let dx = Math.random() * moveLevel*2 - moveLevel;
-				let dy = Math.random() * moveLevel*2 - moveLevel;
-				cl.moveBy(dx, dy);
-			};
+			let dx = Math.random() * moveLevel*2 - moveLevel;
+			let dy = Math.random() * moveLevel*2 - moveLevel;
+			window.moveBy(dx, dy);
 
 			const now = performance.now();
 			lastTime = now;
