@@ -27,13 +27,21 @@
 				clones.push(window.open("", "test"+(clones.length+1), "popup=true,width=200,height=200"));
 			};
 
-			setInterval(() => {
+			let lastTime = performance.now();
+			function loop() {
 				for (const cl of clones) {
 					let dx = Math.random() * 60 - 30;
 					let dy = Math.random() * 60 - 30;
 					cl.moveBy(dx, dy);
 				}
-			}, 30)
+
+
+				const now = performance.now();
+				lastTime = now;
+				requestAnimationFrame(loop);
+			}
+
+			loop();
 		</script>
   </body>
 </html>
