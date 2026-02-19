@@ -46,10 +46,10 @@
 			windowPosition.y += moveSpeed.y;
 
 			if (windowPosition.x + windowSize.x > screenSize.x || windowPosition.x < 0) {
-				moveSpeed.x *= -1;
+				moveSpeed.x = -moveSpeed.x
 			};
 			if (windowPosition.y + windowSize.y > screenSize.y || windowPosition.y < 0) {
-				moveSpeed.y *= -1;
+				moveSpeed.y = -moveSpeed.y;
 			};
 
 			window.moveBy(moveSpeed.x, moveSpeed.y);
