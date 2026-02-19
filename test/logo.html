@@ -17,30 +17,27 @@
 </head>
 <body>
 	<img src="https://cdn-icons-png.freepik.com/512/2/2126.png" width="150" height="150">
-	<p id="output"></p>
-	<p id="errorOutput"></p>
 	<script>
 		function el(id) {return document.getElementById(id)};
 
 		try {
-		const params = new URLSearchParams(document.location.search);
-		const gotMoveSpeed = params.get("moveSpeed");
+		let params = new URLSearchParams(document.location.search);
 		let windowPosition = {
 			x: 0,
 			y: 0
 		};
 		let moveSpeed = {
-			x: gotMoveSpeed,
-			y: gotMoveSpeed
+			x: 7,
+			y: 7
 		};
 		let windowSize = {
 			x: 150,
 			y: 150
-		};
+		}
 		let screenSize = {
 			x: window.screen.availWidth,
 			y: window.screen.availHeight
-		};
+		}
 
 		let lastTime = performance.now();
 		function loop() {
@@ -48,12 +45,10 @@
 			windowPosition.y += moveSpeed.y;
 
 			if (windowPosition.x + windowSize.x > screenSize.x || windowPosition.x < 0) {
-				el("output").innerHTML += "X did";
-				moveSpeed.x = -moveSpeed.x;
+				moveSpeed.x *= -1;
 			};
 			if (windowPosition.y + windowSize.y > screenSize.y || windowPosition.y < 0) {
-				el("output").innerHTML += "Y did";
-				moveSpeed.y = -moveSpeed.y;
+				moveSpeed.y *= -1;
 			};
 
 			window.moveBy(moveSpeed.x, moveSpeed.y);
@@ -64,7 +59,7 @@
 		};
 
 		loop();
-	}catch(error) {el("errorOutput").innerHTML = (`${error.name}\n${error.stack}`)}
+	}catch(error) {alert(`${error.name}\n${error.stack}`)}
 	</script>
 </body>
 
