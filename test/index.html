@@ -20,12 +20,20 @@
 		<button id="summonClone">新しいクローンを追加</button>
 		<span id="output"></span>
 		<script>
-			let clones = []
+			let clones = [];
+			let intervals = []
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
 				clones.push(window.open("", "test", "popup=true,width=200,height=200"));
-				el("output").innerHTML = clones[0]
 			};
+
+			setInterval(() => {
+				for (const cl of clones) {
+					const dx = Math.random()-0.5 ? -10 : 10;
+					const dy = Math.random()-0.5 ? -10 : 10;
+					cl.moveBy(dx, dy);
+				}
+			}, 60)
 		</script>
   </body>
 </html>
