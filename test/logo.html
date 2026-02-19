@@ -17,6 +17,8 @@
 </head>
 <body>
 	<img src="https://cdn-icons-png.freepik.com/512/2/2126.png" width="150" height="150">
+	<p id="output"></p>
+	<p id="errorOutput"></p>
 	<script>
 		function el(id) {return document.getElementById(id)};
 
@@ -46,9 +48,11 @@
 			windowPosition.y += moveSpeed.y;
 
 			if (windowPosition.x + windowSize.x > screenSize.x || windowPosition.x < 0) {
-				moveSpeed.x = -moveSpeed.x
+				el("output").innerHTML += "X did";
+				moveSpeed.x = -moveSpeed.x;
 			};
 			if (windowPosition.y + windowSize.y > screenSize.y || windowPosition.y < 0) {
+				el("output").innerHTML += "Y did";
 				moveSpeed.y = -moveSpeed.y;
 			};
 
@@ -60,7 +64,7 @@
 		};
 
 		loop();
-	}catch(error) {alert(`${error.name}\n${error.stack}`)}
+	}catch(error) {el("errorOutput").innerHTML = (`${error.name}\n${error.stack}`)}
 	</script>
 </body>
 
