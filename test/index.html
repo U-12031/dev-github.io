@@ -24,14 +24,13 @@
 			let intervals = []
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
-				clones.push(window.open("", "test", "popup=true,width=200,height=200"));
+				clones.push(window.open("", "test"+clones.length+1, "popup=true,width=200,height=200"));
 			};
 
 			setInterval(() => {
 				for (const cl of clones) {
-					let dx, dy;
-					if(Math.random() > 0.5) dx = 10; else dx = -10;
-					if(Math.random() > 0.5) dy = 10; else dy = -10;
+					let dx = Math.random() * 60 - 30;
+					let dy = Math.random() * 60 - 30;
 					cl.moveBy(dx, dy);
 				}
 			}, 30)
