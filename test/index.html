@@ -24,7 +24,7 @@
 			let moveLevel = 30;
 			el("moveLevel").oninput = function() {
 				el("moveLevelOutput").innerHTML = "Lv. " + this.value;
-				moveLevel = 30;
+				moveLevel = this.value;
 			}
 
 			let clones = [];
