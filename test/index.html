@@ -31,24 +31,8 @@
 			let intervals = []
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
-				clones.push(window.open("clone.html", "test"+(clones.length+1), "popup=true,width=300,height=300,alwaysRaised=yes"));
+				clones.push(window.open(`clone.html?moveLevel=${moveLevel}`, "test"+(clones.length+1), "popup=true,width=300,height=300,alwaysRaised=yes"));
 			};
-
-			let lastTime = performance.now();
-			function loop() {
-				for (const cl of clones) {
-					let dx = Math.random() * moveLevel*2 - moveLevel;
-					let dy = Math.random() * moveLevel*2 - moveLevel;
-					cl.moveBy(dx, dy);
-				}
-
-
-				const now = performance.now();
-				lastTime = now;
-				requestAnimationFrame(loop);
-			}
-
-			loop();
 		</script>
   </body>
 </html>

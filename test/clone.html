@@ -27,13 +27,31 @@
 
 		body {animation: bodyGradation 1s linear infinite;}
 
-		* {font-size: 1.5em;}
+		* {font-size: 2.5em;}
 	</style>
 </head>
 <body>
-	<h1>消せるもんなら消してみろやwwwwwwwwwwwwww</h1>
+	<h1 style="word-break: break-all;">消せるもんなら消してみろやwwwwwwwwwwwwww</h1>
 	<script>
 		function el(id) {return document.getElementById(id)};
+
+		let params = new URLSearchParams(document.location.search);
+		let moveLevel = params.get("moveLevel");
+
+		let lastTime = performance.now();
+		function loop() {
+			for (const cl of clones) {
+				let dx = Math.random() * moveLevel*2 - moveLevel;
+				let dy = Math.random() * moveLevel*2 - moveLevel;
+				cl.moveBy(dx, dy);
+			};
+
+			const now = performance.now();
+			lastTime = now;
+			requestAnimationFrame(loop);
+		};
+
+		loop();
 	</script>
 </body>
 
