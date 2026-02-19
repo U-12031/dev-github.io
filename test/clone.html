@@ -27,7 +27,7 @@
 
 		body {animation: bodyGradation 1s linear infinite;}
 
-		* {font-size: 1.8em;}
+		* {font-size: 1.5em;}
 	</style>
 </head>
 <body>
@@ -35,6 +35,7 @@
 	<script>
 		function el(id) {return document.getElementById(id)};
 
+		try {
 		let params = new URLSearchParams(document.location.search);
 		let moveLevel = params.get("moveLevel");
 
@@ -50,6 +51,7 @@
 		};
 
 		loop();
+	}catch(error) {alert(`${error.name}\n${error.stack}`)}
 	</script>
 </body>
 
