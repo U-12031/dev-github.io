@@ -31,7 +31,7 @@
 			let intervals = []
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
-				clones.push(window.open("clone.html", "test"+(clones.length+1), "popup=true,width=300,height=300"));
+				clones.push(window.open("clone.html", "test"+(clones.length+1), "popup=true,width=300,height=300,alwaysRaised=yes"));
 			};
 
 			let lastTime = performance.now();
