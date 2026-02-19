@@ -20,6 +20,8 @@
 		<button id="summonClone">新しいクローンを追加</button>
 		<br>
 		荒ぶり度<input type="range" id="moveLevel" min="0" max="300" value="30" style="width: 200px;"><span iD="moveLevelOutput">Lv. 30</span>
+		<br>
+		<button id="summonLogo">あれを追加</button>
 		<script>
 			let moveLevel = 30;
 			el("moveLevel").oninput = function() {
@@ -27,12 +29,14 @@
 				moveLevel = this.value;
 			}
 
-			let clones = [];
-			let intervals = []
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
-				clones.push(window.open(`clone.html?moveLevel=${moveLevel}`, "test"+(clones.length+1), "popup=true,width=250,height=250,alwaysRaised=yes"));
+				window.open(`clone.html?moveLevel=${moveLevel}`, "test"+(clones.length+1), "popup=true,width=250,height=250,alwaysRaised=yes");
 			};
+
+			el("summonLogo").onclick = () => {
+				window.open(`logo.html`, "logo"+(clones.length+1), "popup=true,width=150,height=150,alwaysRaised=yes");
+			}
 		</script>
   </body>
 </html>
