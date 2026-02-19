@@ -102,9 +102,24 @@
 		*/
 		function el(id) {return document.getElementById(id)};
 		const HIGH_SCALE = el("highScale").getContext("2d");
-		
+
+		/** この関数は、要素に線を描画します。
+		 * @param {object} objective 描画先の要素の描画コンテキストです。
+		 * @param {array} paths 描画する線のパスです。[[x1, y1], [x2, y2]]のように配列で入力してください。
+		 * @param {boolean} doClose=false 描画した線を閉じるかどうかを定義します。
+		 * @param {boolean} doFill=false 描画した線を図形として塗りつぶすがどうかを定義します。doFillをtrueにするとき、必ずdoCloseもtrueにしてください。
+		*/
+		function drawLine(objective, paths, doClose=false, doFill=false) {
+			const firstPath = paths[0];
+			const otherPath = paths.slice(1);
+			objective.beginPath();
+			objective.moveTo(firstPath[0], firstPath[1]);
+			for(const path of otherPath) {
+				path
+			}
+		};
 		/** この関数は、要素の中心に線を描画します。
-		 * @param {object} obnective 描画先の要素の描画コンテキストです。
+		 * @param {object} objective 描画先の要素の描画コンテキストです。
 		 * @param {number} y 描画する線の高さです。
 		 * @param {number} width 描画する線の幅です。
 		 * @param {boolean} doClose=true 描画した線を閉じるかどうかを定義します。
