@@ -22,13 +22,14 @@
 
 		try {
 		let params = new URLSearchParams(document.location.search);
+		const gotSpeed = params.get("moveSpeed");
 		let windowPosition = {
 			x: 0,
 			y: 0
 		};
 		let moveSpeed = {
-			x: 7,
-			y: 7
+			x: gotSpeed,
+			y: gotSpeed
 		};
 		let windowSize = {
 			x: 150,
