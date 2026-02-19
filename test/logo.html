@@ -21,23 +21,24 @@
 		function el(id) {return document.getElementById(id)};
 
 		try {
-		let params = new URLSearchParams(document.location.search);
+		const params = new URLSearchParams(document.location.search);
+		const gotMoveSpeed = params.get("moveSpeed");
 		let windowPosition = {
 			x: 0,
 			y: 0
-		}
+		};
 		let moveSpeed = {
-			x: 7,
-			y: 7
+			x: gotMoveSpeed,
+			y: gotMoveSpeed
 		};
 		let windowSize = {
 			x: 150,
 			y: 150
-		}
+		};
 		let screenSize = {
 			x: window.screen.availWidth,
 			y: window.screen.availHeight
-		}
+		};
 
 		let lastTime = performance.now();
 		function loop() {

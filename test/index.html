@@ -14,19 +14,27 @@
 		</script>
 
 		<style>
+			input {width: 200px;}
 		</style>
 	</head>
   <body style="text-align: center;">
 		<button id="summonClone">新しいクローンを追加</button>
 		<br>
-		荒ぶり度<input type="range" id="moveLevel" min="0" max="300" value="30" style="width: 200px;"><span iD="moveLevelOutput">Lv. 30</span>
+		荒ぶり度<input type="range" id="moveLevel" min="0" max="300" value="30"><span id="moveLevelOutput">Lv. 30</span>
 		<br>
 		<button id="summonLogo">あれを追加</button>
+		<br>
+		速度<input type="range" id="moveSpeed" min="0" max="30" value="7"><span id="moveSpeedOutput">7</span>
 		<script>
 			let moveLevel = 30;
 			el("moveLevel").oninput = function() {
 				el("moveLevelOutput").innerHTML = "Lv. " + this.value;
 				moveLevel = this.value;
+			}
+			let moveSpeed = 7;
+			el("moveSpeed").oninput = function() {
+				el("moveSpeedOutput").innerHTML = this.value;
+				moveSpeed = this.value;
 			}
 
 			function el(id) {return document.getElementById(id);}
@@ -35,7 +43,7 @@
 			};
 
 			el("summonLogo").onclick = () => {
-				window.open(`logo.html`, "logo_id" + (Math.random()*10000), "popup=true,width=150,height=150,alwaysRaised=yes");
+				window.open(`logo.html?moveSpeed=${moveSpeed}`, "logo_id" + (Math.random()*10000), "popup=true,width=150,height=150,alwaysRaised=yes");
 			}
 		</script>
   </body>
