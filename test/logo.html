@@ -14,20 +14,6 @@
 	</script>
 
 	<title></title>
-	<style>
-		@keyframes bodyGradation {
-			0%	 {background-color:#f88;}
-			16%	{background-color:#ff8;}
-			33%	{background-color:#8f8;}
-			50%	{background-color:#8ff;}
-			67%	{background-color:#88f;}
-			83%	{background-color:#f8f;}
-			100% {background-color:#f88;}
-		}
-
-		body {animation: bodyGradation 1s linear infinite;}
-
-	</style>
 </head>
 <body>
 	<img src="https://cdn-icons-png.freepik.com/512/2/2126.png" width="150" height="150">
@@ -41,8 +27,8 @@
 			y: 0
 		}
 		let moveSpeed = {
-			x: 10,
-			y: 10
+			x: 7,
+			y: 7
 		};
 		let windowSize = {
 			x: 150,
@@ -60,10 +46,10 @@
 
 			if (windowPosition.x + windowSize.x > screenSize.x || windowPosition.x < 0) {
 				moveSpeed.x *= -1;
-			}
+			};
 			if (windowPosition.y + windowSize.y > screenSize.y || windowPosition.y < 0) {
 				moveSpeed.y *= -1;
-			}
+			};
 
 			window.moveBy(moveSpeed.x, moveSpeed.y);
 

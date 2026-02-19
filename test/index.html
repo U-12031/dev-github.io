@@ -31,11 +31,11 @@
 
 			function el(id) {return document.getElementById(id);}
 			el("summonClone").onclick = () => {
-				window.open(`clone.html?moveLevel=${moveLevel}`, "clone_id:" + (Math.random() * 10000), "popup=true,width=250,height=250,alwaysRaised=yes");
+				window.open(`clone.html?moveLevel=${moveLevel}`, "clone_id:" + (Math.random()*10000), "popup=true,width=250,height=250,alwaysRaised=yes");
 			};
 
 			el("summonLogo").onclick = () => {
-				window.open(`logo.html`, "logo_id" + (Math.random()*10000),"popup=true,width=150,height=150,alwaysRaised=yes");
+				window.open(`logo.html`, "logo_id" + (Math.random()*10000), "popup=true,width=150,height=150,alwaysRaised=yes");
 			}
 		</script>
   </body>
