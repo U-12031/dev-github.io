@@ -17,8 +17,15 @@
 		</style>
 	</head>
   <body style="text-align: center;">
+		<button id="summonClone">新しいクローンを追加</button>
+		<span id="output"></span>
 		<script>
+			let clones = []
 			function el(id) {return document.getElementById(id);}
+			el("summonClone").onclick = () => {
+				clones.push(window.open("", "test", "popup=true,width=200,height=200"));
+				el("output").innerHTML = clones[0]
+			};
 		</script>
   </body>
 </html>
