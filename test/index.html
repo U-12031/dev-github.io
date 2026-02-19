@@ -18,8 +18,15 @@
 	</head>
   <body style="text-align: center;">
 		<button id="summonClone">新しいクローンを追加</button>
-		<span id="output"></span>
+		<br>
+		荒ぶり度<input type="range" id="moveLevel" min="0" max="300" value="30" style="width: 200px;"><span iD="moveLevelOutput">Lv. 30</span>
 		<script>
+			let moveLevel = 30;
+			el("moveLevel").oninput = function() {
+				el("moveLevelOutput").innerHTML = "Lv. " + this.value;
+				moveLevel = 30;
+			}
+
 			let clones = [];
 			let intervals = []
 			function el(id) {return document.getElementById(id);}
@@ -30,8 +37,8 @@
 			let lastTime = performance.now();
 			function loop() {
 				for (const cl of clones) {
-					let dx = Math.random() * 60 - 30;
-					let dy = Math.random() * 60 - 30;
+					let dx = Math.random() * moveLevel*2 - moveLevel;
+					let dy = Math.random() * moveLevel*2 - moveLevel;
 					cl.moveBy(dx, dy);
 				}
 
