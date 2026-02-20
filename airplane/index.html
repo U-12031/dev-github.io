@@ -36,7 +36,7 @@
 			overflow: hidden;
 		}
 
-		#parent>* {
+		#parent * {
 			display: block;
 			position: absolute;
 		}
@@ -58,10 +58,19 @@
 		}
 
 		#bank {
-			background-color: #fa0;
-			width: 100%;
-			height: 100px;
-			/* clip-path: ; */
+			background-color: #af06;
+			height: 400px;
+			width: 400px;
+			clip-path: circle(50% at 50% 50%);
+		}
+
+		#test {
+			background-color: #f004;
+			left: 20px;
+			top: 20px;
+			height: 360px;
+			width: 360px;
+			clip-path: circle(50% at 50% 50%);
 		}
 
 	</style>
@@ -70,10 +79,10 @@
 	<div id="parent">
 		<div id="ground"></div>
 		<canvas id="highScale" width="1400" height="1400"></canvas>
-		<!-- <div id="bank">
-			<div></div>
+		<div id="bank">
+			<div id="test"></div>
 			<canvas id="bankScale"></canvas>
-		</div> -->
+		</div>
 	</div>
 	TEST<br>ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
 	<br>
@@ -81,6 +90,7 @@
 	<br>
 	Y-TRANSFORM<input type="range" id="input3" min="-500" value="0" max="500" style="width: 300px;"><span id="output3">0 px</span>
 	<script>
+		// ここにテスト用のメーターの処理部分があります
 		el("input1").oninput = function() {
 			el("output1").innerHTML = this.value + " deg";
 			el("ground").style.rotate = this.value + "deg";
@@ -92,22 +102,23 @@
 			el("highScale").style.translate = this.value + "px " + el("input3").value + "px";
 		}
 		el("input3").oninput = function() {
-			
 			el("output3").innerHTML = this.value + " px";
 			el("ground").style.translate = "calc(-50% + " + el("input2").value + "px) " + this.value + "px";
 			el("highScale").style.translate = el("input2").value + "px " + this.value + "px";
 		}
 		/** この関数は、取得したidを持つ要素を返します。
-		 * @param {string} id 取得する要素のidです。
+		 * @param {string} id - 取得する要素のidです。
 		*/
 		function el(id) {return document.getElementById(id)};
-		const HIGH_SCALE = el("highScale").getContext("2d");
+		const HIGH_SCALE = el("highScale").getContext("2d");		
+		const BANK_SCALE = el("bankScale").getContext("2d");
+		const LINE_WIDTH = 3;
 
 		/** この関数は、要素に線を描画します。
-		 * @param {object} objective 描画先の要素の描画コンテキストです。
-		 * @param {array} paths 描画する線のパスです。[[x1, y1], [x2, y2]]のように配列で入力してください。
-		 * @param {boolean} doClose=false 描画した線を閉じるかどうかを定義します。
-		 * @param {boolean} doFill=false 描画した線を図形として塗りつぶすがどうかを定義します。doFillをtrueにするとき、必ずdoCloseもtrueにしてください。
+		 * @param {object} objective - 描画先の要素の描画コンテキストです。
+		 * @param {array} paths - 描画する線のパスです。[[x1, y1], [x2, y2]]のように配列で入力してください。
+		 * @param {boolean} [doClose=false] - 描画した線を閉じるかどうかを定義します。
+		 * @param {boolean} [doFill=false] - 描画した線を図形として塗りつぶすがどうかを定義します。これをtrueにするとき、必ずdoCloseもtrueにしてください。
 		*/
 		function drawLine(objective, paths, doClose=false, doFill=false) {
 			const firstPath = paths[0];
@@ -115,14 +126,17 @@
 			objective.beginPath();
 			objective.moveTo(firstPath[0], firstPath[1]);
 			for(const path of otherPath) {
-				path
-			}
+				objective.lineTo(path[0], path[1]);
+			};
+			objective.stroke();
+			if(doClose) objective.closePath();
+			if(doFill) objective.fill();
 		};
 		/** この関数は、要素の中心に線を描画します。
-		 * @param {object} objective 描画先の要素の描画コンテキストです。
-		 * @param {number} y 描画する線の高さです。
-		 * @param {number} width 描画する線の幅です。
-		 * @param {boolean} doClose=true 描画した線を閉じるかどうかを定義します。
+		 * @param {object} objective - 描画先の要素の描画コンテキストです。
+		 * @param {number} y - 描画する線の高さです。
+		 * @param {number} width - 描画する線の幅です。
+		 * @param {boolean} [doClose=true] - 描画した線を閉じるかどうかを定義します。
 		*/
 		function drawLineOnCenter(objective, y, width, doClose=true) {
 			const centerStart = 700 - (width / 2);
@@ -133,17 +147,25 @@
 			if(doClose) objective.closePath();
 			objective.stroke();
 		};
-		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。
-		 * @param {string} text="" 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
-		 * @param {number} y テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
+		/** この関数は、特定の円の円周上の点の座標を返します。
+		 * @param {array} circleCenter - 円の中心を[x, y]という形式で入力します。このxとyはdiv#parentの右上を[0,0]、左下を[400,500]としたものです。
+		 * @param {number} radius - 円の半径です。
+		 * @param {number} deg - 一般的にθで表される、始線(円の中心からx+方向に伸びる線)から反時計回りに回る角度です。
 		*/
-		function addScaleLabel(text="", y) {
-			HIGH_SCALE.fillText(text, 560, y);
-			HIGH_SCALE.fillText(text, 820, y);
+		function onCircle(circleCenter, radius, deg) {
+
+		}
+		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。(使われるのは限定的です)
+		 * @param {string} [text=""] - 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
+		 * @param {number} y - テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
+		*/
+		function addScaleLabel(objective, text="", y) {
+			objective.fillText(text, 560, y);
+			objective.fillText(text, 820, y);
 		};
 		HIGH_SCALE.fillStyle = "white";
 		HIGH_SCALE.font = "bold 25px numFont"
-		HIGH_SCALE.lineWidth = 5;
+		HIGH_SCALE.lineWidth = LINE_WIDTH;
 		HIGH_SCALE.strokeStyle = "white";
 
 		drawLineOnCenter(HIGH_SCALE, 697.5, 1400);
@@ -153,15 +175,21 @@
 			drawLineOnCenter(HIGH_SCALE, -80*i + 657.5, 100);
 			drawLineOnCenter(HIGH_SCALE, -80*i + 637.5, 50);
 			drawLineOnCenter(HIGH_SCALE, -80*i + 617.5, 200);
-			addScaleLabel(`${(i+1)*10}`, -80*i + 627.5);
+			addScaleLabel(HIGH_SCALE, `${(i+1)*10}`, -80*i + 627.5);
 		};
 		for(let i=0;i<9;i++) {
 			drawLineOnCenter(HIGH_SCALE, 80*i + 717.5, 50);
 			drawLineOnCenter(HIGH_SCALE, 80*i + 737.5, 100);
 			drawLineOnCenter(HIGH_SCALE, 80*i + 757.5, 50);
 			drawLineOnCenter(HIGH_SCALE, 80*i + 777.5, 200);
-			addScaleLabel(`${(i+1)*10}`, 80*i + 787.5);
+			addScaleLabel(HIGH_SCALE, `${(i+1)*10}`, 80*i + 787.5);
 		};
+
+		BANK_SCALE.lineWidth = LINE_WIDTH;
+		BANK_SCALE.strokeStyle = "white";
+
+
+		drawLine(BANK_SCALE, [[0,0], [100,100]], true, true)
 	</script>
 </body>
 </html>
