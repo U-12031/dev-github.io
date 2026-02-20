@@ -58,10 +58,11 @@
 		}
 
 		#bank {
-			background-color: #af06;
-			height: 400px;
+			height: 50%;
 			width: 400px;
-			clip-path: circle(50% at 50% 50%);
+			top: 0;
+			left: 0;
+			/* clip-path: circle(50% at 50% 50%); */
 		}
 
 		#test {
@@ -73,6 +74,11 @@
 			clip-path: circle(50% at 50% 50%);
 		}
 
+		#bankScale {
+			/* background-color: #ff05; */
+			top: 0;
+			left: 0;
+		}
 	</style>
 </head>
 <body>
@@ -81,7 +87,7 @@
 		<canvas id="highScale" width="1400" height="1400"></canvas>
 		<div id="bank">
 			<div id="test"></div>
-			<canvas id="bankScale"></canvas>
+			<canvas id="bankScale" width="400" height="250"></canvas>
 		</div>
 	</div>
 	TEST<br>ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
@@ -128,8 +134,8 @@
 			for(const path of otherPath) {
 				objective.lineTo(path[0], path[1]);
 			};
-			objective.stroke();
 			if(doClose) objective.closePath();
+			objective.stroke();
 			if(doFill) objective.fill();
 		};
 		/** この関数は、要素の中心に線を描画します。
@@ -148,7 +154,7 @@
 			objective.stroke();
 		};
 		/** この関数は、特定の円の円周上の点の座標を返します。
-		 * @param {array} circleCenter - 円の中心を[x, y]という形式で入力します。このxとyはdiv#parentの右上を[0,0]、左下を[400,500]としたものです。
+		 * @param {array} circleCenter - 円の中心を[x, y]という形式で入力します。
 		 * @param {number} radius - 円の半径です。
 		 * @param {number} deg - 一般的にθで表される、始線(円の中心からx+方向に伸びる線)から反時計回りに回る角度です。
 		*/
@@ -157,7 +163,7 @@
 
 			let result = [,];
 			result[0] = circleCenter[0] + radius * Math.cos(theta);
-			result[1] = circleCenter[1] + radius * Math.sin(theta);
+			result[1] = circleCenter[1] - radius * Math.sin(theta);
 			
 			return result;
 		};
@@ -191,11 +197,13 @@
 			addScaleLabel(HIGH_SCALE, `${(i+1)*10}`, 80*i + 787.5);
 		};
 
+		BANK_SCALE.fillStyle = "white"
 		BANK_SCALE.lineWidth = LINE_WIDTH;
 		BANK_SCALE.strokeStyle = "white";
 
 
-		drawLine(BANK_SCALE, [[0,0], [100,100]], true, true)
+		const TRIANGLE_TOP = onCircle([200, 200], 180, 90)
+		drawLine(BANK_SCALE, [[180,0], [220,0], TRIANGLE_TOP], true, true);
 	</script>
 </body>
 </html>
