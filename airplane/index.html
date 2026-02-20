@@ -202,8 +202,14 @@
 		BANK_SCALE.strokeStyle = "white";
 
 
-		const TRIANGLE_TOP = onCircle([200, 200], 180, 90)
-		drawLine(BANK_SCALE, [[180,0], [220,0], TRIANGLE_TOP], true, true);
+		const MAIN_CIRCLE = [200, 220]; // 基準となる円の中心の座標
+		const CIRCLE_RADIUS = [200, 250] // 基準となる2つの円の半径
+		drawLine(BANK_SCALE, [[185,0], [215,0], onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 90)], true, true);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 100), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 100)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 110), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 110)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 120), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 120)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 135), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 135)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 150), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 150)])
 	</script>
 </body>
 </html>
