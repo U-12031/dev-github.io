@@ -51,20 +51,24 @@
 			height: 100%;
 		}
 
-		#highScale {
+		#high {
+			width: 400px;
+			height: 500px;
+			clip-path: path("M 0 130 L 40 130 A 180 180 0 0 1 360 130 L 400 130, 400 500, 0 500");
+			overflow: hidden;
+		}
+
+		#high #highScale {
 			top: -450px;
 			left: -500px;
 			transform-origin: center;
 		}
 
 		#bank {
-			background-color: #09e;
 			height: 50%;
 			width: 400px;
 			top: 0;
 			left: 0;
-			/* clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 90% 50%, 50% 30px, 10% 50%, 0% 50%); */
-			clip-path: path("M 0 0 L 400 0, 400 130, 360 130 A 180 180 0 0 0 40 130 L 0 130 Z");
 		}
 
 		#test {
@@ -84,7 +88,9 @@
 <body>
 	<div id="parent">
 		<div id="ground"></div>
-		<canvas id="highScale" width="1400" height="1400"></canvas>
+		<div id="high">
+			<canvas id="highScale" width="1400" height="1400"></canvas>
+		</div>
 		<div id="bank">
 			<div id="test"></div>
 			<canvas id="bankScale" width="400" height="250"></canvas>
