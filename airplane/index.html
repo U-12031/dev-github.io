@@ -153,8 +153,14 @@
 		 * @param {number} deg - 一般的にθで表される、始線(円の中心からx+方向に伸びる線)から反時計回りに回る角度です。
 		*/
 		function onCircle(circleCenter, radius, deg) {
+			const theta = deg * Math.PI / 180 // degをラジアンに変換
 
-		}
+			let result = [,];
+			result[0] = circleCenter[0] + radius * Math.cos(theta);
+			result[1] = circleCenter[1] + radius * Math.sin(theta);
+			
+			return result;
+		};
 		/** この関数は、addScaleOnCenter関数で描画したような目盛りの左右にラベルを付けます。(使われるのは限定的です)
 		 * @param {string} [text=""] - 描画するテキストです(英数半角2文字指定。そうでないと正しい位置に表示されません)。
 		 * @param {number} y - テキストのy座標です。描画したいところのy座標から10増やした値を入れてください。
