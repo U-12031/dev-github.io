@@ -84,6 +84,19 @@
 			top: 0;
 			left: 0;
 		}
+
+		#bankTest {
+			top: 25px;
+			left: 0;
+			width: 400px;
+			height: 400px;
+			border-radius: 100%;
+		}
+
+		#bankPointer {
+			top: 25px;
+			transform-origin: center 200px;
+		}
 	</style>
 </head>
 <body>
@@ -95,19 +108,34 @@
 		<div id="bank">
 			<div id="test"></div>
 			<canvas id="bankScale" width="400" height="250"></canvas>
+			<canvas id="bankPointer" width="400" height="225"></canvas>
+			<div id="bankTest"></div>
 		</div>
 	</div>
-	TEST<br>ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
+	TEST<br>
+	ROTATE<input type="range" id="input1" min="-50" value="0" max="50" style="width: 300px;"><span id="output1">0 deg</span>
 	<br>
 	X-TRANSFORM<input type="range" id="input2" min="-500" value="0" max="500" style="width: 300px;"><span id="output2">0 px</span>
 	<br>
 	Y-TRANSFORM<input type="range" id="input3" min="-500" value="0" max="500" style="width: 300px;"><span id="output3">0 px</span>
+	<br>
+	BANK-ROTATE<input type="range" id="input4" min="-50" value="0" max="50" style="width: 300px;"><span id="output4">0 deg</span>
+
 	<script>
 		// ここにテスト用のメーターの処理部分があります
 		el("input1").oninput = function() {
 			el("output1").innerHTML = this.value + " deg";
 			el("ground").style.rotate = this.value + "deg";
 			el("highScale").style.rotate = this.value + "deg";
+			el("bankPointer").style.rotate = this.value + "deg";
+			BANK_POINTER.clearRect(0,0, 400,225);
+			if(Math.abs(this.value) >= 35) {
+				BANK_POINTER.strokeStyle = "#fb1";
+				drawLine(BANK_POINTER, [[200,3], [185,23], [215,23]], true, true);
+			} else {
+				BANK_POINTER.strokeStyle = "white";
+				drawLine(BANK_POINTER, [[200,3], [185,23], [215,23]], true, false);
+			};
 		}
 		el("input2").oninput = function() {
 			el("output2").innerHTML = this.value + " px";
@@ -125,6 +153,7 @@
 		function el(id) {return document.getElementById(id)};
 		const HIGH_SCALE = el("highScale").getContext("2d");		
 		const BANK_SCALE = el("bankScale").getContext("2d");
+		const BANK_POINTER = el("bankPointer").getContext("2d");
 		const LINE_WIDTH = 3;
 
 		/** この関数は、要素に線を描画します。
@@ -203,27 +232,31 @@
 			drawLineOnCenter(HIGH_SCALE, 80*i + 777.5, 200);
 			addScaleLabel(HIGH_SCALE, `${(i+1)*10}`, 80*i + 787.5);
 		};
-
-		BANK_SCALE.fillStyle = "white"
+		
+		BANK_SCALE.fillStyle = "white";
 		BANK_SCALE.lineWidth = LINE_WIDTH;
 		BANK_SCALE.strokeStyle = "white";
-
 
 		const MAIN_CIRCLE = [200, 220]; // 基準となる円の中心の座標
 		const CIRCLE_RADIUS = [200, 230, 250] // 基準となる2つの円の半径
 		drawLine(BANK_SCALE, [[185,0], [215,0], onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 90)], true, true);
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 100), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 100)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 110), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 110)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 120), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[2], 120)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 135), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 135)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 150), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 150)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 100), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 100)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 110), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 110)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 120), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[2], 120)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 135), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 135)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 150), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 150)]);
 
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 80), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 80)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 70), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 70)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 60), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[2], 60)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 45), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 45)])
-		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 30), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 30)])
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 80), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 80)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 70), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 70)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 60), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[2], 60)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 45), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 45)]);
+		drawLine(BANK_SCALE, [onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[0], 30), onCircle(MAIN_CIRCLE, CIRCLE_RADIUS[1], 30)]);
 
+		BANK_POINTER.fillStyle = "#fb1"
+		BANK_POINTER.lineWidth = LINE_WIDTH;
+		BANK_POINTER.strokeStyle = "white";
+
+		drawLine(BANK_POINTER, [[200,3], [185,23], [215,23]], true, false);
 </script>
 </body>
 </html>
