@@ -119,7 +119,6 @@
 	<br>
 	Y-TRANSFORM<input type="range" id="input3" min="-500" value="0" max="500" style="width: 300px;"><span id="output3">0 px</span>
 	<br>
-	BANK-ROTATE<input type="range" id="input4" min="-50" value="0" max="50" style="width: 300px;"><span id="output4">0 deg</span>
 
 	<script>
 		// ここにテスト用のメーターの処理部分があります
@@ -147,6 +146,7 @@
 			el("ground").style.translate = "calc(-50% + " + el("input2").value + "px) " + this.value + "px";
 			el("highScale").style.translate = el("input2").value + "px " + this.value + "px";
 		}
+
 		/** この関数は、取得したidを持つ要素を返します。
 		 * @param {string} id - 取得する要素のidです。
 		*/
@@ -212,7 +212,7 @@
 			objective.fillText(text, 820, y);
 		};
 		HIGH_SCALE.fillStyle = "white";
-		HIGH_SCALE.font = "bold 25px numFont"
+		HIGH_SCALE.font = "bold 25px 'numFont'"
 		HIGH_SCALE.lineWidth = LINE_WIDTH;
 		HIGH_SCALE.strokeStyle = "white";
 
