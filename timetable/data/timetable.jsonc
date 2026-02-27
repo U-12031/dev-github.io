@@ -1,0 +1,29 @@
+{
+	"_specialTrain": {
+	},
+	"JR_JM_higashitokorozawa": {
+		"jaName":"東所沢",
+		"enName": "Higashitokorozawa",
+		"platform": [
+			{
+				"num":[1,2],
+				"direction": "JR_JM_down",
+				"to": "武蔵浦和・新松戸・西船橋",
+				"timetable": [
+					{
+						"time": [4,44],
+						"via": null,
+						"to": {"ja": "", "en": "Tokyo", "time": [6,13]},
+						"trainType": "local",
+						"firstTrain": true
+					}
+				]
+			},
+			{
+				"num": [3,4],
+				"direction": "JR_JM_up",
+				"to": "府中本町"
+			}
+		]
+	}
+}
